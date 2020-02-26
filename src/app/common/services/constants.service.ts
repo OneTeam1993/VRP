@@ -1,0 +1,113 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ConstantsService {
+
+  constructor(public http: HttpClient) {
+
+  }
+
+  readonly httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+  };
+
+  readonly baseAppUrl: string = 'https://app.track-asia.com/';
+  readonly mainAppURL: string = 'https://track-asia.com/';
+  readonly uri_track: string = 'tracksgwebapi/api/';
+  readonly resellerApi: string = this.baseAppUrl + this.uri_track + "resellerinfo/";
+  readonly companyApi: string = this.baseAppUrl + this.uri_track + "companyinfo/";
+  readonly zoneApi: string = this.baseAppUrl + this.uri_track + "zoneinfo/";
+  readonly zonetypeApi: string = this.baseAppUrl + this.uri_track + "zonetypeinfo/";
+  readonly param_put: string = "?id=";
+  readonly url_login = 'https://app.track-asia.com/tracksgwebapi/api/login';
+  readonly url_events = 'https://app.track-asia.com/tracksgwebapi/api/eventinfo';
+  readonly GetTrackVersion = "sg";
+ 
+  //Declare Session Storage
+  readonly getSessionstorageValueLanguage: string = sessionStorage.getItem('setSessionstorageValueLanguage');
+  readonly getSessionstorageValueUserID: number = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+  readonly getSessionstorageValueUser: string = sessionStorage.getItem('setSessionstorageValueUser');
+  readonly getSessionstorageValueCompany: string = sessionStorage.getItem('setSessionstorageValueCompany');
+  readonly getSessionstorageValueCompanyID: number = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  readonly getSessionstorageValueUserNotifications: string = sessionStorage.getItem('setSessionstorageValueUserNotifications');
+  readonly getSessionstorageValueRoleID: number = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
+  readonly getSessionstorageValueEmail: string = sessionStorage.getItem('setSessionstorageValueEmail');
+  readonly getSessionstorageValueUserResellerID: number = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+  readonly getSessionstorageValueAssetReseller: string = sessionStorage.getItem('setSessionstorageValueAssetReseller');
+  readonly getSessionstorageValueAssetCompany: string = sessionStorage.getItem('setSessionstorageValueAssetCompany');
+  readonly getSessionstorageValueDefaultReseller: Number =  4;
+  readonly getSessionstorageValueDefaultCompany: Number = 2;
+
+  //Markers
+  readonly mapTypeIds = ["Mapbox", "OSM", "PublicTransport", "OneMap"];
+  readonly shape = {
+    coord: [16, 0, 18, 1, 21, 2, 24, 3, 26, 4, 27, 5, 28, 6, 29, 7, 29, 8, 29, 9, 29, 10, 29, 11, 29, 12, 29, 13, 29, 14, 29, 15, 29, 16, 29, 17, 29, 18, 29, 19, 29, 20, 29, 21, 29, 22, 29, 23, 29, 24, 29, 25, 29, 26, 29, 27, 29, 28, 28, 29, 3, 29, 2, 28, 2, 27, 1, 26, 1, 25, 1, 24, 0, 23, 0, 22, 0, 21, 0, 20, 0, 19, 0, 18, 0, 17, 0, 16, 0, 15, 0, 14, 0, 13, 0, 12, 0, 11, 0, 10, 0, 9, 0, 8, 0, 7, 1, 6, 2, 5, 2, 4, 3, 3, 5, 2, 6, 1, 8, 0, 16, 0],
+    type: 'poly'
+  };
+
+  // Error handling
+  errorHandl(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }
+
+  getAssets() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
+        url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + '&ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+      } else {
+        url = '';
+      }
+
+    } else if (this.getSessionstorageValueRoleID == 2) {
+
+      url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+
+      url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    }
+
+    return url;
+  }
+
+  getZones() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+
+      if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
+        url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+      } else {
+        url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+      }
+
+    } else if (this.getSessionstorageValueRoleID == 2) {
+
+      url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+
+      url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+
+    }
+    //alert('test: ' + url)
+    return url;
+  }
+
+}

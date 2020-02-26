@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+declare var $: any;
+console.log(`jQuery version: ${$.fn.jquery}`);
+
+
 @Component({
   // tslint:disable-next-line
   selector: 'body',
