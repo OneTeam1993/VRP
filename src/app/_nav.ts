@@ -11,6 +11,15 @@ export const navItems: INavData[] = [
     }
   },
   {
+    name: 'Tracking',
+    url: '/tracking',
+    icon: 'icon-speedometer',
+    badge: {
+      variant: 'info',
+      text: 'Live Map'
+    }
+  },
+  {
     title: true,
     name: 'Theme'
   },
