@@ -23,8 +23,10 @@ export class ConstantsService {
   readonly uri_track: string = 'tracksgwebapi/api/';
   readonly resellerApi: string = this.baseAppUrl + this.uri_track + "resellerinfo/";
   readonly companyApi: string = this.baseAppUrl + this.uri_track + "companyinfo/";
+  readonly assetApi: string = this.baseAppUrl + this.uri_track + "assetinfo/";
   readonly zoneApi: string = this.baseAppUrl + this.uri_track + "zoneinfo/";
   readonly zonetypeApi: string = this.baseAppUrl + this.uri_track + "zonetypeinfo/";
+  readonly reportApi: string = this.baseAppUrl + this.uri_track + "reportinfo/";
   readonly param_put: string = "?id=";
   readonly url_login = 'https://app.track-asia.com/tracksgwebapi/api/login';
   readonly url_events = 'https://app.track-asia.com/tracksgwebapi/api/eventinfo';
@@ -43,7 +45,7 @@ export class ConstantsService {
   readonly getSessionstorageValueAssetReseller: string = sessionStorage.getItem('setSessionstorageValueAssetReseller');
   readonly getSessionstorageValueAssetCompany: string = sessionStorage.getItem('setSessionstorageValueAssetCompany');
   readonly getSessionstorageValueDefaultReseller: Number =  4;
-  readonly getSessionstorageValueDefaultCompany: Number = 2;
+  readonly getSessionstorageValueDefaultCompany: Number = 14;
 
   //Markers
   readonly mapTypeIds = ["Mapbox", "OSM", "PublicTransport", "OneMap"];
@@ -52,36 +54,49 @@ export class ConstantsService {
     type: 'poly'
   };
 
-  // Error handling
-  errorHandl(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  getResellers() {
+    let url: string;
+
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.resellerApi;
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'resellerinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = '';
     }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+
+    return url;
+  }
+
+  getCompanies() {
+    let url: string;
+
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueDefaultReseller;
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
+    }
+
+    return url;
   }
 
   getAssets() {
     let url: string;
     if (this.getSessionstorageValueRoleID == 1) {
       if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-        url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + '&ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+        url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + this.getSessionstorageValueDefaultReseller + '&CompanyID=' + this.getSessionstorageValueDefaultCompany;
       } else {
         url = '';
       }
-
     } else if (this.getSessionstorageValueRoleID == 2) {
 
-      url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+      url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
 
     } else if (this.getSessionstorageValueRoleID >= 3) {
 
-      url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+      url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
     }
 
     return url;
@@ -92,22 +107,29 @@ export class ConstantsService {
     if (this.getSessionstorageValueRoleID == 1) {
 
       if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-        url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+        url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueDefaultReseller + '&CompanyID=' + this.getSessionstorageValueDefaultCompany;
       } else {
-        url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+        url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
       }
 
     } else if (this.getSessionstorageValueRoleID == 2) {
 
-      url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+      url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
 
     } else if (this.getSessionstorageValueRoleID >= 3) {
 
-      url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+      url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
 
     }
-    //alert('test: ' + url)
+
     return url;
   }
+
+  getReports() {
+
+    let url: string = this.reportApi;
+    return url;
+  }
+
 
 }
