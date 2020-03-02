@@ -40,7 +40,7 @@
         <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
         <div class="divider"></div>
         <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock account</a>
-        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+        <a class="dropdown-item" (click)="logOut()"><i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>
   </ul>
@@ -86,43 +86,31 @@
         <ng-template tabHeading><i class="fa fa-filter"></i></ng-template>
         <div class="p-3">
           <div class="row">
-            <div class="form-group col-sm-12">
-              <select class="selectpicker" data-live-search="true" data-width="100%" id="load-reseller"></select>
+            <div class="form-group col-sm-12" id="_reseller">
+              <label>Reseller</label>
+              <select #resellerSelect (change)='onOptionsSelectedReseller(resellerSelect.value)' class="selectpicker SelectResellerFilter" data-live-search="true" data-width="100%" id="load-reseller"></select>
             </div>
             <div class="form-group col-sm-12">
-              <select class="selectpicker" data-live-search="true" data-width="100%" id="load-company"></select>
+              <label>Company</label>
+              <select #companySelect (change)='onOptionsSelectedCompany(companySelect.value)' class="selectpicker SelectCompanyFilter" data-live-search="true" data-width="100%" id="load-company"></select>
             </div>
             <div class="form-group col-sm-12">
-              <select class="selectpicker" data-live-search="true" data-width="100%" id="load-assets"></select>
+              <label>Vehicles</label>
+              <select #assetSelect (change)='onOptionsSelectedAsset(assetSelect.value)' class="selectpicker SelectAssetFilter" data-live-search="true" data-width="100%" id="load-assets"></select>
             </div>
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-12" id="_reports">
+              <label>Report</label>
               <select class="selectpicker" data-live-search="true" data-width="100%" id="load-report"></select>
             </div>
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-12" id="_dateFrom">
               <input id="dateFrom" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
             </div>
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-12" id="_dateTo">
               <input id="dateTo" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
             </div>
-            <div class="col-sm-6 float-right">
-              <button class="btn btn-block btn-info active" type="button" aria-pressed="true" id="clickGenerateEN" value="clickGenerateEN" (click)="GenerateEN();">Generate</button>
+            <div class="col-sm-6 float-right" id="_generate">
+              <button class="btn btn-block btn-info active" type="button" aria-pressed="true" id="generate" value="generate" (click)="Generate();">Generate</button>
             </div>
-
-          </div>
-          <h6>Total Vehicles: <span class="badge badge-success" id="total-vehicles"></span></h6>
-          <div class="table-full-width table-responsive">
-            <table class="table" id="assetStatus">
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>
-                      <a (click)="test()" style="color:#458FD2;">XE3338X</a>
-                    </strong>
-                    <br>PIE, Singapore<br>
-                  </td>
-                <tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </tab>
@@ -130,7 +118,7 @@
   </app-aside>
 </div>
 <app-footer>
-  <span><a href="https://track-asia.com/">TRACK</a> &copy; 2020 Acecom Technologies Pte. Ltd.</span>
+  <span><a href="https://track-asia.com/" target="_blank">TRACK</a> &copy; 2020 Acecom Technologies Pte. Ltd.</span>
   <span class="ml-auto"></span>
   <i class="far fa-clock hidden-xs">&nbsp;</i> <div class="show-fixed pull-right pad-rgt hidden-xs" id="clockbox" title="" style="display: inline-block;">{{ time | date: 'hh:mm:ss a' }}</div>
 </app-footer>

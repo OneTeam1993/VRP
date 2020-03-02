@@ -7,6 +7,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { TrackingComponent } from './tracking.component';
 import { TrackingRoutingModule } from './tracking-routing.module';
+import { DataTablesModule } from 'angular-datatables';
+
 
 
 @NgModule({
@@ -16,7 +18,8 @@ import { TrackingRoutingModule } from './tracking-routing.module';
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
-    TrackingRoutingModule
+    TrackingRoutingModule,
+    DataTablesModule
   ],
   declarations: [TrackingComponent]
 })

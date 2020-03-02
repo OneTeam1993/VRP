@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
-import 'moment/locale/en-SG';
+import 'moment/locale/en-gb';
 import { ConstantsService } from '../../common/services/constants.service';
 import axios from "axios";
+import { RouterEvent, Router } from '@angular/router';
+import { Location } from "@angular/common";
 
+declare var $: any;
 
 declare const google: any;
 declare const StyledMarker: any;
@@ -17,8 +20,16 @@ declare const MarkerWithLabel: any;
 })
 
 export class TrackingComponent implements OnInit {
+  route: string;
+  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
 
-  constructor(private _constant: ConstantsService) {
+    this.router.events.subscribe((event: RouterEvent) => {
+
+      if (location.path() != "") {
+        this.route = location.path();
+      } 
+
+    });
 
   }
 
@@ -39,8 +50,24 @@ export class TrackingComponent implements OnInit {
     $('#panel').hide();
     $('#infobubbleDrawing').hide();
 
+    let base = this._constant.baseAppUrl;
+    let uri = this._constant.uri_track;
+    let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+    let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let role_id = this._constant.getSessionstorageValueRoleID;
     let api_zonetype = this._constant.zonetypeApi;
     let api_post_zones = this._constant.zoneApi;
+    let api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
+    let api_zones = base + uri + 'zoneinfo' + '?ResellerID=' + reseller_id + '&CompanyID=' + company_id;
+
+    //Filter Dropdown
+    $('#_reports').hide();
+    if (role_id >= 3) {
+      $('#_reseller').hide();
+    }
+    if (this.route == '/reports') $('#_reports').show();
+    else $('#_reports').hide();
 
     //var openmarker= [];
     var openmarker = new Array();
@@ -77,10 +104,10 @@ export class TrackingComponent implements OnInit {
     var polygon1 = {};
     var circles = [];
     var poi;
-    var pois = [];
+    var pois = new Array();
     var poiContent;
     var markerLabel;
-    var markerLabels = [];
+    var markerLabels = new Array();
 
     var all_overlays = [];
     var selectedShape;
@@ -101,14 +128,16 @@ export class TrackingComponent implements OnInit {
     var destfrom;
     var destto;
 
-    let api_assets: string;
-    let api_zones: string;
     var assets = [];
 
     var shape = {
       coord: [16, 0, 18, 1, 21, 2, 24, 3, 26, 4, 27, 5, 28, 6, 29, 7, 29, 8, 29, 9, 29, 10, 29, 11, 29, 12, 29, 13, 29, 14, 29, 15, 29, 16, 29, 17, 29, 18, 29, 19, 29, 20, 29, 21, 29, 22, 29, 23, 29, 24, 29, 25, 29, 26, 29, 27, 29, 28, 28, 29, 3, 29, 2, 28, 2, 27, 1, 26, 1, 25, 1, 24, 0, 23, 0, 22, 0, 21, 0, 20, 0, 19, 0, 18, 0, 17, 0, 16, 0, 15, 0, 14, 0, 13, 0, 12, 0, 11, 0, 10, 0, 9, 0, 8, 0, 7, 1, 6, 2, 5, 2, 4, 3, 3, 5, 2, 6, 1, 8, 0, 16, 0],
       type: 'poly'
     };
+
+
+    //===================Timer=================================================//
+    var assetMarkerInterval;
 
     //===================================STYLED MARKER========================//
 
@@ -161,8 +190,6 @@ export class TrackingComponent implements OnInit {
     };
 
     //================================INIT==================================//
-
-    var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(1.3521, 103.8198);
     for (var type in google.maps.MapTypeId) {
       this._constant.mapTypeIds.push(google.maps.MapTypeId[type]);
@@ -195,38 +222,18 @@ export class TrackingComponent implements OnInit {
       scaleControl: true,
       overviewMapControl: true
     };
-    var heatmapOptions = {
-      zoom: 12,
-      center: latlng,
-      panControl: false,
-      zoomControl: false,
-      zoomControlOptions:
-      {
-        position: google.maps.ControlPosition.LEFT_TOP
-      },
-      mapTypeControl: false,
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-      streetViewControl: false,
-      streetViewControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_BOTTOM
-      },
-      fullscreenControl: true,
-      fullscreenControlOptions:
-      {
-        position: google.maps.ControlPosition.TOP_LEFT
-      },
-      scaleControl: false,
-      overviewMapControl: false
-    };
 
     var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('panel'));
     Layers();
-    api_assets = this._constant.getAssets();
-    api_zones = this._constant.getZones();
-
+   
     setZones(handleZones, api_zones);
-    setMarkers(updateAssets, api_assets);
+    setMarkers(updateAssets, api_assets, this.route);
+
+    google.maps.event.addListener(map, 'mousemove', function (event) {
+      document.getElementById('coordinates-panel').innerHTML =
+        event.latLng.lat() + ', ' + event.latLng.lng();
+    });
 
     //==================================DRAWING==========================================//
     var polyOptions = {
@@ -573,8 +580,8 @@ export class TrackingComponent implements OnInit {
 
     //================================AUTOREFRESH========================================//
 
-    setInterval(() => {
-      setMarkers(updateAssets, api_assets);
+    assetMarkerInterval = setInterval(() => {
+      setMarkers(updateAssets, api_assets, this.route);
     }, 10000);
 
     //=====================================CONVERSION========================================//
@@ -777,9 +784,7 @@ export class TrackingComponent implements OnInit {
             pathCoordinates = [];
             polygonCoordinates.push(polygon);
 
-
             polygon.setMap(map);
-
 
             // Add a listener for the click event.
             google.maps.event.addListener(polygon, 'click', showArrays);
@@ -807,16 +812,16 @@ export class TrackingComponent implements OnInit {
           var perimeterPOI = zones[i].Perimeter.split(",");
           var latLngPOI = new google.maps.LatLng(parseFloat(perimeterPOI[0]), parseFloat(perimeterPOI[1]));
 
-          poi = new google.maps.Marker({
-            map: map,
-            position: latLngPOI,
-            draggable: false,
-            zoneID: zoneID,
-            icon: imageUrl,
-            title: name
-          });
+          //poi = new google.maps.Marker({
+          //  map: map,
+          //  position: latLngPOI,
+          //  draggable: false,
+          //  zoneID: zoneID,
+          //  icon: imageUrl,
+          //  title: name
+          //});
 
-          pois.push(poi);
+          //pois.push(poi);
 
           markerLabel = new MarkerWithLabel({
             position: latLngPOI,
@@ -977,11 +982,9 @@ export class TrackingComponent implements OnInit {
       var infoBubble = new google.maps.InfoWindow({
         content: poiContent
       });
-
       infoWindowListLabel.push(infoBubble);
 
       markerLabel.addListener('click', function () {
-
         infoBubble.open(markerLabel.get('map'), markerLabel);
       });
 
@@ -1065,7 +1068,7 @@ export class TrackingComponent implements OnInit {
             "data": form
           }
 
-          $.ajax(settings).done(function (response) {
+          $.ajax(settings).done(function (response: any) {
             var obj = JSON.parse(response);
 
             var onemap_api = 'https://developers.onemap.sg/privateapi/commonsvc/revgeocode?location=' + finalString + '&token=' + obj.access_token;
@@ -1319,12 +1322,12 @@ export class TrackingComponent implements OnInit {
 
     //=====================================MARKERS=============================================//
 
-    function setMarkers(callback: any, api_assets: string) {
+    function setMarkers(callback: any, api_assets: string, route: string) {
 
       axios.get(api_assets)
         .then(function (response) {
           //console.log(response);
-          callback(response.data);
+          callback(response.data, route);
         })
         .catch(function (error) {
           console.log(error);
@@ -1332,7 +1335,7 @@ export class TrackingComponent implements OnInit {
 
     }
 
-    function updateAssets(data) {
+    function updateAssets(data, route) {
 
       //first start
       var move = 0;
@@ -1387,7 +1390,6 @@ export class TrackingComponent implements OnInit {
             var d = new Date();
             var timestamp2 = moment.utc(d).local().format("DD MMM YYYY");
             var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
-            $('#load-assets').append($('<option></option>').val(id).html(vechs));
 
             let vehicleImg: string;
             let markerCategory: string;
@@ -1606,6 +1608,7 @@ export class TrackingComponent implements OnInit {
               markers[i].setIcon(icon);
 
               if (paramtitle == vechs) {
+                markers[i].id = id;
                 markers[i].content = assetContent;
                 markers[i].address = address;
                 markers[i].timestamp = timestamp;
@@ -1614,7 +1617,7 @@ export class TrackingComponent implements OnInit {
                 markers[i].fix = fix;
                 markers[i].tag = tag;
                 markers[i].speed = speed;
-                markers[i].cat_img = vehicleImg;
+                markers[i].CZ = vehicleImg;
                 markers[i].driver = driverName;
 
                 if ($('#assetInfo').val() != null || $('#assetInfo').val() != undefined) {
@@ -1623,6 +1626,7 @@ export class TrackingComponent implements OnInit {
                 //map.panTo(marker.getPosition());
               }
               else {
+                markers[i].id = id;
                 markers[i].content = assetContent;
                 markers[i].address = address;
                 markers[i].timestamp = timestamp;
@@ -1659,82 +1663,58 @@ export class TrackingComponent implements OnInit {
         firstData = false;
       }
 
-      var outputDiv = document.getElementById('assetStatus');
+      if (route == "/tracking") {
+        var outputDiv = document.getElementById('assetStatus');
+        if (outputDiv) {
+          for (k = 0; k < markers.length; k++) {
 
-      for (k = 0; k < markers.length; k++) {
+            if (markers[k] != undefined || markers[k]) {
 
-        if (markers[k] != undefined || markers[k]) {
+              outputDiv.innerHTML += "<tr>"
+                //+ "<td>"
+                //+ "<img class='vehicle-img' src='" + markers[k].cat_img + "'/>"
+                //+ "</td>"
+                + "<td>"
+                //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
+                + "<strong><a style='color:#458FD2;'>" + markers[k].title + '</a></strong>'
+                + "</td>"
+                + "<td>"
+                //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
+                + "<strong><a style='color:#458FD2;'>" + markers[k].address + "<br>"
+                + "</td>"
+                + "<td>"
+                + markers[k].timestamp
+                + "</td>"
+                + "<td>"
+                + markers[k].speed
+                + "</td>"
+                + "<td>"
+                + markers[k].driver
+                + "</td>"
+                + "<td>"
+                + gpsStatus(markers[k].gps, markers[k].timestamp)
+                + "</td>"
+                + "<td>"
+                + gprsStatus(markers[k].gprs, markers[k].timestamp)
+                + "</td>"
+                + "</tr>"
+                + "<hr style='border: 1px solid #FFFFFF !important'>";
+            }
 
-          outputDiv.innerHTML += "<tr class='white-space'>"
-            + "<td colspan='8'>"
-            + "</td>"
-            + "</tr>"
-            //===================================================================//
-            + "<tr class='border-b'>"
-            + "<th colspan='2'>"
-            //+ "<p><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a>' + "</p>"
-            + "<p><a href='javascript:google.maps.event.trigger(markers[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a>' + "</p>"
-            + "</th>"
-            + "<th colspan='2' class='signal'><p data-toggle='tooltip' data-placement='left'>"
-            + "<p data-toggle='tooltip' data-placement='left'>"
-            + gpsStatus(markers[k].gps, markers[k].timestamp)
-            + "&nbsp;" + gprsStatus(markers[k].gprs, markers[k].timestamp)
-            + "</p>"
-            + "</th>"
-            + "</tr>"
-            //===================================================================//
-            + "<tr class='pt'>"
-            + "<td colspan='2'>"
-            + "<p class='overview-add'><i class='fa fa-mobile-alt'></i><span class='align-t'>" + markers[k].tag + "</span></p>"
-            + "</td>"
-            + "<td colspan='2' rowspan='3' class='img-tb'>"
-            + "<img src='" + markers[k].cat_img + "' class='img-fluid img-thumbnail' style='height:75px; width:75px;'/>"
-            + "</td>"
-            + "</tr>"
-            //===================================================================//  
-            + "<tr>"
-            + "<td colspan='2'>"
-            + "<p class='overview-add'><i class='fa fa-map-marker-alt'></i><span class='align-t'>" + markers[k].address + "</span></p>"
-            + "</td>"
-            + "</tr>"
-            //===================================================================//  
-            + "<tr>"
-            + "<td colspan='2'>"
-            + "<p><i class='fas fa-user-circle'></i>" + markers[k].driver + "</p>"
-            + "</td>"
-            + "</tr>"
-            //===================================================================//  
-            + "<tr>"
-            + "<td colspan='2'>"
-            + "<p><i class='far fa-calendar-alt'></i>" + markers[k].timestamp + "</p>"
-            + "</td>"
-            + "<td>"
-            + statusFormatter(markers[k].engine, markers[k].timestamp)
-            + "</td>"
-            + "<td class='overview-speed'>"
-            + "<p>" + speedFormatter(markers[k].speed) + "</p>"
-            + "</td>"
-            + "</tr>";
+          }
 
+          //document.getElementById('total-vehicles').innerHTML = data.length;
+          document.getElementById('getMove').innerHTML = move.toString();
+          document.getElementById('getIdle').innerHTML = idle.toString();
+          document.getElementById('getStop').innerHTML = stop.toString();
+          document.getElementById('getDown').innerHTML = down.toString();
+          //document.getElementById('getGPS').innerHTML = nogps.toString();
+          //document.getElementById('getGPRS').innerHTML = nogprs.toString();
         }
 
       }
 
-      //if (marker) openmarker = findMarker(marker.position);
 
-      document.getElementById('total-vehicles').innerHTML = data.length;
-      document.getElementById('getMove').innerHTML = move.toString();
-      document.getElementById('getIdle').innerHTML = idle.toString();
-      document.getElementById('getStop').innerHTML = stop.toString();
-      document.getElementById('getDown').innerHTML = down.toString();
-      //document.getElementById('getGPS').innerHTML = nogps.toString();
-      //document.getElementById('getGPRS').innerHTML = nogprs.toString();
-
-      //$("#assetStatus tr").click(function () {
-      //  $(this).addClass('selected').siblings().removeClass('selected');
-      //  var value = $(this).val();
-      //  alert(value);
-      //});
 
 
     }
@@ -1751,6 +1731,7 @@ export class TrackingComponent implements OnInit {
     function setInfoBubble(param: any) {
 
       var newMarker = new google.maps.Marker({
+        id: param.id,
         map: param.map,
         position: param.position,
         title: param.title,
@@ -2117,7 +2098,156 @@ export class TrackingComponent implements OnInit {
       return "<p class='" + labelColor + "'>" + text + "</p>";
     }
 
+    function ClearResellerFilter() {
+
+      // Loop through markers and set map to null for each
+      for (var i = 0; i < markers.length; i++) {
+        if (markers[i]) markers[i].setMap(null);
+      }
+
+      // Reset the markers array
+      markers = [];
+
+      for (var i = 0; i < styleMakers.length; i++) {
+        if (styleMakers[i]) styleMakers[i].setMap(null);
+      }
+      styleMakers = [];
+
+      for (var i = 0; i < infoBoxList.length; i++) {
+
+        if (infoBoxList[i]) infoBoxList[i].close();
+      }
+
+      // Reset the markers array
+      infoBoxList = [];
+
+    }
+
+    function ClearZoneFilter() {
+
+      for (var i = 0; i < polygonCoordinates.length; i++) {
+        polygonCoordinates[i].setMap(null);
+      }
+
+      for (var i = 0; i < circleCoordinates.length; i++) {
+        circleCoordinates[i].setMap(null);
+      }
+
+      for (var i = 0; i < pois.length; i++) {
+        pois[i].setMap(null);
+      }
+        pois = [];
+
+      for (var i = 0; i < infoWindowList.length; i++) {
+        infoWindowList[i].close();
+      }
+        infoWindowList = [];
+
+      for (var i = 0; i < markerLabels.length; i++) {
+        markerLabels[i].setMap(null);
+      }
+        markerLabels = [];
+
+      for (var i = 0; i < all_overlays.length; i++) {
+        all_overlays[i].overlay.setMap(null);
+      }
+        all_overlays = [];
+
+      for (var i = 0; i < recmarkers.length; i++) {
+        recmarkers[i].setMap(null);
+      }
+        recmarkers = [];
+
+      // To show:
+      drawingManager.setOptions({
+        drawingControl: true
+      });
+
+    }
+
+    //=====================================OnChange==========================================//
+
+    $('.SelectResellerFilter').on('change', function () {
+      clearInterval(assetMarkerInterval);
+      ClearResellerFilter();
+      ClearZoneFilter();
+    });
+
+    
+    $('.SelectCompanyFilter').change({ route: this.route }, function (event) {
+      
+      clearInterval(assetMarkerInterval);
+      ClearResellerFilter();
+      ClearZoneFilter();
+      //get new api
+      let api_zones_filter = getZonesFilter(role_id, base, uri, reseller_id);
+      let api_assets_filter = getAssetsFilter(role_id, base, uri, user_id, reseller_id);
+      //recreate
+      setZones(handleZones, api_zones_filter);
+      //resume
+      setMarkers(updateAssets, api_assets_filter, event.data.route);
+      assetMarkerInterval = setInterval(() => {
+        setMarkers(updateAssets, api_assets_filter, event.data.route);
+      }, 10000);
+    });
+
+    $('.SelectAssetFilter').on('change', function () {
+
+      var selected = $(this).find("option:selected").val();
+
+      for (k = 0; k < markers.length; k++) {
+        marker = markers[k];
+
+        if (markers[k]) {
+          // If is same assets or assets not picked
+          if (marker.id == selected) {
+            google.maps.event.trigger(markers[k], "click");
+          }
+        }
+
+
+      }
+
+    }); // end of on change
+
+
+
+    //====================================GET API WITH PARAM=================================//
+
+    function getZonesFilter(role_id: Number, base: string, uri: string, reseller_id: Number) {
+
+      let url: string;
+      if (role_id == 1) {
+        url = base + uri + 'zoneinfo' + '?ResellerID=' + $('#load-reseller').val() + '&CompanyID=' + $('#load-company').val();
+      } else if (role_id == 2) {
+
+        url = base + uri + 'zoneinfo' + '?ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+
+      } else if (role_id >= 3) {
+
+        url = base + uri + 'zoneinfo' + '?ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+      }
+      return url;
+    }
+
+    function getAssetsFilter(role_id: Number, base: string, uri: string, user_id: Number, reseller_id: Number) {
+
+      let url: string;
+      if (role_id == 1) {
+        url = base + uri + 'assetinfo' + '?UserID=' + '&ResellerID=' + $('#load-reseller').val() + '&CompanyID=' + $('#load-company').val();
+      } else if (role_id == 2) {
+
+        url = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+
+      } else if (role_id >= 3) {
+
+        url = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+      }
+      return url;
+    }
+
     //====================================END===============================================//
 
   } //end of ngOnInit
+
 }

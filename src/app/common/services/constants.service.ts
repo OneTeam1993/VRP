@@ -3,6 +3,8 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
+declare var $: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,7 +74,7 @@ export class ConstantsService {
     let url: string;
 
     if (this.getSessionstorageValueRoleID == 1) {
-      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueDefaultReseller;
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
     } else if (this.getSessionstorageValueRoleID == 2) {
       url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
     } else if (this.getSessionstorageValueRoleID >= 3) {
@@ -82,11 +84,23 @@ export class ConstantsService {
     return url;
   }
 
+  getCompaniesFilter() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + $('#load-reseller').val() + "&ResellerID=" + $('#load-company').val();
+    }
+    return url;
+  }
+
   getAssets() {
     let url: string;
     if (this.getSessionstorageValueRoleID == 1) {
       if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-        url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + this.getSessionstorageValueDefaultReseller + '&CompanyID=' + this.getSessionstorageValueDefaultCompany;
+        url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
       } else {
         url = '';
       }
@@ -98,7 +112,25 @@ export class ConstantsService {
 
       url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
     }
+    return url;
+  }
 
+  getAssetsFilter() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
+        url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + $('#load-reseller').val() + '&CompanyID=' + $('#load-company').val();
+      } else {
+        url = '';
+      }
+    } else if (this.getSessionstorageValueRoleID == 2) {
+
+      url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + $('#load-company').val();
+
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+
+      url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + $('#load-company').val();
+    }
     return url;
   }
 
@@ -107,7 +139,7 @@ export class ConstantsService {
     if (this.getSessionstorageValueRoleID == 1) {
 
       if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-        url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueDefaultReseller + '&CompanyID=' + this.getSessionstorageValueDefaultCompany;
+        url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
       } else {
         url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
       }

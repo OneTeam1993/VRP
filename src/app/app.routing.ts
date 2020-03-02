@@ -16,7 +16,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: "",
+    path: '',
     component: LoginComponent,
   },
   {
@@ -73,6 +73,10 @@ export const routes: Routes = [
       {
         path: 'tracking',
         loadChildren: () => import('./views/tracking/tracking.module').then(m => m.TrackingModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./views/reports/reports.module').then(m => m.ReportsModule)
       },
       {
         path: 'icons',

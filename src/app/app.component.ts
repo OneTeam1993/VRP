@@ -22,17 +22,15 @@ export class AppComponent implements OnInit {
 
       if (location.path() != "") {
         this.route = location.path();
-        console.log(this.route)
+        //console.log(this.route)
         if (this.route == "/login") {
           this.loading = false;
         } else {
-          if (this.route == "/dashboard") $("#asset_list").hide();
-          else if (this.route == "/tracking") $("#asset_list").show(); 
           this.navigationInterceptor(event);
         }
       } else {
         this.loading = false;
-        console.log(this.route)
+        //console.log(this.route)
       }
 
     });
@@ -73,4 +71,5 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
   }
+
 }

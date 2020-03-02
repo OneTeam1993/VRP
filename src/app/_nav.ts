@@ -19,6 +19,11 @@ export const navItems: INavData[] = [
       text: 'Live Map'
     }
   },
+  {
+    name: 'Reports',
+    url: '/reports',
+    icon: 'icon-chart',
+  },
   //{
   //  title: true,
   //  name: 'Theme'

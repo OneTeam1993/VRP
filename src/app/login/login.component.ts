@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit {
       }, 2000);
     };
 
-    //Pageload
-    let getUsername: string = sessionStorage.getItem("SetUsername");
-    let getPassword: string = sessionStorage.getItem("SetPassword");
-
   }
 
   submit() {
@@ -91,7 +87,6 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("setSessionstorageValueTrackVersion", this._constant.GetTrackVersion);
         sessionStorage.setItem("setSessionstorageValueUserID", GetUserID.toString());
         sessionStorage.setItem("setSessionstorageValueCompany", GetCompany);
-        sessionStorage.setItem("setSessionstorageValueCompanyID", GetCompanyID.toString());
         sessionStorage.setItem("setSessionstorageValueEmail", GetEmail);
         sessionStorage.setItem("setSessionstorageValuePhone", GetPhone);
         sessionStorage.setItem("setSessionstorageValueName", GetName);
@@ -100,12 +95,18 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("setSessionstorageValueUser", GetUser);
         sessionStorage.setItem("setSessionstorageValueUserLoginDate", GetCurrentDate);
         sessionStorage.setItem("setSessionstorageValueUserNotifications", GetNotifications);
-        sessionStorage.setItem("setSessionstorageValueUserResellerID", GetResellerID.toString());
         sessionStorage.setItem("setSessionstorageValueUserResellerDesc", GetResellerDesc);
         sessionStorage.setItem("setSessionstorageValueUserImage", GetImage);
         sessionStorage.setItem("setSessionstorageValueUserImageFill", GetImageFill);
         sessionStorage.setItem("setSessionstorageValueUserAssets", GetUserAssets);
 
+        if (GetRoleID == 1) {
+          Number(sessionStorage.setItem('setSessionstorageValueCompanyID', String(14)));
+          Number(sessionStorage.setItem("setSessionstorageValueUserResellerID", String(4)));
+        } else {
+          sessionStorage.setItem("setSessionstorageValueCompanyID", GetCompanyID.toString());
+          sessionStorage.setItem("setSessionstorageValueUserResellerID", GetResellerID.toString());
+        }
 
         var getUserLogin = {
           AssetID: 0,
