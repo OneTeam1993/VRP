@@ -1,0 +1,69 @@
+<div class="animated fadeIn">
+  <div class="weather-card">
+  <div class="row" *ngFor="let weather of weathers; let index=index">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <i class="fa fa-cloud fa-3x"></i>
+          </div>
+          <div class="text-value">Today's Forecast</div>
+          <div>{{weather.forecast}}</div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <i class="fa fa-cloud fa-3x"></i>
+          </div>
+          <div class="text-value">Humidity</div>
+          <div>Low {{weather.humidity.low}}</div>
+          <div>High {{weather.humidity.high}}</div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <i class="fa fa-cloud fa-3x"></i>
+          </div>
+          <div class="text-value">Temperature</div>
+          <div>Low {{weather.temperature.low}}</div>
+          <div>High {{weather.temperature.high}}</div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right">
+            <i class="fa fa-cloud fa-3x"></i>
+          </div>
+          <div class="text-value">Wind - {{weather.wind.direction}}</div>
+          <div>Low {{weather.wind.speed.low}}</div>
+          <div>High {{weather.wind.speed.high}}</div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    </div>
+  </div><!--/.row-->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">{{weather_label}}</span>
+        </div>
+        <div class="card-body">
+          <div class="col-sm-12">
+            <div style="height:380px;" id="weather-map"></div>
+          </div>       
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

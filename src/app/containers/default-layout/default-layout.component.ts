@@ -5,6 +5,7 @@ import 'moment/locale/en-gb';
 import { ConstantsService } from '../../common/services/constants.service';
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
+import { EventEmitterService } from '../../views/reports/event-emitter.service';
 
 declare var $: any; 
 
@@ -31,7 +32,7 @@ export class DefaultLayoutComponent implements OnInit {
   api_reports = this._constant.getReports();
   time = new Date();
   route: string;
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private eventEmitterService: EventEmitterService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
@@ -76,7 +77,8 @@ export class DefaultLayoutComponent implements OnInit {
     $.getJSON(this.api_assets, function (data) {
       $('#load-assets').append($('<option></option>').val(0).html('---'));
       $.each(data, function (index, item) {
-        $('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
+        //$('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
+        $('#load-assets').append($('<option></option>').val(item.Name).html(item.Name));
       });
       $('.selectpicker').selectpicker('refresh');
     });
@@ -84,17 +86,53 @@ export class DefaultLayoutComponent implements OnInit {
     $.getJSON(this.api_reports, function (data) {
       $('#load-report').append($('<option></option>').val(0).html('---'));
       $.each(data, function (index, item) {
-        $('#load-report').append($('<option></option>').val(item.CompanyID).html(item.Name));
+        $('#load-report').append($('<option></option>').val(item.ReportID).html(item.Name));
       });
       $('.selectpicker').selectpicker('refresh');
     });
 
+    var getReport = $("#load-report").val();
+
+    if (getReport == 3) {
+      $('#_speed').hide();
+    } else {
+      $('#_speed').show();
+    }
+
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d1 = new Date();
+    d1.setHours(0);
+    d1.setMinutes(0);
+    var dateFrom = moment(d1).format(dateFormat);
+
+    var d2 = new Date();
+    d2.setDate(d2.getDate() + 1);
+    d2.setHours(0);
+    d2.setMinutes(0);
+    var dateTo = moment(d2).format(dateFormat);
+
+    $('#dateFrom').datetimepicker({
+      format: 'd-M-Y H:i A',
+      theme: 'dark',
+      lang: 'en',
+      value: dateFrom
+    });
+
+    $('#dateTo').datetimepicker({
+      format: 'd-M-Y H:i A',
+      theme: 'dark',
+      lang: 'en',
+      value: dateTo
+    });
 
     //Timer 
     setInterval(() => {
       this.time = new Date();
     }, 1000);
 
+  }
+    generate() {
+    this.eventEmitterService.sendClickEvent();
   }
   onOptionsSelectedReseller(value: any) {
     Number(sessionStorage.setItem('setSessionstorageValueUserResellerID', value));

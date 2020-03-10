@@ -295,7 +295,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header\n  [navbarBrandRouterLink]=\"['/dashboard']\"\n  [fixed]=\"true\"\n  [navbarBrandFull]=\"{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}\"\n  [navbarBrandMinimized]=\"{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}\"\n  [sidebarToggler]=\"'lg'\"\n  [asideMenuToggler]=\"'lg'\">\n  <ul class=\"nav navbar-nav d-md-down-none\">\n    <li class=\"nav-item px-3\">\n      <a class=\"nav-link\" href=\"#\">Dashboard</a>\n    </li>\n    <li class=\"nav-item px-3\">\n      <a class=\"nav-link\" href=\"#\">Users</a>\n    </li>\n    <li class=\"nav-item px-3\">\n      <a class=\"nav-link\" href=\"#\">Settings</a>\n    </li>\n  </ul>\n  <ul class=\"nav navbar-nav ml-auto\">\n    <li class=\"nav-item d-md-down-none\">\n      <a class=\"nav-link\" href=\"#\"><i class=\"icon-bell\"></i><span class=\"badge badge-pill badge-danger\">5</span></a>\n    </li>\n    <li class=\"nav-item d-md-down-none\">\n      <a class=\"nav-link\" href=\"#\"><i class=\"icon-list\"></i></a>\n    </li>\n    <li class=\"nav-item d-md-down-none\">\n      <a class=\"nav-link\" href=\"#\"><i class=\"icon-location-pin\"></i></a>\n    </li>\n    <li class=\"nav-item dropdown\" dropdown placement=\"bottom right\">\n      <a class=\"nav-link\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\" dropdownToggle (click)=\"false\">\n        <img src=\"assets/img/avatars/6.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\"/>\n      </a>\n      <div class=\"dropdown-menu dropdown-menu-right\" *dropdownMenu aria-labelledby=\"simple-dropdown\">\n        <div class=\"dropdown-header text-center\"><strong>Account</strong></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-bell-o\"></i> Updates<span class=\"badge badge-info\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-envelope-o\"></i> Messages<span class=\"badge badge-success\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-tasks\"></i> Tasks<span class=\"badge badge-danger\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-comments\"></i> Comment<span class=\"badge badge-warning\">42</span></a>\n        <div class=\"dropdown-header text-center\"><strong>Settings</strong></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-user\"></i> Profile</a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-wrench\"></i> Setting</a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-usd\"></i> Payments<span class=\"badge badge-dark\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-file\"></i> Projects<span class=\"badge badge-primary\">42</span></a>\n        <div class=\"divider\"></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-shield\"></i> Lock account</a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-lock\"></i> Logout</a>\n      </div>\n    </li>\n  </ul>\n</app-header>\n<div class=\"app-body\">\n  <app-sidebar #appSidebar [fixed]=\"true\" [display]=\"'lg'\" [minimized]=\"sidebarMinimized\" (minimizedChange)=\"toggleMinimize($event)\">\n    <app-sidebar-nav [navItems]=\"navItems\" [perfectScrollbar] [disabled]=\"appSidebar.minimized\"></app-sidebar-nav>\n    <app-sidebar-minimizer></app-sidebar-minimizer>\n  </app-sidebar>\n  <!-- Main content -->\n  <main class=\"main\">\n    <!-- Breadcrumb -->\n    <!-- breaking change 'cui-breadcrumb' -->\n    <cui-breadcrumb>\n      <!-- Breadcrumb Menu-->\n      <li class=\"breadcrumb-menu d-md-down-none\">\n        <div class=\"btn-group\" role=\"group\" aria-label=\"Button group with nested dropdown\">\n          <a class=\"btn\" href=\"#\"><i class=\"icon-speech\"></i></a>\n          <a class=\"btn\" [routerLink]=\"['/dashboard']\"><i class=\"icon-graph\"></i> &nbsp;Dashboard</a>\n          <a class=\"btn\" href=\"#\"><i class=\"icon-settings\"></i> &nbsp;Settings</a>\n        </div>\n      </li>\n    </cui-breadcrumb>\n    <!-- deprecation warning for 'app-breadcrumb' -->\n    <!--<ol class=\"breadcrumb\">-->\n      <!--<app-breadcrumb></app-breadcrumb>-->\n      <!--&lt;!&ndash; Breadcrumb Menu&ndash;&gt;-->\n      <!--<li class=\"breadcrumb-menu d-md-down-none\">-->\n        <!--<div class=\"btn-group\" role=\"group\" aria-label=\"Button group with nested dropdown\">-->\n          <!--<a class=\"btn\" href=\"#\"><i class=\"icon-speech\"></i></a>-->\n          <!--<a class=\"btn\" [routerLink]=\"['/dashboard']\"><i class=\"icon-graph\"></i> &nbsp;Dashboard</a>-->\n          <!--<a class=\"btn\" href=\"#\"><i class=\"icon-settings\"></i> &nbsp;Settings</a>-->\n        <!--</div>-->\n      <!--</li>-->\n    <!--</ol>-->\n    <div class=\"container-fluid\">\n      <router-outlet></router-outlet>\n    </div><!-- /.container-fluid -->\n  </main>\n  <app-aside [fixed]=\"true\" [display]=\"false\" [ngClass]=\"'test'\">\n    <tabset>\n      <tab>\n        <ng-template tabHeading><i class=\"icon-list\"></i></ng-template>\n        <div class=\"list-group list-group-accent\">\n          <div class=\"list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small\">Today</div>\n          <div class=\"list-group-item list-group-item-accent-warning list-group-item-divider\">\n            <div class=\"avatar float-right\">\n              <img class=\"img-avatar\" src=\"assets/img/avatars/7.jpg\" alt=\"admin@bootstrapmaster.com\">\n            </div>\n            <div>Meeting with\n              <strong>Lucas</strong>\n            </div>\n            <small class=\"text-muted mr-3\">\n              <i class=\"icon-calendar\"></i>  1 - 3pm</small>\n            <small class=\"text-muted\">\n              <i class=\"icon-location-pin\"></i>  Palo Alto, CA</small>\n          </div>\n          <div class=\"list-group-item list-group-item-accent-info\">\n            <div class=\"avatar float-right\">\n              <img class=\"img-avatar\" src=\"assets/img/avatars/4.jpg\" alt=\"admin@bootstrapmaster.com\">\n            </div>\n            <div>Skype with\n              <strong>Megan</strong>\n            </div>\n            <small class=\"text-muted mr-3\">\n              <i class=\"icon-calendar\"></i>  4 - 5pm</small>\n            <small class=\"text-muted\">\n              <i class=\"icon-social-skype\"></i>  On-line</small>\n          </div>\n          <div class=\"list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small\">Tomorrow</div>\n          <div class=\"list-group-item list-group-item-accent-danger list-group-item-divider\">\n            <div>New UI Project -\n              <strong>deadline</strong>\n            </div>\n            <small class=\"text-muted mr-3\">\n              <i class=\"icon-calendar\"></i>  10 - 11pm</small>\n            <small class=\"text-muted\">\n              <i class=\"icon-home\"></i>  creativeLabs HQ</small>\n            <div class=\"avatars-stack mt-2\">\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/2.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/3.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/4.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/5.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/6.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n            </div>\n          </div>\n          <div class=\"list-group-item list-group-item-accent-success list-group-item-divider\">\n            <div>\n              <strong>#10 Startups.Garden</strong> Meetup</div>\n            <small class=\"text-muted mr-3\">\n              <i class=\"icon-calendar\"></i>  1 - 3pm</small>\n            <small class=\"text-muted\">\n              <i class=\"icon-location-pin\"></i>  Palo Alto, CA</small>\n          </div>\n          <div class=\"list-group-item list-group-item-accent-primary list-group-item-divider\">\n            <div>\n              <strong>Team meeting</strong>\n            </div>\n            <small class=\"text-muted mr-3\">\n              <i class=\"icon-calendar\"></i>  4 - 6pm</small>\n            <small class=\"text-muted\">\n              <i class=\"icon-home\"></i>  creativeLabs HQ</small>\n            <div class=\"avatars-stack mt-2\">\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/2.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/3.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/4.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/5.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/6.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/7.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n              <div class=\"avatar avatar-xs\">\n                <img class=\"img-avatar\" src=\"assets/img/avatars/8.jpg\" alt=\"admin@bootstrapmaster.com\">\n              </div>\n            </div>\n          </div>\n        </div>\n      </tab>\n      <tab>\n        <ng-template tabHeading><i class=\"icon-speech\"></i></ng-template>\n        <div class=\"p-3\">\n          <div class=\"message\">\n            <div class=\"py-3 pb-5 mr-3 float-left\">\n              <div class=\"avatar\">\n                <img src=\"assets/img/avatars/7.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                <span class=\"avatar-status badge-success\"></span>\n              </div>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lukasz Holeczek</small>\n              <small class=\"text-muted float-right mt-1\">1:52 PM</small>\n            </div>\n            <div class=\"text-truncate font-weight-bold\">Lorem ipsum dolor sit amet</div>\n            <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>\n          </div>\n          <hr>\n          <div class=\"message\">\n            <div class=\"py-3 pb-5 mr-3 float-left\">\n              <div class=\"avatar\">\n                <img src=\"assets/img/avatars/7.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                <span class=\"avatar-status badge-success\"></span>\n              </div>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lukasz Holeczek</small>\n              <small class=\"text-muted float-right mt-1\">1:52 PM</small>\n            </div>\n            <div class=\"text-truncate font-weight-bold\">Lorem ipsum dolor sit amet</div>\n            <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>\n          </div>\n          <hr>\n          <div class=\"message\">\n            <div class=\"py-3 pb-5 mr-3 float-left\">\n              <div class=\"avatar\">\n                <img src=\"assets/img/avatars/7.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                <span class=\"avatar-status badge-success\"></span>\n              </div>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lukasz Holeczek</small>\n              <small class=\"text-muted float-right mt-1\">1:52 PM</small>\n            </div>\n            <div class=\"text-truncate font-weight-bold\">Lorem ipsum dolor sit amet</div>\n            <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>\n          </div>\n          <hr>\n          <div class=\"message\">\n            <div class=\"py-3 pb-5 mr-3 float-left\">\n              <div class=\"avatar\">\n                <img src=\"assets/img/avatars/7.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                <span class=\"avatar-status badge-success\"></span>\n              </div>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lukasz Holeczek</small>\n              <small class=\"text-muted float-right mt-1\">1:52 PM</small>\n            </div>\n            <div class=\"text-truncate font-weight-bold\">Lorem ipsum dolor sit amet</div>\n            <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>\n          </div>\n          <hr>\n          <div class=\"message\">\n            <div class=\"py-3 pb-5 mr-3 float-left\">\n              <div class=\"avatar\">\n                <img src=\"assets/img/avatars/7.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                <span class=\"avatar-status badge-success\"></span>\n              </div>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lukasz Holeczek</small>\n              <small class=\"text-muted float-right mt-1\">1:52 PM</small>\n            </div>\n            <div class=\"text-truncate font-weight-bold\">Lorem ipsum dolor sit amet</div>\n            <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>\n          </div>\n        </div>\n      </tab>\n      <tab>\n        <ng-template tabHeading><i class=\"icon-settings\"></i></ng-template>\n        <div class=\"p-3\">\n          <h6>Settings</h6>\n          <div class=\"aside-options\">\n            <div class=\"clearfix mt-4\">\n              <small><b>Option 1</b></small>\n              <label class=\"switch switch-label switch-pill switch-success switch-sm float-right\">\n                <input type=\"checkbox\" class=\"switch-input\" checked>\n                <span class=\"switch-slider\" data-checked=\"On\" data-unchecked=\"Off\"></span>\n              </label>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>\n            </div>\n          </div>\n          <div class=\"aside-options\">\n            <div class=\"clearfix mt-3\">\n              <small><b>Option 2</b></small>\n              <label class=\"switch switch-label switch-pill switch-success switch-sm float-right\">\n                <input type=\"checkbox\" class=\"switch-input\">\n                <span class=\"switch-slider\" data-checked=\"On\" data-unchecked=\"Off\"></span>\n              </label>\n            </div>\n            <div>\n              <small class=\"text-muted\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>\n            </div>\n          </div>\n          <div class=\"aside-options\">\n            <div class=\"clearfix mt-3\">\n              <small><b>Option 3</b></small>\n              <label class=\"switch switch-label switch-pill switch-success switch-sm float-right\">\n                <input type=\"checkbox\" class=\"switch-input\">\n                <span class=\"switch-slider\" data-checked=\"On\" data-unchecked=\"Off\"></span>\n                <span class=\"switch-handle\"></span>\n              </label>\n            </div>\n          </div>\n          <div class=\"aside-options\">\n            <div class=\"clearfix mt-3\">\n              <small><b>Option 4</b></small>\n              <label class=\"switch switch-label switch-pill switch-success switch-sm float-right\">\n                <input type=\"checkbox\" class=\"switch-input\" checked>\n                <span class=\"switch-slider\" data-checked=\"On\" data-unchecked=\"Off\"></span>\n              </label>\n            </div>\n          </div>\n          <hr>\n          <h6>System Utilization</h6>\n          <div class=\"text-uppercase mb-1 mt-4\"><small><b>CPU Usage</b></small></div>\n          <div class=\"progress progress-xs\">\n            <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 25%\" aria-valuenow=\"25\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n          <small class=\"text-muted\">348 Processes. 1/4 Cores.</small>\n          <div class=\"text-uppercase mb-1 mt-2\"><small><b>Memory Usage</b></small></div>\n          <div class=\"progress progress-xs\">\n            <div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 70%\" aria-valuenow=\"70\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n          <small class=\"text-muted\">11444GB/16384MB</small>\n          <div class=\"text-uppercase mb-1 mt-2\"><small><b>SSD 1 Usage</b></small></div>\n          <div class=\"progress progress-xs\">\n            <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 95%\" aria-valuenow=\"95\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n          <small class=\"text-muted\">243GB/256GB</small>\n          <div class=\"text-uppercase mb-1 mt-2\"><small><b>SSD 2 Usage</b></small></div>\n          <div class=\"progress progress-xs\">\n            <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 10%\" aria-valuenow=\"10\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n          <small class=\"text-muted\">25GB/256GB</small>\n        </div>\n      </tab>\n    </tabset>\n  </app-aside>\n</div>\n<app-footer>\n  <span><a href=\"https://coreui.io\">CoreUI</a> &copy; 2018 creativeLabs.</span>\n  <span class=\"ml-auto\">Powered by <a href=\"https://coreui.io/angular\">CoreUI for Angular</a></span>\n</app-footer>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header\n  [navbarBrandRouterLink]=\"['/dashboard']\"\n  [fixed]=\"true\"\n  [navbarBrandFull]=\"{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'TRACK VRP'}\"\n  [navbarBrandMinimized]=\"{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'TRACK VRP'}\"\n  [sidebarToggler]=\"'lg'\"\n  [asideMenuToggler]=\"'lg'\">\n  <ul class=\"nav navbar-nav d-md-down-none\">\r\n    <li class=\"nav-item px-3\">\r\n      {{company}}\r\n    </li>\r\n    <!--<li class=\"nav-item px-3\">\r\n    <a class=\"nav-link\" href=\"#\">Dashboard</a>\r\n  </li>\r\n  <li class=\"nav-item px-3\">\r\n    <a class=\"nav-link\" href=\"#\">Users</a>\r\n  </li>\r\n  <li class=\"nav-item px-3\">\r\n    <a class=\"nav-link\" href=\"#\">Settings</a>\r\n  </li>-->\r\n  </ul>\n  <ul class=\"nav navbar-nav ml-auto\">\n    <li class=\"nav-item d-md-down-none\">\n      <a class=\"nav-link\" href=\"#\"><i class=\"icon-bell\"></i><span class=\"badge badge-pill badge-danger\">5</span></a>\n    </li>\n    <li class=\"nav-item dropdown\" dropdown placement=\"bottom right\">\n      <a class=\"nav-link\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\" dropdownToggle (click)=\"false\">\n        {{username}}<img id=\"showProfile\" src=\"assets/img/avatars/1.png\" class=\"img-avatar\"/>\n      </a>\n      <div class=\"dropdown-menu dropdown-menu-right\" *dropdownMenu aria-labelledby=\"simple-dropdown\">\n        <div class=\"dropdown-header text-center\"><strong>Account</strong></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-bell-o\"></i> Updates<span class=\"badge badge-info\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-envelope-o\"></i> Messages<span class=\"badge badge-success\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-tasks\"></i> Tasks<span class=\"badge badge-danger\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-comments\"></i> Comment<span class=\"badge badge-warning\">42</span></a>\n        <div class=\"dropdown-header text-center\"><strong>Settings</strong></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-user\"></i> Profile</a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-wrench\"></i> Setting</a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-usd\"></i> Payments<span class=\"badge badge-dark\">42</span></a>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-file\"></i> Projects<span class=\"badge badge-primary\">42</span></a>\n        <div class=\"divider\"></div>\n        <a class=\"dropdown-item\" href=\"#\"><i class=\"fa fa-shield\"></i> Lock account</a>\n        <a class=\"dropdown-item\" (click)=\"logOut()\"><i class=\"fa fa-lock\"></i> Logout</a>\n      </div>\n    </li>\n  </ul>\n</app-header>\n<div class=\"app-body\">\n  <app-sidebar #appSidebar [fixed]=\"true\" [display]=\"'lg'\" [minimized]=\"sidebarMinimized\" (minimizedChange)=\"toggleMinimize($event)\">\n    <app-sidebar-nav [navItems]=\"navItems\" [perfectScrollbar] [disabled]=\"appSidebar.minimized\"></app-sidebar-nav>\n    <app-sidebar-minimizer></app-sidebar-minimizer>\n  </app-sidebar>\n  <!-- Main content -->\n  <main class=\"main\">\n    <!-- Breadcrumb -->\n    <!-- breaking change 'cui-breadcrumb' -->\n    <cui-breadcrumb>\n      <!-- Breadcrumb Menu-->\n      <li class=\"breadcrumb-menu d-md-down-none\">\n        <div class=\"btn-group\" role=\"group\" aria-label=\"Button group with nested dropdown\">\n          <a class=\"btn\" href=\"#\"><i class=\"icon-speech\"></i></a>\n          <a class=\"btn\" [routerLink]=\"['/dashboard']\"><i class=\"icon-graph\"></i> &nbsp;Dashboard</a>\n          <a class=\"btn\" href=\"#\"><i class=\"icon-settings\"></i> &nbsp;Settings</a>\n        </div>\n      </li>\n    </cui-breadcrumb>\n    <!-- deprecation warning for 'app-breadcrumb' -->\n    <!--<ol class=\"breadcrumb\">-->\n      <!--<app-breadcrumb></app-breadcrumb>-->\n      <!--&lt;!&ndash; Breadcrumb Menu&ndash;&gt;-->\n      <!--<li class=\"breadcrumb-menu d-md-down-none\">-->\n        <!--<div class=\"btn-group\" role=\"group\" aria-label=\"Button group with nested dropdown\">-->\n          <!--<a class=\"btn\" href=\"#\"><i class=\"icon-speech\"></i></a>-->\n          <!--<a class=\"btn\" [routerLink]=\"['/dashboard']\"><i class=\"icon-graph\"></i> &nbsp;Dashboard</a>-->\n          <!--<a class=\"btn\" href=\"#\"><i class=\"icon-settings\"></i> &nbsp;Settings</a>-->\n        <!--</div>-->\n      <!--</li>-->\n    <!--</ol>-->\n    <div class=\"container-fluid\">\n      <router-outlet></router-outlet>\n    </div><!-- /.container-fluid -->\n  </main>\n  <app-aside [fixed]=\"true\" [display]=\"false\" [ngClass]=\"'test'\">\n    <tabset id=\"asset_list\">\n      <tab class=\"tab_aside\">\r\n        <ng-template tabHeading><i class=\"fa fa-filter\"></i></ng-template>\r\n        <div class=\"p-3\">\r\n          <div class=\"row\">\r\n            <div class=\"form-group col-sm-12\" id=\"_reseller\">\r\n              <label>Reseller</label>\r\n              <select #resellerSelect (change)='onOptionsSelectedReseller(resellerSelect.value)' class=\"selectpicker SelectResellerFilter\" data-live-search=\"true\" data-width=\"100%\" id=\"load-reseller\"></select>\r\n            </div>\r\n            <div class=\"form-group col-sm-12\">\r\n              <label>Company</label>\r\n              <select #companySelect (change)='onOptionsSelectedCompany(companySelect.value)' class=\"selectpicker SelectCompanyFilter\" data-live-search=\"true\" data-width=\"100%\" id=\"load-company\"></select>\r\n            </div>\r\n            <div class=\"form-group col-sm-12\">\r\n              <label>Vehicles</label>\r\n              <select #assetSelect (change)='onOptionsSelectedAsset(assetSelect.value)' class=\"selectpicker SelectAssetFilter\" data-live-search=\"true\" data-width=\"100%\" id=\"load-assets\"></select>\r\n            </div>\r\n\t\t      \t<div id=\"_reports\" class=\"report-content\">\n              <div class=\"form-group col-sm-12 padding-c\">\n                <label>Report</label>\n                <select class=\"selectpicker\" data-live-search=\"true\" data-width=\"100%\" id=\"load-report\"></select>\n              </div>\n              <div class=\"form-group col-sm-12 padding-c\" id=\"_dateFrom\">\n                <input id=\"dateFrom\" type=\"text\" class=\"form-control\" placeholder=\"DD-MMM-YYYY HH:MM\">\n              </div>\n              <div class=\"form-group col-sm-12 padding-c\" id=\"_dateTo\">\n                <input id=\"dateTo\" type=\"text\" class=\"form-control\" placeholder=\"DD-MMM-YYYY HH:MM\">\n              </div>\n              <div class=\"form-group col-sm-12 padding-c\" id=\"_speed\">\n                <label>Speed</label>\n                <input id=\"speedLimit\" type=\"text\" class=\"form-control\" placeholder=\"\" name=\"speedLimit\" data-by-field=\"speedLimit\">\n              </div>\n              <div class=\"col-sm-6 float-right padding-c\" id=\"_generate\">\n                <button class=\"btn btn-block btn-info active\" type=\"button\" aria-pressed=\"true\" id=\"generate\" value=\"generate\" (click)=\"generate();\">Generate</button>\n              </div>\n            </div>\n\r\n          </div>\r\n        </div>\r\n      </tab>\n    </tabset>\n  </app-aside>\n</div>\n<app-footer>\r\n  <span><a href=\"https://track-asia.com/\" target=\"_blank\">TRACK</a> &copy; 2020 Acecom Technologies Pte. Ltd.</span>\r\n  <span class=\"ml-auto\"></span>\r\n  <i class=\"far fa-clock hidden-xs\">&nbsp;</i> <div class=\"show-fixed pull-right pad-rgt hidden-xs\" id=\"clockbox\" title=\"\" style=\"display: inline-block;\">{{ time | date: 'dd-MMM-yyyy, hh:mm:ss a' }}</div>\r\n</app-footer>\n");
 
 /***/ }),
 
@@ -639,29 +639,51 @@ var navItems = [
         name: 'Dashboard',
         url: '/dashboard',
         icon: 'icon-speedometer',
+    },
+    {
+        name: 'Tracking',
+        url: '/tracking',
+        icon: 'icon-map',
         badge: {
             variant: 'info',
-            text: 'NEW'
-        }
+            text: 'Live Map'
+        },
+        children: [
+            {
+                name: 'Fleet',
+                url: '/tracking',
+                icon: 'icon-map'
+            },
+            {
+                name: 'Traffic',
+                url: '/tracking/traffic',
+                icon: 'icon-puzzle'
+            },
+        ]
     },
     {
-        title: true,
-        name: 'Theme'
+        name: 'Reports',
+        url: '/reports',
+        icon: 'icon-chart',
     },
-    {
-        name: 'Colors',
-        url: '/theme/colors',
-        icon: 'icon-drop'
-    },
-    {
-        name: 'Typography',
-        url: '/theme/typography',
-        icon: 'icon-pencil'
-    },
-    {
-        title: true,
-        name: 'Components'
-    },
+    //{
+    //  title: true,
+    //  name: 'Theme'
+    //},
+    //{
+    //  name: 'Colors',
+    //  url: '/theme/colors',
+    //  icon: 'icon-drop'
+    //},
+    //{
+    //  name: 'Typography',
+    //  url: '/theme/typography',
+    //  icon: 'icon-pencil'
+    //},
+    //{
+    //  title: true,
+    //  name: 'Components'
+    //},
     {
         name: 'Base',
         url: '/base',
@@ -729,158 +751,6 @@ var navItems = [
             }
         ]
     },
-    {
-        name: 'Buttons',
-        url: '/buttons',
-        icon: 'icon-cursor',
-        children: [
-            {
-                name: 'Buttons',
-                url: '/buttons/buttons',
-                icon: 'icon-cursor'
-            },
-            {
-                name: 'Dropdowns',
-                url: '/buttons/dropdowns',
-                icon: 'icon-cursor'
-            },
-            {
-                name: 'Brand Buttons',
-                url: '/buttons/brand-buttons',
-                icon: 'icon-cursor'
-            }
-        ]
-    },
-    {
-        name: 'Charts',
-        url: '/charts',
-        icon: 'icon-pie-chart'
-    },
-    {
-        name: 'Icons',
-        url: '/icons',
-        icon: 'icon-star',
-        children: [
-            {
-                name: 'CoreUI Icons',
-                url: '/icons/coreui-icons',
-                icon: 'icon-star',
-                badge: {
-                    variant: 'success',
-                    text: 'NEW'
-                }
-            },
-            {
-                name: 'Flags',
-                url: '/icons/flags',
-                icon: 'icon-star'
-            },
-            {
-                name: 'Font Awesome',
-                url: '/icons/font-awesome',
-                icon: 'icon-star',
-                badge: {
-                    variant: 'secondary',
-                    text: '4.7'
-                }
-            },
-            {
-                name: 'Simple Line Icons',
-                url: '/icons/simple-line-icons',
-                icon: 'icon-star'
-            }
-        ]
-    },
-    {
-        name: 'Notifications',
-        url: '/notifications',
-        icon: 'icon-bell',
-        children: [
-            {
-                name: 'Alerts',
-                url: '/notifications/alerts',
-                icon: 'icon-bell'
-            },
-            {
-                name: 'Badges',
-                url: '/notifications/badges',
-                icon: 'icon-bell'
-            },
-            {
-                name: 'Modals',
-                url: '/notifications/modals',
-                icon: 'icon-bell'
-            }
-        ]
-    },
-    {
-        name: 'Widgets',
-        url: '/widgets',
-        icon: 'icon-calculator',
-        badge: {
-            variant: 'info',
-            text: 'NEW'
-        }
-    },
-    {
-        divider: true
-    },
-    {
-        title: true,
-        name: 'Extras',
-    },
-    {
-        name: 'Pages',
-        url: '/pages',
-        icon: 'icon-star',
-        children: [
-            {
-                name: 'Login',
-                url: '/login',
-                icon: 'icon-star'
-            },
-            {
-                name: 'Register',
-                url: '/register',
-                icon: 'icon-star'
-            },
-            {
-                name: 'Error 404',
-                url: '/404',
-                icon: 'icon-star'
-            },
-            {
-                name: 'Error 500',
-                url: '/500',
-                icon: 'icon-star'
-            }
-        ]
-    },
-    {
-        name: 'Disabled',
-        url: '/dashboard',
-        icon: 'icon-ban',
-        badge: {
-            variant: 'secondary',
-            text: 'NEW'
-        },
-        attributes: { disabled: true },
-    },
-    {
-        name: 'Download CoreUI',
-        url: 'http://coreui.io/angular/',
-        icon: 'icon-cloud-download',
-        class: 'mt-auto',
-        variant: 'success',
-        attributes: { target: '_blank', rel: 'noopener' }
-    },
-    {
-        name: 'Try CoreUI PRO',
-        url: 'http://coreui.io/pro/angular/',
-        icon: 'icon-layers',
-        variant: 'danger',
-        attributes: { target: '_blank', rel: 'noopener' }
-    }
 ];
 
 
@@ -899,14 +769,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+
 
 
 
 console.log("jQuery version: " + $.fn.jquery);
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router) {
+    function AppComponent(location, router) {
+        var _this = this;
         this.router = router;
+        this.title = "TRACK";
+        this.loading = true;
+        this.router.events.subscribe(function (event) {
+            if (location.path() != "") {
+                _this.route = location.path();
+                //console.log(this.route)
+                if (_this.route == "/login") {
+                    _this.loading = false;
+                }
+                else {
+                    _this.navigationInterceptor(event);
+                }
+            }
+            else {
+                _this.loading = false;
+                //console.log(this.route)
+            }
+        });
     }
+    // Shows and hides the loading spinner during RouterEvent changes
+    AppComponent.prototype.navigationInterceptor = function (event) {
+        var _this = this;
+        if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationStart"]) {
+            this.loading = true;
+        }
+        if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+            setTimeout(function () {
+                _this.loading = false;
+            }, 800);
+        }
+        // Set loading state to false in both of the below events to hide the spinner in case a request fails
+        if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationCancel"]) {
+            setTimeout(function () {
+                _this.loading = false;
+            }, 800);
+        }
+        if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationError"]) {
+            setTimeout(function () {
+                _this.loading = false;
+            }, 800);
+        }
+    };
     AppComponent.prototype.ngOnInit = function () {
         this.router.events.subscribe(function (evt) {
             if (!(evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"])) {
@@ -916,15 +830,17 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent.ctorParameters = function () { return [
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
     ]; };
     AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             // tslint:disable-next-line
             selector: 'body',
+            //template: '<div *ngIf="loading" class="lds-roller"><div></div><div></div><div></div><div></div></div><div *ngIf="!loading"><router-outlet></router-outlet></div>',
             template: '<router-outlet></router-outlet>'
         }),
-        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -962,6 +878,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-bootstrap/dropdown */ "./node_modules/ngx-bootstrap/dropdown/fesm5/ngx-bootstrap-dropdown.js");
 /* harmony import */ var ngx_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-bootstrap/tabs */ "./node_modules/ngx-bootstrap/tabs/fesm5/ngx-bootstrap-tabs.js");
 /* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
+/* harmony import */ var _views_reports_event_emitter_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/reports/event-emitter.service */ "./src/app/views/reports/event-emitter.service.ts");
 
 
 
@@ -987,6 +904,7 @@ var APP_CONTAINERS = [
 // Import routing module
 
 // Import 3rd party components
+
 
 
 
@@ -1022,7 +940,8 @@ var AppModule = /** @class */ (function () {
             providers: [{
                     provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["LocationStrategy"],
                     useClass: _angular_common__WEBPACK_IMPORTED_MODULE_3__["HashLocationStrategy"]
-                }],
+                },
+                _views_reports_event_emitter_service__WEBPACK_IMPORTED_MODULE_19__["EventEmitterService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
         })
     ], AppModule);
@@ -1068,7 +987,7 @@ var routes = [
         pathMatch: 'full',
     },
     {
-        path: "",
+        path: '',
         component: _login_login_component__WEBPACK_IMPORTED_MODULE_6__["LoginComponent"],
     },
     {
@@ -1108,11 +1027,11 @@ var routes = [
         children: [
             {
                 path: 'base',
-                loadChildren: function () { return Promise.all(/*! import() | views-base-base-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module"), __webpack_require__.e("default~views-base-base-module~views-notifications-notifications-module"), __webpack_require__.e("default~views-base-base-module~views-dashboard-dashboard-module"), __webpack_require__.e("views-base-base-module")]).then(__webpack_require__.bind(null, /*! ./views/base/base.module */ "./src/app/views/base/base.module.ts")).then(function (m) { return m.BaseModule; }); }
+                loadChildren: function () { return Promise.all(/*! import() | views-base-base-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module~views-t~c1ac4783"), __webpack_require__.e("default~views-base-base-module~views-dashboard-dashboard-module~views-tracking-tracking-module"), __webpack_require__.e("default~views-base-base-module~views-notifications-notifications-module"), __webpack_require__.e("default~views-base-base-module~views-tracking-tracking-module"), __webpack_require__.e("views-base-base-module")]).then(__webpack_require__.bind(null, /*! ./views/base/base.module */ "./src/app/views/base/base.module.ts")).then(function (m) { return m.BaseModule; }); }
             },
             {
                 path: 'buttons',
-                loadChildren: function () { return Promise.all(/*! import() | views-buttons-buttons-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module"), __webpack_require__.e("views-buttons-buttons-module")]).then(__webpack_require__.bind(null, /*! ./views/buttons/buttons.module */ "./src/app/views/buttons/buttons.module.ts")).then(function (m) { return m.ButtonsModule; }); }
+                loadChildren: function () { return Promise.all(/*! import() | views-buttons-buttons-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module~views-t~c1ac4783"), __webpack_require__.e("views-buttons-buttons-module")]).then(__webpack_require__.bind(null, /*! ./views/buttons/buttons.module */ "./src/app/views/buttons/buttons.module.ts")).then(function (m) { return m.ButtonsModule; }); }
             },
             {
                 path: 'charts',
@@ -1120,7 +1039,15 @@ var routes = [
             },
             {
                 path: 'dashboard',
-                loadChildren: function () { return Promise.all(/*! import() | views-dashboard-dashboard-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module"), __webpack_require__.e("default~views-dashboard-dashboard-module~views-theme-theme-module~views-widgets-widgets-module"), __webpack_require__.e("default~views-base-base-module~views-dashboard-dashboard-module"), __webpack_require__.e("common"), __webpack_require__.e("views-dashboard-dashboard-module")]).then(__webpack_require__.bind(null, /*! ./views/dashboard/dashboard.module */ "./src/app/views/dashboard/dashboard.module.ts")).then(function (m) { return m.DashboardModule; }); }
+                loadChildren: function () { return Promise.all(/*! import() | views-dashboard-dashboard-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module~views-t~c1ac4783"), __webpack_require__.e("default~views-base-base-module~views-dashboard-dashboard-module~views-tracking-tracking-module"), __webpack_require__.e("default~views-dashboard-dashboard-module~views-tracking-tracking-module"), __webpack_require__.e("views-dashboard-dashboard-module")]).then(__webpack_require__.bind(null, /*! ./views/dashboard/dashboard.module */ "./src/app/views/dashboard/dashboard.module.ts")).then(function (m) { return m.DashboardModule; }); }
+            },
+            {
+                path: 'tracking',
+                loadChildren: function () { return Promise.all(/*! import() | views-tracking-tracking-module */[__webpack_require__.e("default~views-base-base-module~views-buttons-buttons-module~views-dashboard-dashboard-module~views-t~c1ac4783"), __webpack_require__.e("default~views-base-base-module~views-dashboard-dashboard-module~views-tracking-tracking-module"), __webpack_require__.e("default~views-dashboard-dashboard-module~views-tracking-tracking-module"), __webpack_require__.e("default~views-base-base-module~views-tracking-tracking-module"), __webpack_require__.e("views-tracking-tracking-module")]).then(__webpack_require__.bind(null, /*! ./views/tracking/tracking.module */ "./src/app/views/tracking/tracking.module.ts")).then(function (m) { return m.TrackingModule; }); }
+            },
+            {
+                path: 'reports',
+                loadChildren: function () { return __webpack_require__.e(/*! import() | views-reports-reports-module */ "views-reports-reports-module").then(__webpack_require__.bind(null, /*! ./views/reports/reports.module */ "./src/app/views/reports/reports.module.ts")).then(function (m) { return m.ReportsModule; }); }
             },
             {
                 path: 'icons',
@@ -1132,11 +1059,11 @@ var routes = [
             },
             {
                 path: 'theme',
-                loadChildren: function () { return Promise.all(/*! import() | views-theme-theme-module */[__webpack_require__.e("default~views-dashboard-dashboard-module~views-theme-theme-module~views-widgets-widgets-module"), __webpack_require__.e("views-theme-theme-module")]).then(__webpack_require__.bind(null, /*! ./views/theme/theme.module */ "./src/app/views/theme/theme.module.ts")).then(function (m) { return m.ThemeModule; }); }
+                loadChildren: function () { return Promise.all(/*! import() | views-theme-theme-module */[__webpack_require__.e("default~views-theme-theme-module~views-widgets-widgets-module"), __webpack_require__.e("views-theme-theme-module")]).then(__webpack_require__.bind(null, /*! ./views/theme/theme.module */ "./src/app/views/theme/theme.module.ts")).then(function (m) { return m.ThemeModule; }); }
             },
             {
                 path: 'widgets',
-                loadChildren: function () { return Promise.all(/*! import() | views-widgets-widgets-module */[__webpack_require__.e("default~views-dashboard-dashboard-module~views-theme-theme-module~views-widgets-widgets-module"), __webpack_require__.e("common"), __webpack_require__.e("views-widgets-widgets-module")]).then(__webpack_require__.bind(null, /*! ./views/widgets/widgets.module */ "./src/app/views/widgets/widgets.module.ts")).then(function (m) { return m.WidgetsModule; }); }
+                loadChildren: function () { return Promise.all(/*! import() | views-widgets-widgets-module */[__webpack_require__.e("default~views-theme-theme-module~views-widgets-widgets-module"), __webpack_require__.e("views-widgets-widgets-module")]).then(__webpack_require__.bind(null, /*! ./views/widgets/widgets.module */ "./src/app/views/widgets/widgets.module.ts")).then(function (m) { return m.WidgetsModule; }); }
             }
         ]
     },
@@ -1171,8 +1098,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-
 
 
 
@@ -1189,12 +1114,17 @@ var ConstantsService = /** @class */ (function () {
         this.uri_track = 'tracksgwebapi/api/';
         this.resellerApi = this.baseAppUrl + this.uri_track + "resellerinfo/";
         this.companyApi = this.baseAppUrl + this.uri_track + "companyinfo/";
+        this.assetApi = this.baseAppUrl + this.uri_track + "assetinfo/";
         this.zoneApi = this.baseAppUrl + this.uri_track + "zoneinfo/";
         this.zonetypeApi = this.baseAppUrl + this.uri_track + "zonetypeinfo/";
+        this.reportApi = this.baseAppUrl + this.uri_track + "reportinfo/";
         this.param_put = "?id=";
         this.url_login = 'https://app.track-asia.com/tracksgwebapi/api/login';
         this.url_events = 'https://app.track-asia.com/tracksgwebapi/api/eventinfo';
         this.GetTrackVersion = "sg";
+        this.trafficApi = 'https://api.data.gov.sg/v1/transport/traffic-images';
+        this.carkparkApi = 'https://api.data.gov.sg/v1/transport/carpark-availability';
+        this.traffic_incidentApi = 'http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents';
         //Declare Session Storage
         this.getSessionstorageValueLanguage = sessionStorage.getItem('setSessionstorageValueLanguage');
         this.getSessionstorageValueUserID = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
@@ -1208,7 +1138,7 @@ var ConstantsService = /** @class */ (function () {
         this.getSessionstorageValueAssetReseller = sessionStorage.getItem('setSessionstorageValueAssetReseller');
         this.getSessionstorageValueAssetCompany = sessionStorage.getItem('setSessionstorageValueAssetCompany');
         this.getSessionstorageValueDefaultReseller = 4;
-        this.getSessionstorageValueDefaultCompany = 2;
+        this.getSessionstorageValueDefaultCompany = 14;
         //Markers
         this.mapTypeIds = ["Mapbox", "OSM", "PublicTransport", "OneMap"];
         this.shape = {
@@ -1216,35 +1146,78 @@ var ConstantsService = /** @class */ (function () {
             type: 'poly'
         };
     }
-    // Error handling
-    ConstantsService.prototype.errorHandl = function (error) {
-        var errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-            // Get client-side error
-            errorMessage = error.error.message;
+    ConstantsService.prototype.getResellers = function () {
+        var url;
+        if (this.getSessionstorageValueRoleID == 1) {
+            url = this.resellerApi;
         }
-        else {
-            // Get server-side error
-            errorMessage = "Error Code: " + error.status + "\nMessage: " + error.message;
+        else if (this.getSessionstorageValueRoleID == 2) {
+            url = this.baseAppUrl + this.uri_track + 'resellerinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
         }
-        console.log(errorMessage);
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(errorMessage);
+        else if (this.getSessionstorageValueRoleID >= 3) {
+            url = '';
+        }
+        return url;
+    };
+    ConstantsService.prototype.getCompanies = function () {
+        var url;
+        if (this.getSessionstorageValueRoleID == 1) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
+        }
+        else if (this.getSessionstorageValueRoleID == 2) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
+        }
+        else if (this.getSessionstorageValueRoleID >= 3) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
+        }
+        return url;
+    };
+    ConstantsService.prototype.getCompaniesFilter = function () {
+        var url;
+        if (this.getSessionstorageValueRoleID == 1) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+        }
+        else if (this.getSessionstorageValueRoleID == 2) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+        }
+        else if (this.getSessionstorageValueRoleID >= 3) {
+            url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + $('#load-reseller').val() + "&ResellerID=" + $('#load-company').val();
+        }
+        return url;
     };
     ConstantsService.prototype.getAssets = function () {
         var url;
         if (this.getSessionstorageValueRoleID == 1) {
             if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-                url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + '&ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+                url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
             }
             else {
                 url = '';
             }
         }
         else if (this.getSessionstorageValueRoleID == 2) {
-            url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+            url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
         }
         else if (this.getSessionstorageValueRoleID >= 3) {
-            url = 'https://app.track-asia.com/tracksgwebapi/api/assetinfo?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+            url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+        }
+        return url;
+    };
+    ConstantsService.prototype.getAssetsFilter = function () {
+        var url;
+        if (this.getSessionstorageValueRoleID == 1) {
+            if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
+                url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + '&ResellerID=' + $('#load-reseller').val() + '&CompanyID=' + $('#load-company').val();
+            }
+            else {
+                url = '';
+            }
+        }
+        else if (this.getSessionstorageValueRoleID == 2) {
+            url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + $('#load-company').val();
+        }
+        else if (this.getSessionstorageValueRoleID >= 3) {
+            url = this.baseAppUrl + this.uri_track + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + $('#load-company').val();
         }
         return url;
     };
@@ -1252,19 +1225,22 @@ var ConstantsService = /** @class */ (function () {
         var url;
         if (this.getSessionstorageValueRoleID == 1) {
             if (this.getSessionstorageValueDefaultReseller > 0 && this.getSessionstorageValueDefaultCompany > 0) {
-                url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + sessionStorage.getItem('setSessionstorageValueDefaultReseller') + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+                url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
             }
             else {
-                url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+                url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueAssetReseller + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
             }
         }
         else if (this.getSessionstorageValueRoleID == 2) {
-            url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
+            url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + sessionStorage.getItem('setSessionstorageValueDefaultCompany');
         }
         else if (this.getSessionstorageValueRoleID >= 3) {
-            url = 'https://app.track-asia.com/tracksgwebapi/api/zoneinfo?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+            url = this.baseAppUrl + this.uri_track + 'zoneinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
         }
-        //alert('test: ' + url)
+        return url;
+    };
+    ConstantsService.prototype.getReports = function () {
+        var url = this.reportApi;
         return url;
     };
     ConstantsService.ctorParameters = function () { return [
@@ -1283,6 +1259,19 @@ var ConstantsService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/containers/default-layout/default-layout.component.css":
+/*!************************************************************************!*\
+  !*** ./src/app/containers/default-layout/default-layout.component.css ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (".report-content {\n  width: 100%;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29udGFpbmVycy9kZWZhdWx0LWxheW91dC9kZWZhdWx0LWxheW91dC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztBQUNiIiwiZmlsZSI6InNyYy9hcHAvY29udGFpbmVycy9kZWZhdWx0LWxheW91dC9kZWZhdWx0LWxheW91dC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnJlcG9ydC1jb250ZW50IHtcbiAgd2lkdGg6IDEwMCU7XG59XG4iXX0= */");
+
+/***/ }),
+
 /***/ "./src/app/containers/default-layout/default-layout.component.ts":
 /*!***********************************************************************!*\
   !*** ./src/app/containers/default-layout/default-layout.component.ts ***!
@@ -1296,22 +1285,227 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../_nav */ "./src/app/_nav.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment/locale/en-gb */ "./node_modules/moment/locale/en-gb.js");
+/* harmony import */ var moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _common_services_constants_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/services/constants.service */ "./src/app/common/services/constants.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _views_reports_event_emitter_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../views/reports/event-emitter.service */ "./src/app/views/reports/event-emitter.service.ts");
+
+
+
+
+
+
 
 
 
 var DefaultLayoutComponent = /** @class */ (function () {
-    function DefaultLayoutComponent() {
+    function DefaultLayoutComponent(_constant, location, router, eventEmitterService) {
+        var _this = this;
+        this._constant = _constant;
+        this.router = router;
+        this.eventEmitterService = eventEmitterService;
         this.sidebarMinimized = false;
         this.navItems = _nav__WEBPACK_IMPORTED_MODULE_2__["navItems"];
+        this.base = this._constant.baseAppUrl;
+        this.uri = this._constant.uri_track;
+        this.user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+        this.reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+        this.company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+        this.role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
+        this.username = sessionStorage.getItem('setSessionstorageValueUser');
+        this.company = sessionStorage.getItem('setSessionstorageValueCompany');
+        this.api_reseller = this._constant.getResellers();
+        this.api_company = this._constant.getCompanies();
+        this.api_assets = this._constant.getAssets();
+        this.api_reports = this._constant.getReports();
+        this.time = new Date();
+        this.router.events.subscribe(function (event) {
+            if (location.path() != "") {
+                _this.route = location.path();
+            }
+        });
     }
+    DefaultLayoutComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var default_reseller = this._constant.getSessionstorageValueUserResellerID;
+        var default_company = this._constant.getSessionstorageValueCompanyID;
+        $.getJSON(this.api_reseller, function (data) {
+            $.each(data, function (index, item) {
+                if (item.ResellerID == default_reseller) {
+                    $('#load-reseller').append($('<option selected="selected"></option>').val(item.ResellerID).html(item.Name));
+                }
+                else {
+                    $('#load-reseller').append($('<option></option>').val(item.ResellerID).html(item.Name));
+                }
+            });
+            $('.selectpicker').selectpicker('refresh');
+        });
+        $.getJSON(this.api_company, function (data) {
+            if (this.role_id == 1 || this.role_id == 2)
+                $('#load-company').append($('<option></option>').val(0).html('---'));
+            $.each(data, function (index, item) {
+                if (item.CompanyID == default_company) {
+                    $('#load-company').append($('<option selected="selected"></option>').val(item.CompanyID).html(item.Name));
+                }
+                else {
+                    $('#load-company').append($('<option></option>').val(item.CompanyID).html(item.Name));
+                }
+            });
+            $('.selectpicker').selectpicker('refresh');
+        });
+        $.getJSON(this.api_assets, function (data) {
+            $('#load-assets').append($('<option></option>').val(0).html('---'));
+            $.each(data, function (index, item) {
+                //$('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
+                $('#load-assets').append($('<option></option>').val(item.Name).html(item.Name));
+            });
+            $('.selectpicker').selectpicker('refresh');
+        });
+        $.getJSON(this.api_reports, function (data) {
+            $('#load-report').append($('<option></option>').val(0).html('---'));
+            $.each(data, function (index, item) {
+                $('#load-report').append($('<option></option>').val(item.ReportID).html(item.Name));
+            });
+            $('.selectpicker').selectpicker('refresh');
+        });
+        var getReport = $("#load-report").val();
+        if (getReport == 3) {
+            $('#_speed').hide();
+        }
+        else {
+            $('#_speed').show();
+        }
+        var dateFormat = "D-MMM-YYYY HH:mm A";
+        var d1 = new Date();
+        d1.setHours(0);
+        d1.setMinutes(0);
+        var dateFrom = moment__WEBPACK_IMPORTED_MODULE_3__(d1).format(dateFormat);
+        var d2 = new Date();
+        d2.setDate(d2.getDate() + 1);
+        d2.setHours(0);
+        d2.setMinutes(0);
+        var dateTo = moment__WEBPACK_IMPORTED_MODULE_3__(d2).format(dateFormat);
+        $('#dateFrom').datetimepicker({
+            format: 'd-M-Y H:i A',
+            theme: 'dark',
+            lang: 'en',
+            value: dateFrom
+        });
+        $('#dateTo').datetimepicker({
+            format: 'd-M-Y H:i A',
+            theme: 'dark',
+            lang: 'en',
+            value: dateTo
+        });
+        //Timer 
+        setInterval(function () {
+            _this.time = new Date();
+        }, 1000);
+    };
+    DefaultLayoutComponent.prototype.generate = function () {
+        this.eventEmitterService.sendClickEvent();
+    };
+    DefaultLayoutComponent.prototype.onOptionsSelectedReseller = function (value) {
+        Number(sessionStorage.setItem('setSessionstorageValueUserResellerID', value));
+        $("#getMove").hide().html('0').fadeIn('0');
+        $("#getIdle").hide().html('0').fadeIn('0');
+        $("#getStop").hide().html('0').fadeIn('0');
+        $("#getDown").hide().html('0').fadeIn('0');
+        $('#assetStatus').empty(); //table
+        $('#load-company').empty();
+        $('#load-assets').empty();
+        $('#load-company').append($('<option></option>').val(0).html('---'));
+        $.getJSON(this._constant.getCompaniesFilter(), function (data) {
+            $.each(data, function (index, item) {
+                $('#load-company').append($('<option></option>').val(item.CompanyID).html(item.Name));
+            });
+            $('.selectpicker').selectpicker('refresh');
+        });
+        $(".selectpicker").selectpicker('refresh');
+    };
+    DefaultLayoutComponent.prototype.onOptionsSelectedCompany = function (value) {
+        Number(sessionStorage.setItem('setSessionstorageValueCompanyID', value));
+        var selected_reseller = $('#load-reseller').val();
+        var selected_company = $('#load-company').val();
+        var api_assets_filter = getAssetsFilter(this.role_id, this.base, this.uri, selected_reseller, selected_company);
+        function getAssetsFilter(role_id, base, uri, selected_reseller, selected_company) {
+            var url;
+            if (role_id == 1) {
+                url = base + uri + 'assetinfo' + '?UserID=' + '&ResellerID=' + selected_reseller + '&CompanyID=' + selected_company;
+            }
+            else if (role_id == 2) {
+                url = base + uri + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + selected_company;
+            }
+            else if (role_id >= 3) {
+                url = base + uri + 'assetinfo' + '?UserID=' + this.getSessionstorageValueUserID + '&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + selected_company;
+            }
+            return url;
+        }
+        if (value > 0) {
+            $('#assetStatus').empty(); //table
+            $('#load-assets').empty();
+            $.getJSON(api_assets_filter, function (data) {
+                $('#load-assets').append($('<option></option>').val(0).html('---'));
+                $.each(data, function (index, item) {
+                    $('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
+                });
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $(".selectpicker").selectpicker('refresh');
+        }
+        else {
+            $('#load-company').append($('<option></option>').val(0).html('---'));
+            sessionStorage.setItem("setSessionstorageValueDefaultReseller", String(0));
+            sessionStorage.setItem("setSessionstorageValueDefaultCompany", String(0));
+            var getCountMove = 0;
+            var getCountIdle = 0;
+            var getCountStop = 0;
+            var getCountDown = 0;
+            document.getElementById("getMove").innerHTML = getCountMove.toString();
+            document.getElementById("getIdle").innerHTML = getCountIdle.toString();
+            document.getElementById("getStop").innerHTML = getCountStop.toString();
+            document.getElementById("getDown").innerHTML = getCountDown.toString();
+            $('#assetStatus').empty(); //Table
+            $('#load-assets').empty();
+            $(".selectpicker").selectpicker('refresh');
+        }
+    };
+    DefaultLayoutComponent.prototype.onOptionsSelectedAsset = function (value) {
+    };
+    DefaultLayoutComponent.prototype.logOut = function () {
+        sessionStorage.clear();
+        sessionStorage.removeItem("setSessionstorageValuePerimeterLength");
+        sessionStorage.removeItem("setSessionstorageValueIgnition");
+        sessionStorage.removeItem("setSessionstorageValueEngine");
+        sessionStorage.removeItem("setSessionstorageValueCompany");
+        sessionStorage.removeItem("setSessionstorageValueCompanyID");
+        sessionStorage.removeItem("setSessionstorageValueEmail");
+        sessionStorage.removeItem("setSessionstorageValueName");
+        sessionStorage.removeItem("setSessionstorageValueRoleDesc");
+        sessionStorage.removeItem("setSessionstorageValueUser");
+        localStorage.clear();
+        this.router.navigate(['/login']);
+    };
     DefaultLayoutComponent.prototype.toggleMinimize = function (e) {
         this.sidebarMinimized = e;
     };
+    DefaultLayoutComponent.ctorParameters = function () { return [
+        { type: _common_services_constants_service__WEBPACK_IMPORTED_MODULE_5__["ConstantsService"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] },
+        { type: _views_reports_event_emitter_service__WEBPACK_IMPORTED_MODULE_8__["EventEmitterService"] }
+    ]; };
     DefaultLayoutComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-dashboard',
-            template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./default-layout.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/containers/default-layout/default-layout.component.html")).default
-        })
+            template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./default-layout.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/containers/default-layout/default-layout.component.html")).default,
+            styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./default-layout.component.css */ "./src/app/containers/default-layout/default-layout.component.css")).default]
+        }),
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_common_services_constants_service__WEBPACK_IMPORTED_MODULE_5__["ConstantsService"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"], _views_reports_event_emitter_service__WEBPACK_IMPORTED_MODULE_8__["EventEmitterService"]])
     ], DefaultLayoutComponent);
     return DefaultLayoutComponent;
 }());
@@ -1417,9 +1611,6 @@ var LoginComponent = /** @class */ (function () {
             }, 2000);
         }
         ;
-        //Pageload
-        var getUsername = sessionStorage.getItem("SetUsername");
-        var getPassword = sessionStorage.getItem("SetPassword");
     };
     LoginComponent.prototype.submit = function () {
         var _this = this;
@@ -1463,7 +1654,6 @@ var LoginComponent = /** @class */ (function () {
                 sessionStorage.setItem("setSessionstorageValueTrackVersion", _this._constant.GetTrackVersion);
                 sessionStorage.setItem("setSessionstorageValueUserID", GetUserID.toString());
                 sessionStorage.setItem("setSessionstorageValueCompany", GetCompany);
-                sessionStorage.setItem("setSessionstorageValueCompanyID", GetCompanyID.toString());
                 sessionStorage.setItem("setSessionstorageValueEmail", GetEmail);
                 sessionStorage.setItem("setSessionstorageValuePhone", GetPhone);
                 sessionStorage.setItem("setSessionstorageValueName", GetName);
@@ -1472,11 +1662,18 @@ var LoginComponent = /** @class */ (function () {
                 sessionStorage.setItem("setSessionstorageValueUser", GetUser);
                 sessionStorage.setItem("setSessionstorageValueUserLoginDate", GetCurrentDate);
                 sessionStorage.setItem("setSessionstorageValueUserNotifications", GetNotifications);
-                sessionStorage.setItem("setSessionstorageValueUserResellerID", GetResellerID.toString());
                 sessionStorage.setItem("setSessionstorageValueUserResellerDesc", GetResellerDesc);
                 sessionStorage.setItem("setSessionstorageValueUserImage", GetImage);
                 sessionStorage.setItem("setSessionstorageValueUserImageFill", GetImageFill);
                 sessionStorage.setItem("setSessionstorageValueUserAssets", GetUserAssets);
+                if (GetRoleID == 1) {
+                    Number(sessionStorage.setItem('setSessionstorageValueCompanyID', String(14)));
+                    Number(sessionStorage.setItem("setSessionstorageValueUserResellerID", String(4)));
+                }
+                else {
+                    sessionStorage.setItem("setSessionstorageValueCompanyID", GetCompanyID.toString());
+                    sessionStorage.setItem("setSessionstorageValueUserResellerID", GetResellerID.toString());
+                }
                 var getUserLogin = {
                     AssetID: 0,
                     TagID: 0,
@@ -1606,6 +1803,45 @@ var RegisterComponent = /** @class */ (function () {
         Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
     ], RegisterComponent);
     return RegisterComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/views/reports/event-emitter.service.ts":
+/*!********************************************************!*\
+  !*** ./src/app/views/reports/event-emitter.service.ts ***!
+  \********************************************************/
+/*! exports provided: EventEmitterService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventEmitterService", function() { return EventEmitterService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+
+
+var EventEmitterService = /** @class */ (function () {
+    function EventEmitterService() {
+        this.subject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    }
+    EventEmitterService.prototype.sendClickEvent = function () {
+        this.subject.next();
+    };
+    EventEmitterService.prototype.getClickEvent = function () {
+        return this.subject.asObservable();
+    };
+    EventEmitterService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
+    ], EventEmitterService);
+    return EventEmitterService;
 }());
 
 

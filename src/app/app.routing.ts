@@ -78,6 +78,18 @@ export const routes: Routes = [
         path: 'reports',
         loadChildren: () => import('./views/reports/reports.module').then(m => m.ReportsModule)
       },
+      //{
+      //  path: 'users',
+      //  loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
+      //},
+      {
+        path: 'companies',
+        loadChildren: () => import('./views/companies/companies.module').then(m => m.CompaniesModule)
+      },
+      {
+        path: 'reseller',
+        loadChildren: () => import('./views/reseller/reseller.module').then(m => m.ResellerModule)
+      },
       {
         path: 'icons',
         loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)

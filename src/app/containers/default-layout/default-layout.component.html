@@ -25,7 +25,7 @@
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        {{username}}<img id="showProfile" src="assets/img/avatars/1.png" class="img-avatar" alt="admin@bootstrapmaster.com"/>
+        {{username}}<img id="showProfile" src="assets/img/avatars/1.png" class="img-avatar"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Account</strong></div>
@@ -58,7 +58,7 @@
       <!-- Breadcrumb Menu-->
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn" href="#"><i class="icon-speech"></i></a>
+          <a class="btn" [routerLink]="['/tracking']"><i class="fa fa-car"></i> &nbsp;Fleet</a>
           <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
           <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
@@ -98,19 +98,26 @@
               <label>Vehicles</label>
               <select #assetSelect (change)='onOptionsSelectedAsset(assetSelect.value)' class="selectpicker SelectAssetFilter" data-live-search="true" data-width="100%" id="load-assets"></select>
             </div>
-            <div class="form-group col-sm-12" id="_reports">
-              <label>Report</label>
-              <select class="selectpicker" data-live-search="true" data-width="100%" id="load-report"></select>
+		      	<div id="_reports" class="report-content">
+              <div class="form-group col-sm-12 padding-c">
+                <label>Report</label>
+                <select class="selectpicker" data-live-search="true" data-width="100%" id="load-report"></select>
+              </div>
+              <div class="form-group col-sm-12 padding-c" id="_dateFrom">
+                <input id="dateFrom" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-sm-12 padding-c" id="_dateTo">
+                <input id="dateTo" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-sm-12 padding-c" id="_speed">
+                <label>Speed</label>
+                <input id="speedLimit" type="text" class="form-control" placeholder="" name="speedLimit" data-by-field="speedLimit">
+              </div>
+              <div class="col-sm-6 float-right padding-c" id="_generate">
+                <button class="btn btn-block btn-info active" type="button" aria-pressed="true" id="generate" value="generate" (click)="generate();">Generate</button>
+              </div>
             </div>
-            <div class="form-group col-sm-12" id="_dateFrom">
-              <input id="dateFrom" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
-            </div>
-            <div class="form-group col-sm-12" id="_dateTo">
-              <input id="dateTo" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
-            </div>
-            <div class="col-sm-6 float-right" id="_generate">
-              <button class="btn btn-block btn-info active" type="button" aria-pressed="true" id="generate" value="generate" (click)="Generate();">Generate</button>
-            </div>
+
           </div>
         </div>
       </tab>
@@ -120,5 +127,5 @@
 <app-footer>
   <span><a href="https://track-asia.com/" target="_blank">TRACK</a> &copy; 2020 Acecom Technologies Pte. Ltd.</span>
   <span class="ml-auto"></span>
-  <i class="far fa-clock hidden-xs">&nbsp;</i> <div class="show-fixed pull-right pad-rgt hidden-xs" id="clockbox" title="" style="display: inline-block;">{{ time | date: 'hh:mm:ss a' }}</div>
+  <i class="far fa-clock hidden-xs">&nbsp;</i> <div class="show-fixed pull-right pad-rgt hidden-xs" id="clockbox" title="" style="display: inline-block;">{{ time | date: 'dd-MMM-yyyy, hh:mm:ss a' }}</div>
 </app-footer>

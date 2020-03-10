@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
-import 'moment/locale/en-gb';
+import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
 import axios from "axios";
 import { RouterEvent, Router } from '@angular/router';
@@ -313,7 +313,6 @@ export class TrackingComponent implements OnInit {
     google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
 
       polygons.push(polygon);
-
       getCoordinates();
       function getCoordinates() {
         console.log(polygon.getPath().getArray());
@@ -593,6 +592,7 @@ export class TrackingComponent implements OnInit {
     function toRadians(angle) {
       return angle * (Math.PI / 180);
     }
+
     //=====================================ZONES==========================================//
 
     function setZones(callback: any, api_zones: string) {
@@ -1345,6 +1345,7 @@ export class TrackingComponent implements OnInit {
       var nogps = 0;
       var nogprs = 0;
 
+
       var bounds = new google.maps.LatLngBounds();
 
       for (var i = 0, length = data.length; i < length; i++) {
@@ -1386,10 +1387,14 @@ export class TrackingComponent implements OnInit {
             var finaldata = finaldata1.substring(0, 18);
             var getXPosition = data[i].LastPos.PosX;
             var getYPosition = data[i].LastPos.PosY;
-            var timestamp1 = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
+            var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
             var d = new Date();
-            var timestamp2 = moment.utc(d).local().format("DD MMM YYYY");
+            var timestamp2: any = moment.utc(d).local().format("DD MMM YYYY");
+            timestamp2 = Date.parse(timestamp2);
+            timestamp1 = Date.parse(timestamp1);
             var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
+            var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
+            var el = getElapsedTime(elapsedTimestamp);
 
             let vehicleImg: string;
             let markerCategory: string;
@@ -1437,23 +1442,18 @@ export class TrackingComponent implements OnInit {
                 break;
             }
 
-            let assetColor: string;
             let color: string;
 
             if (engine == 'MOVE') {
-              assetColor = "success";
               color = "#5cb85c";
             }
             else if (engine == 'IDLE') {
-              assetColor = "warning";
               color = "#f0ad4e";
             }
             else if (engine == 'STOP' && timestamp2 > timestamp1) {
-              assetColor = "down";
               color = "#696969";
             }
             else if (engine == 'STOP') {
-              assetColor = "danger";
               color = "#d9534f";
             }
 
@@ -1523,26 +1523,27 @@ export class TrackingComponent implements OnInit {
               "<tbody>" +
               "<tr>" + "<td colspan='2'>";
 
-            assetContent += "<span data-l11n class='text-bold'>Address:&nbsp;</span>" + address +
+            assetContent += "<span class='font-weight-bold'>Address:&nbsp;</span>" + address +
               "<br />" +
-              "<span data-l11n class='text-bold'>Date:&nbsp;</span>" + timestamp +
+              "<span class='font-weight-bold'>Date:&nbsp;</span>" + timestamp +
               "<br />" +
-              "<span data-l11n class='text-bold'>Speed:&nbsp;</span>" + speedFormatter(speed) +
+              "<span>Speed:&nbsp;</span>" + speedFormatter(speed) +
               "<br />" +
-              "<span data-l11n class='text-bold'>GPS Status:&nbsp;</span>" + fix +
+              "<span class='font-weight-bold'>GPS Status:&nbsp;</span>" + fix +
               "<br />" +
-              "<span data-l11n class='text-bold'>Driver:&nbsp;</span>" + driverName +
+              "<span class='font-weight-bold'>Driver:&nbsp;</span>" + driverName +
               "<br />" +
-              "<span data-l11n class='text-bold'>Zones:&nbsp;</span>" + zone +
+              "<span class='font-weight-bold'>Zones:&nbsp;</span>" + zone +
               "<br />" +
-
+              "<span class='font-weight-bold'>Last Updated:&nbsp;</span>" + el +
+              "<br />" +
               "</td>" +
               "<td colspan='2' class='pl-4'>" +
               "<img class='vehicle-img' src='" + vehicleImg + "'/>" + "<br />";
 
-            if (make !== "Unknown") assetContent += "<span data-l11n class='text-bold'>Brand:&nbsp;</span>" + make +
+            if (make !== "Unknown") assetContent += "<span class='font-weight-bold'>Brand:&nbsp;</span>" + make +
               "<br />";
-            if (model !== "Unknown") assetContent += "<span data-l11n class='text-bold'>Model:&nbsp;</span>" + model +
+            if (model !== "Unknown") assetContent += "<span class='font-weight-bold'>Model:&nbsp;</span>" + model +
               "<br />";
 
             assetContent += "</td>" +
@@ -1568,6 +1569,7 @@ export class TrackingComponent implements OnInit {
               gprs: gprs,
               title: vechs,
               zone: zone,
+              fix: fix,
               engine: engine,
               speed: speed,
               mileage: mileage,
@@ -1578,7 +1580,8 @@ export class TrackingComponent implements OnInit {
               getXPosition: getXPosition,
               assetBattery: assetBattery,
               content: assetContent,
-              driver: driverName
+              driver: driverName,
+              elapsed_timestamp: el
             });
 
             marker.setMap(map);
@@ -1604,7 +1607,6 @@ export class TrackingComponent implements OnInit {
 
               markers[i].setPosition(latLng);
               styleMakers[i].setPosition(latLng);
-
               markers[i].setIcon(icon);
 
               if (paramtitle == vechs) {
@@ -1614,11 +1616,13 @@ export class TrackingComponent implements OnInit {
                 markers[i].timestamp = timestamp;
                 markers[i].gps = gps;
                 markers[i].gprs = gprs;
+                markers[i].engine = engine;
                 markers[i].fix = fix;
                 markers[i].tag = tag;
                 markers[i].speed = speed;
-                markers[i].CZ = vehicleImg;
+                markers[i].cat_img = vehicleImg;
                 markers[i].driver = driverName;
+                markers[i].elapsed_timestamp = el;
 
                 if ($('#assetInfo').val() != null || $('#assetInfo').val() != undefined) {
                   document.getElementById('assetInfo').innerHTML = assetContent
@@ -1632,11 +1636,13 @@ export class TrackingComponent implements OnInit {
                 markers[i].timestamp = timestamp;
                 markers[i].gps = gps;
                 markers[i].gprs = gprs;
+                markers[i].engine = engine;
                 markers[i].fix = fix;
                 markers[i].tag = tag;
                 markers[i].speed = speed;
                 markers[i].cat_img = vehicleImg;
                 markers[i].driver = driverName;
+                markers[i].elapsed_timestamp = el;
               }
 
 
@@ -1679,17 +1685,25 @@ export class TrackingComponent implements OnInit {
                 + "<strong><a style='color:#458FD2;'>" + markers[k].title + '</a></strong>'
                 + "</td>"
                 + "<td>"
-                //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
-                + "<strong><a style='color:#458FD2;'>" + markers[k].address + "<br>"
+                + markers[k].address
                 + "</td>"
                 + "<td>"
                 + markers[k].timestamp
                 + "</td>"
                 + "<td>"
-                + markers[k].speed
+                + markers[k].elapsed_timestamp
+                + "</td>"
+                + "<td>"
+                + speedFormatter(markers[k].speed)
                 + "</td>"
                 + "<td>"
                 + markers[k].driver
+                + "</td>"
+                + "<td>"
+                + markers[k].fix
+                + "</td>"
+                + "<td>"
+                + statusFormatter(markers[k].engine, markers[k].timestamp)
                 + "</td>"
                 + "<td>"
                 + gpsStatus(markers[k].gps, markers[k].timestamp)
@@ -1703,7 +1717,7 @@ export class TrackingComponent implements OnInit {
 
           }
 
-          //document.getElementById('total-vehicles').innerHTML = data.length;
+          document.getElementById('total-vehicles').innerHTML = data.length;
           document.getElementById('getMove').innerHTML = move.toString();
           document.getElementById('getIdle').innerHTML = idle.toString();
           document.getElementById('getStop').innerHTML = stop.toString();
@@ -1713,9 +1727,6 @@ export class TrackingComponent implements OnInit {
         }
 
       }
-
-
-
 
     }
 
@@ -1758,10 +1769,11 @@ export class TrackingComponent implements OnInit {
           rotation: param.course,
           anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
         },
-        shape: shape,
+        shape: param.shape,
         content: param.content,
         tag: param.tag,
-        cat_img: param.cat_img
+        cat_img: param.cat_img,
+        elapsed_timestamp: param.elapsed_timestamp
       });
 
       if (param.content) {
@@ -1870,14 +1882,6 @@ export class TrackingComponent implements OnInit {
 
       }));
 
-      //End
-      /*=================================================*/
-
-
-      //OSM Public Transport Layer - On
-      /*=================================================*/
-      //Start
-
       map.mapTypes.set("PublicTransport", new google.maps.ImageMapType({
         getTileUrl: function (coord, zoom) {
 
@@ -1895,14 +1899,6 @@ export class TrackingComponent implements OnInit {
         maxZoom: 20
 
       }));
-
-      //End
-      /*=================================================*/
-
-
-      //Open Cycle Map Outdoor Layer - On
-      /*=================================================*/
-      //Start
 
       map.mapTypes.set("OneMap", new google.maps.ImageMapType({
         getTileUrl: function (coord, zoom) {
@@ -1922,27 +1918,7 @@ export class TrackingComponent implements OnInit {
 
       }));
 
-      // Normalizes the coords that tiles repeat across the x axis (horizontally)
-      // like the standard Google map tiles.
-      function getNormalizedCoord(coord, zoom) {
-        var y = coord.y;
-        var x = coord.x;
-        // tile range in one direction range is dependent on zoom level
-        // 0 = 1 tile, 1 = 2 tiles, 2 = 4 tiles, 3 = 8 tiles, etc
-        var tileRange = 1 << zoom;
-        // don't repeat across y-axis (vertically)
-        if (y < 0 || y >= tileRange) {
-          return null;
-        }
-        // repeat across x-axis
-        if (x < 0 || x >= tileRange) {
-          x = (x % tileRange + tileRange) % tileRange;
-        }
-        return {
-          x: x,
-          y: y
-        };
-      }
+  
 
       //End
       /*=================================================*/
@@ -2053,7 +2029,7 @@ export class TrackingComponent implements OnInit {
       return "<i class='fa fa-signal " + labelColor + "' title='3G'></i>";
     }
 
-    function speedFormatter(value) {
+    function convertKmPerHour(value) {
 
       //Speed Formula
       if (value < 20) {
@@ -2068,6 +2044,40 @@ export class TrackingComponent implements OnInit {
       return roundoff + ' Km/h';
     }
 
+    function speedFormatter(value) {
+
+      var roundoff = Math.round(value * 100) / 100;
+
+      return roundoff + ' km/h';
+    }
+
+    function getElapsedTime(timestamp) {
+
+      var now = moment().format();
+      var diff: any = moment.duration(moment(now).diff(moment(timestamp)));
+      var days = parseInt(diff.asDays()); //84
+      var hours = parseInt(diff.asHours()); //2039 hours, but it gives total hours in given miliseconds which is not expacted.
+      hours = hours - days * 24;  // 23 hours
+      var minutes = parseInt(diff.asMinutes()); //122360 minutes,but it gives total minutes in given miliseconds which is not expacted.
+      minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
+      var ms = "";
+
+      if (days == 0 && hours == 0 && minutes == 0) {
+        ms = "a moment ago";
+      } else if (days == 0) {
+        ms = hours + " hours " + minutes + " minutes ago";
+      } else {
+        if (days == 1) {
+          ms = days + " day " + hours + " hours " + minutes + " minutes ago";
+        } else {
+          ms = days + " days " + hours + " hours " + minutes + " minutes ago";
+        }
+
+      }
+
+      return ms;
+    }
+
     function statusFormatter(val, timestamp) {
       var text;
       var d = new Date();
@@ -2076,26 +2086,26 @@ export class TrackingComponent implements OnInit {
 
       var labelColor;
       if (timestamp2 > dateEntered) {
-        labelColor = "status-down";
+        labelColor = "down";
         text = "DOWN";
       }
       else if (val == "MOVE") {
-        labelColor = "status-move";
+        labelColor = "move";
         text = "MOVE";
       }
       else if (val == "IDLE") {
-        labelColor = "status-idle";
+        labelColor = "idle";
         text = "IDLE";
       }
       else if (val == "STOP" && timestamp2 == dateEntered) {
-        labelColor = "status-stop";
+        labelColor = "stop";
         text = "STOP";
       } else {
-        labelColor = "status-down";
+        labelColor = "down";
         text = "DOWN";
       }
 
-      return "<p class='" + labelColor + "'>" + text + "</p>";
+      return "<span style='padding: 4px; color:white;' class='" + labelColor + "'>" + text + "</span>";
     }
 
     function ClearResellerFilter() {
@@ -2244,6 +2254,28 @@ export class TrackingComponent implements OnInit {
         url = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
       }
       return url;
+    }
+
+    //==================================================//
+
+    function getNormalizedCoord(coord, zoom) {
+      var y = coord.y;
+      var x = coord.x;
+      // tile range in one direction range is dependent on zoom level
+      // 0 = 1 tile, 1 = 2 tiles, 2 = 4 tiles, 3 = 8 tiles, etc
+      var tileRange = 1 << zoom;
+      // don't repeat across y-axis (vertically)
+      if (y < 0 || y >= tileRange) {
+        return null;
+      }
+      // repeat across x-axis
+      if (x < 0 || x >= tileRange) {
+        x = (x % tileRange + tileRange) % tileRange;
+      }
+      return {
+        x: x,
+        y: y
+      };
     }
 
     //====================================END===============================================//

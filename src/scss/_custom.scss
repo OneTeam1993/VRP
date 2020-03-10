@@ -1,1 +1,78 @@
 // Here you can add other styles
+#reports-container .dt-buttons {
+  float: right !important;
+}
+
+div.dt-button-background {
+  background: none;
+}
+
+div.dt-button-collection {
+  overflow: auto !important;
+  /*left: 50px !important;*/
+  width: 130px
+}
+
+.dt-button.buttons-collection {
+  color: #fff;
+  background: #5a6268 !important;
+  border-color: #bab9b9;
+  margin-left: 5px !important;
+  margin-right: 0 !important
+}
+
+button.dt-button, div.dt-button, a.dt-button {
+  padding: 0.3em 1em;
+}
+
+.dt-button.buttons-collection:hover,
+.dt-button.buttons-collection:focus,
+.dt-button.buttons-collection:active {
+  background: #3f3f3f !important;
+}
+
+.dt-button.buttons-collection:first-child {
+  margin-left: 0px !important;
+}
+
+.dt-button.buttons-columnVisibility.active {
+  background: #39b2d5 !important;
+  color: #fff;
+  box-shadow: none !important;
+}
+
+/*.table {
+  color: #000 !important;
+}*/
+
+table.dataTable {
+  color: #000 !important;
+}
+
+table.dataTable.nowrap th {
+  color: #5c6873;
+  background-color: #e4e7ea;
+  border-color: #c8ced3;
+}
+/*border: 1px solid #dfe8f1*/
+/*Loading*/
+.dataTables_wrapper .dataTables_processing {
+  z-index: 10000;
+  margin-top: -40px;
+  height: 80px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.95) 25%, rgba(255, 255, 255, 0.95) 75%, rgba(255, 255, 255, 0.95) 100%)
+}
+
+/*-----------------------------------------------*/
+
+.module-dt .buttons-colvis, .module-dt .buttons-copy, .module-dt .buttons-collection {
+  float: right !important;
+}
+
+.module-dt .addBtn {
+  color: #fff !important;
+}
+
+.modal.show {
+  background: rgba(0,0,0,0.7);
+}

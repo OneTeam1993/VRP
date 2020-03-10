@@ -1,0 +1,88 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Traffic Situations</span>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="5000">
+            <slide *ngFor="let slide of slides; let index=index">
+              <img [src]="slide.image" alt="image slide" style="display: block; width: 100%; ">
+              <div class="carousel-caption">
+                <h4>Camera ID: {{slide.title}}</h4>
+                <p>({{slide.latitude}},{{slide.longitude}})</p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Traffic Situations</span>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="5000">
+            <slide *ngFor="let _slide of _slides; let index=index">
+              <img [src]="_slide.image" alt="image slide" style="display: block; width: 100%; ">
+              <div class="carousel-caption">
+                <h4>Camera ID: {{_slide.title}}</h4>
+                <p>({{_slide.latitude}},{{_slide.longitude}})</p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Active Cameras:&nbsp;</span><span id="total-cameras"></span><span class="float-right" id="coordinates-panel"></span>
+        </div>
+        <div class="card-body">
+          <div class="row">        
+            <div class="col-sm-12">
+              <div style="height:600px;" id="traffic-map"></div>
+            </div><!--/.col-->
+          </div><!--/.row-->
+          <br>
+        </div>
+        <div class="card-footer">
+          <h6>Traffic Speed Legend</h6>
+          <div class="row text-center">
+            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+              <div class="text-muted">≥ 60 km/h</div>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+              <div class="text-muted">40-59 km/h</div>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+              <div class="text-muted">20-39 km/h</div>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+              <div class="text-muted">0-19 km/h</div>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-gray-dark" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+
+</div>

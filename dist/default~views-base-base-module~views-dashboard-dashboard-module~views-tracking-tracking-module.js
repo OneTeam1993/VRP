@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~views-base-base-module~views-dashboard-dashboard-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~views-base-base-module~views-dashboard-dashboard-module~views-tracking-tracking-module"],{
 
 /***/ "./node_modules/ngx-bootstrap/buttons/fesm5/ngx-bootstrap-buttons.js":
 /*!***************************************************************************!*\
@@ -512,4 +512,4 @@ var ButtonsModule = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=default~views-base-base-module~views-dashboard-dashboard-module.js.map
+//# sourceMappingURL=default~views-base-base-module~views-dashboard-dashboard-module~views-tracking-tracking-module.js.map

@@ -8,7 +8,10 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TrackingComponent } from './tracking.component';
 import { TrackingRoutingModule } from './tracking-routing.module';
 import { DataTablesModule } from 'angular-datatables';
-
+import { TrafficComponent } from './traffic.component';
+import { HeatmapComponent } from './heatmap.component';
+import { WeatherComponent } from './weather.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 @NgModule({
@@ -19,8 +22,9 @@ import { DataTablesModule } from 'angular-datatables';
     BsDropdownModule,
     ButtonsModule.forRoot(),
     TrackingRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    CarouselModule.forRoot()
   ],
-  declarations: [TrackingComponent]
+  declarations: [TrackingComponent, TrafficComponent, HeatmapComponent, WeatherComponent]
 })
 export class TrackingModule { }

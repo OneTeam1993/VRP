@@ -1,0 +1,27 @@
+#positionReport {
+    color: #000;
+}
+
+table.dataTable thead th {
+  color: #5c6873;
+  background-color: #e4e7ea;
+  border-color: #c8ced3;
+}
+
+.table {
+    table-layout: fixed;
+}
+
+#pageHeader {
+  background: Gainsboro;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100px;
+  z-index: 11;
+  color: #000;
+}
+.table-responsive {
+  overflow-x: unset;
+}

@@ -17,12 +17,56 @@ export const navItems: INavData[] = [
     badge: {
       variant: 'info',
       text: 'Live Map'
-    }
+    },
+    children: [
+      {
+        name: 'Fleet',
+        url: '/tracking',
+        icon: 'fa fa-car'
+      },
+      {
+        name: 'Traffic',
+        url: '/tracking/traffic',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Weather',
+        url: '/tracking/weather',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Heat Map',
+        url: '/tracking/heatmap',
+        icon: 'icon-puzzle'
+      },
+    ]
   },
   {
     name: 'Reports',
     url: '/reports',
     icon: 'icon-chart',
+  },
+  {
+    name: 'Settings',
+    url: '/settings',
+    icon: 'cui-cog icons',
+    children: [
+      {
+        name: 'Users',
+        url: '/users',
+        icon: 'icon-user'
+      },
+      {
+        name: 'Companies',
+        url: '/companies',
+        icon: 'fa fa-building-o'
+      },
+      {
+        name: 'Reseller',
+        url: '/reseller',
+        icon: 'icon-people'
+      },
+    ]
   },
   //{
   //  title: true,

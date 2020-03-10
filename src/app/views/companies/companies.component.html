@@ -1,0 +1,259 @@
+<div class="card module-dt">
+  <div class="card-header">
+    Companies
+  </div>
+  <div class="card-body">
+
+    <div style="width: 100%;">
+      <div class="table-responsive pt-3">
+        <table id="companyData" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+      </div>
+    </div>
+
+    <div id="companyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="companyFormTitle">Companies</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="companyModalForm" novalidate>
+              <div class="col-md-8 float-left pl-0">
+                <div class="form-group d-none">
+                  <label for="companyID">Company ID</label>
+                  <input type="text" class="form-control" placeholder="Enter Company ID" id="companyID" name="companyID">
+                </div>
+
+                <div class="col-md-6 float-left">
+                  <div class="form-group" id="companyImage">
+                    <img src="http://placehold.it/180" class="img-responsive" alt="" width="110" height="110" id="companyImageBox">
+                    <span data-l11n class="btn btn-mint btn-file">
+                      <input type="file" name="UploadFile" id="uploadCompany">
+                      <span id="companyLabelUpload"></span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 float-left">
+                  <div class="col-md-11 float-left p-0">
+                    <div class="form-group">
+                      <label for="companyName">Company Name</label>
+                      <input data-l11n type="text" class="form-control" placeholder="Company Name" name="companyName" id="companyName" data-by-field="companyName" required>
+                    </div>
+                  </div>
+                  <div class="col-md-1 float-left pr-0">
+                    <div class="form-group">
+                      <div class="activateCompany">
+                        <label for="companyStatus">Status</label><br />
+                        <label class="switch switch-label switch-pill switch-primary" style="margin: 4px 0 0 0;">
+                          <input data-switchery="true" class="companyStatus switch-input" name="companyStatus" id="companyStatus" data-by-field="companyStatus" type="checkbox" value="1">
+                          <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6 float-left pl-0">
+                  <div class="form-group">
+                    <label for="companyAddress">Address</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Address" name="companyAddress" id="companyAddress" data-by-field="companyAddress" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="companyPhone">Phone</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Phone Number" name="companyPhone" id="companyPhone" data-by-field="companyPhone" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="companyEmail">Email</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Email" name="companyEmail" id="companyEmail" data-by-field="companyEmail" required>
+                  </div>
+                </div>
+                <div class="col-md-6 float-left p-0">
+                  <div class="form-group">
+                    <label for="companyUserLimit">User Limit</label>
+                    <input data-l11n type="text" class="form-control" placeholder="User Limit" name="companyUserLimit" id="companyUserLimit" data-by-field="companyUserLimit" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="companyZoneLimit">Zone Limit</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Zone Limit" name="companyZoneLimit" id="companyZoneLimit" data-by-field="companyZoneLimit" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="companyAssetLimit">Asset Limit</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Asset Limit" name="companyAssetLimit" id="companyAssetLimit" data-by-field="companyAssetLimit" required>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                  <label for="companyReseller">Reseller</label>
+                  <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="companyReseller"></select>
+                </div>
+                <br />
+              </div>
+              <div class="col-md-4 float-left pr-0">
+                <div class="form-group">
+                  <div class="clearfix"></div>
+                  <div class="col-md-12"><h6><b>Tracking</b></h6></div>
+                  <div class="activateFleet">
+                    <label class="col-md-8 float-left" for="companyFleet">Fleet</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyFleet switch-input" name="companyFleet" id="companyFleet" data-by-field="companyFleet" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateTraffic">
+                    <label class="col-md-8 float-left" for="companyTraffic">Traffic</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyTraffic switch-input" name="companyTraffic" id="companyTraffic" data-by-field="companyTraffic" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateHeatMap">
+                    <label class="col-md-8 float-left" for="companyHeatMap">Heat Map</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyHeatMap switch-input" name="companyHeatMap" id="companyHeatMap" data-by-field="companyHeatMap" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateCarpark">
+                    <label class="col-md-8 float-left" for="companyCarpark">Carpark Availability</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyCarpark switch-input" name="companyCarpark" id="companyCarpark" data-by-field="companyCarpark" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateWeather">
+                    <label class="col-md-8 float-left" for="companyWeather">Weather</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyWeather switch-input" name="companyWeather" id="companyWeather" data-by-field="companyWeather" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+
+                  <div class="clearfix"></div>
+                  <div class="col-md-12"><h6><b>Job Dispatch</b></h6></div>
+
+                  <div class="activateStandard">
+                    <label class="col-md-8 float-left" for="companyStandard">Standard</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyStandard switch-input" name="companyStandard" id="companyStandard" data-by-field="companyStandard" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activatePest">
+                    <label class="col-md-8 float-left" for="companyPest">Pest</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyPest switch-input" name="companyPest" id="companyPest" data-by-field="companyPest" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateAircon">
+                    <label class="col-md-8 float-left" for="companyStatus">Aircon</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyAircon switch-input" name="companyAircon" id="companyAircon" data-by-field="companyAircon" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateAmbulance">
+                    <label class="col-md-8 float-left" for="companyAmbulance">Ambulance</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyAmbulance switch-input" name="companyAmbulance" id="companyAmbulance" data-by-field="companyAmbulance" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateEquipment">
+                    <label class="col-md-8 float-left" for="companyEquipment">Equipment</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyEquipment switch-input" name="companyEquipment" id="companyEquipment" data-by-field="companyEquipment" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateTransport">
+                    <label class="col-md-8 float-left" for="companyTransport">Transport</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyTransport switch-input" name="companyTransport" id="companyTransport" data-by-field="companyTransport" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+
+                  <div class="clearfix"></div>
+                  <div class="col-md-12"><h6><b>Routing</b></h6></div>
+
+                  <div class="activateTravellingSalesman">
+                    <label class="col-md-8 float-left" for="companyTravellingSalesman">Travelling Salesman</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyTravellingSalesman switch-input" name="companyTravellingSalesman" id="companyTravellingSalesman" data-by-field="companyTravellingSalesman" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateStandardVRP">
+                    <label class="col-md-8 float-left" for="companyStandardVRP">Standard VRP</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyStandardVRP switch-input" name="companyStandardVRP" id="companyStandardVRP" data-by-field="companyStandardVRP" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+                  <div class="activateAdvanceVRP">
+                    <label class="col-md-8 float-left" for="companyAdvanceVRP">Advance VRP</label>
+                    <label class="switch switch-label switch-pill switch-primary">
+                      <input data-switchery="true" class="companyAdvance VRP switch-input" name="companyAdvanceVRP" id="companyAdvanceVRP" data-by-field="companyAdvanceVRP" type="checkbox" value="1">
+                      <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                <button id="submit-company" data-toggle="modal" type="button" href="#confirmCompany" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Save changes</button>
+              </div>
+            </form>
+
+          </div>
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="confirmCompany" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Please Confirm...</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you wish to proceed with the updates?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onSubmit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteCompany" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger deleteCompanyBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

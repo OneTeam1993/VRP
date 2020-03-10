@@ -1,0 +1,100 @@
+<div class="card module-dt">
+  <div class="card-header">
+    Reseller
+  </div>
+  <div class="card-body">
+
+    <div style="width: 100%;">
+      <div class="table-responsive pt-3">
+        <table id="resellerData" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+      </div>
+    </div>
+
+
+    <div id="resellerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="resellerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="resellerFormTitle">Reseller</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="resellerModalForm" novalidate>
+              <div class="col-md-12">
+                <div class="form-group d-none">
+                  <label for="resellerID">Reseller ID</label>
+                  <input type="text" class="form-control" placeholder="Enter Reseller ID" id="resellerID" name="resellerID">
+                </div>
+                <div class="form-group">
+                  <label for="resellerName">Reseller Name</label>
+                  <input data-l11n type="text" class="form-control" placeholder="Reseller Name" name="resellerName" id="resellerName" data-by-field="resellerName" required>
+                </div>
+                <div class="form-group">
+                  <label for="companyAddress">Address</label>
+                  <input data-l11n type="text" class="form-control" placeholder="Address" name="resellerAddress" id="resellerAddress" data-by-field="resellerAddress" required>
+                </div>
+                <div class="form-group">
+                  <label for="resellerPhone">Phone</label>
+                  <input data-l11n type="text" class="form-control" placeholder="Phone Number" name="resellerPhone" id="resellerPhone" data-by-field="resellerPhone" required>
+                </div>
+                <div class="form-group">
+                  <label for="resellerEmail">Email</label>
+                  <input data-l11n type="text" class="form-control" placeholder="Email" name="resellerEmail" id="resellerEmail" data-by-field="resellerEmail" required>
+                </div>
+                <br />
+              </div>
+              <div class="clearfix"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                <button id="submit-reseller" data-toggle="modal" type="button" href="#confirmReseller" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Save changes</button>
+              </div>
+            </form>
+
+          </div>
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="confirmReseller" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Please Confirm...</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you wish to proceed with the updates?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onSubmit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteReseller" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger deleteResellerBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -67,7 +67,7 @@
   </div><!--/.row-->
   <div class="card">
     <div class="card-header">
-      Vehicles<span class="float-right" id="coordinates-panel"></span>
+      <span class="font-weight-bold">Vehicles:&nbsp;</span><span id="total-vehicles"></span><span class="float-right" id="coordinates-panel"></span>
     </div>
     <div class="card-body">
       <div class="row">
@@ -79,27 +79,34 @@
         </div><!--/.col-->
       </div><!--/.row-->
       <br>
-      <div class="col-sm-12">
-        <table class="table table-responsive-sm table-hover table-outline mb-0">
-          <thead class="thead-light">
-            <tr>
-              <!--<th class="text-center"><i class="fa fa-car"></i></th>-->
-              <th>Name</th>
-              <th class="text-center">Address</th>
-              <th>Timestamp</th>
-              <th class="text-center">Speed</th>
-              <th>Driver</th>
-              <th class="text-center">GPS</th>
-              <th class="text-center">Network</th>
-            </tr>
-          </thead>
-          <tbody id="assetStatus" >
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-responsive-sm table-hover table-outline mb-0">
+            <thead class="thead-dark">
+              <tr>
+                <!--<th class="text-center"><i class="fa fa-car"></i></th>-->
+                <th>Name</th>
+                <th class="text-center">Address</th>
+                <th>Date</th>
+                <th>Last Updated</th>
+                <th class="text-center">Speed</th>
+                <th>Driver</th>
+                <th class="text-center">Fix</th>
+                <th class="text-center">Engine</th>
+                <th class="text-center">GPS</th>
+                <th class="text-center">Network</th>
+              </tr>
+            </thead>
+            <tbody id="assetStatus">
+            </tbody>
+          </table>
+        </div>
       </div>
+
     </div>
     <div class="card-footer">
       <div class="row text-center">
+        <h6>Traffic Legend</h6>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
           <div class="text-muted">Smooth Traffic</div>
           <div class="progress progress-xs mt-2">

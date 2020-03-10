@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"animated fadeIn\">\n  <div class=\"row\">\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"card text-white bg-info\">\n        <div class=\"card-body pb-0\">\n          <button type=\"button\" class=\"btn btn-transparent p-0 float-right\">\n            <i class=\"icon-location-pin\"></i>\n          </button>\n          <div class=\"text-value\">9.823</div>\n          <div>Members online</div>\n        </div>\n        <div class=\"chart-wrapper mt-3 mx-3\" style=\"height:70px;\">\n          <canvas baseChart class=\"chart\"\n          [datasets]=\"lineChart2Data\"\n          [labels]=\"lineChart2Labels\"\n          [options]=\"lineChart2Options\"\n          [colors]=\"lineChart2Colours\"\n          [legend]=\"lineChart2Legend\"\n          [chartType]=\"lineChart2Type\"></canvas>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"card text-white bg-primary\">\n        <div class=\"card-body pb-0\">\n          <div class=\"btn-group float-right\" dropdown>\n            <button type=\"button\" class=\"btn btn-transparent dropdown-toggle p-0\" dropdownToggle>\n              <i class=\"icon-settings\"></i>\n            </button>\n            <div class=\"dropdown-menu dropdown-menu-right\" *dropdownMenu>\n              <a class=\"dropdown-item\" href=\"#\">Action</a>\n              <a class=\"dropdown-item\" href=\"#\">Another action</a>\n              <a class=\"dropdown-item\" href=\"#\">Something else here</a>\n              <a class=\"dropdown-item\" href=\"#\">Something else here</a>\n            </div>\n          </div>\n          <div class=\"text-value\">9.823</div>\n          <div>Members online</div>\n        </div>\n        <div class=\"chart-wrapper mt-3 mx-3\" style=\"height:70px;\">\n          <canvas baseChart class=\"chart\"\n                  [datasets]=\"lineChart1Data\"\n                  [labels]=\"lineChart1Labels\"\n                  [options]=\"lineChart1Options\"\n                  [colors]=\"lineChart1Colours\"\n                  [legend]=\"lineChart1Legend\"\n                  [chartType]=\"lineChart1Type\"></canvas>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"card text-white bg-warning\">\n        <div class=\"card-body pb-0\">\n          <div class=\"btn-group float-right\" dropdown>\n            <button type=\"button\" class=\"btn btn-transparent dropdown-toggle p-0\" dropdownToggle>\n              <i class=\"icon-settings\"></i>\n            </button>\n            <div class=\"dropdown-menu dropdown-menu-right\" *dropdownMenu>\n              <a class=\"dropdown-item\" href=\"#\">Action</a>\n              <a class=\"dropdown-item\" href=\"#\">Another action</a>\n              <a class=\"dropdown-item\" href=\"#\">Something else here</a>\n            </div>\n          </div>\n          <div class=\"text-value\">9.823</div>\n          <div>Members online</div>\n        </div>\n        <div class=\"chart-wrapper mt-3\" style=\"height:70px;\">\n          <canvas baseChart class=\"chart\"\n          [datasets]=\"lineChart3Data\"\n          [labels]=\"lineChart3Labels\"\n          [options]=\"lineChart3Options\"\n          [colors]=\"lineChart3Colours\"\n          [legend]=\"lineChart3Legend\"\n          [chartType]=\"lineChart3Type\"></canvas>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"card text-white bg-danger\">\n        <div class=\"card-body pb-0\">\n          <div class=\"btn-group float-right\" dropdown>\n            <button type=\"button\" class=\"btn btn-transparent dropdown-toggle p-0\" dropdownToggle>\n              <i class=\"icon-settings\"></i>\n            </button>\n            <div class=\"dropdown-menu dropdown-menu-right\" *dropdownMenu>\n              <a class=\"dropdown-item\" href=\"#\">Action</a>\n              <a class=\"dropdown-item\" href=\"#\">Another action</a>\n              <a class=\"dropdown-item\" href=\"#\">Something else here</a>\n            </div>\n          </div>\n          <div class=\"text-value\">9.823</div>\n          <div>Members online</div>\n        </div>\n        <div class=\"chart-wrapper mt-3 mx-3\" style=\"height:70px;\">\n          <canvas baseChart class=\"chart\"\n          [datasets]=\"barChart1Data\"\n          [labels]=\"barChart1Labels\"\n          [options]=\"barChart1Options\"\n          [colors]=\"barChart1Colours\"\n          [legend]=\"barChart1Legend\"\n          [chartType]=\"barChart1Type\"></canvas>\n        </div>\n      </div>\n    </div><!--/.col-->\n  </div><!--/.row-->\n  <div class=\"card\">\n    <div class=\"card-body\">\n      <div class=\"row\">\n        <div class=\"col-sm-5\">\n          <h4 class=\"card-title mb-0\">Traffic</h4>\n          <div class=\"small text-muted\">November 2017</div>\n        </div><!--/.col-->\n        <div class=\"col-sm-7 d-none d-md-block\">\n          <button type=\"button\" class=\"btn btn-primary float-right\"><i class=\"icon-cloud-download\"></i></button>\n          <div class=\"btn-group btn-group-toggle float-right mr-3\" data-toggle=\"buttons\">\n            <label class=\"btn btn-outline-secondary\" [(ngModel)]=\"radioModel\" btnRadio=\"Day\" id=\"option1\">Day</label>\n            <label class=\"btn btn-outline-secondary\" [(ngModel)]=\"radioModel\" btnRadio=\"Month\" id=\"option2\">Month</label>\n            <label class=\"btn btn-outline-secondary\" [(ngModel)]=\"radioModel\" btnRadio=\"Year\" id=\"option3\">Year</label>\n          </div>\n        </div><!--/.col-->\n      </div><!--/.row-->\n      <div class=\"chart-wrapper\" style=\"height:300px;margin-top:40px;\">\n        <canvas baseChart class=\"chart\"\n        [datasets]=\"mainChartData\"\n        [labels]=\"mainChartLabels\"\n        [options]=\"mainChartOptions\"\n        [colors]=\"mainChartColours\"\n        [legend]=\"mainChartLegend\"\n        [chartType]=\"mainChartType\"></canvas>\n      </div>\n    </div>\n    <div class=\"card-footer\">\n      <div class=\"row text-center\">\n        <div class=\"col-sm-12 col-md mb-sm-2 mb-0\">\n          <div class=\"text-muted\">Visits</div>\n          <strong>29.703 Users (40%)</strong>\n          <div class=\"progress progress-xs mt-2\">\n            <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n        </div>\n        <div class=\"col-sm-12 col-md mb-sm-2 mb-0\">\n          <div class=\"text-muted\">Unique</div>\n          <strong>24.093 Users (20%)</strong>\n          <div class=\"progress progress-xs mt-2\">\n            <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 20%\" aria-valuenow=\"20\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n        </div>\n        <div class=\"col-sm-12 col-md mb-sm-2 mb-0\">\n          <div class=\"text-muted\">Pageviews</div>\n          <strong>78.706 Views (60%)</strong>\n          <div class=\"progress progress-xs mt-2\">\n            <div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n        </div>\n        <div class=\"col-sm-12 col-md mb-sm-2 mb-0\">\n          <div class=\"text-muted\">New Users</div>\n          <strong>22.123 Users (80%)</strong>\n          <div class=\"progress progress-xs mt-2\">\n            <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 80%\" aria-valuenow=\"80\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n        </div>\n        <div class=\"col-sm-12 col-md mb-sm-2 mb-0\">\n          <div class=\"text-muted\">Bounce Rate</div>\n          <strong>40.15%</strong>\n          <div class=\"progress progress-xs mt-2\">\n            <div class=\"progress-bar\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!--/.card-->\n  <div class=\"row\">\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"brand-card\">\n        <div class=\"brand-card-header bg-facebook\">\n          <i class=\"fa fa-facebook\"></i>\n          <div class=\"chart-wrapper\">\n            <canvas baseChart class=\"chart\"\n            [datasets]=\"brandBoxChartData1\"\n            [labels]=\"brandBoxChartLabels\"\n            [options]=\"brandBoxChartOptions\"\n            [colors]=\"brandBoxChartColours\"\n            [legend]=\"brandBoxChartLegend\"\n            [chartType]=\"brandBoxChartType\"></canvas>\n          </div>\n        </div>\n        <div class=\"brand-card-body\">\n          <div>\n            <div class=\"text-value\">89k</div>\n            <div class=\"text-uppercase text-muted small\">friends</div>\n          </div>\n          <div>\n            <div class=\"text-value\">459</div>\n            <div class=\"text-uppercase text-muted small\">feeds</div>\n          </div>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"brand-card\">\n        <div class=\"brand-card-header bg-twitter\">\n          <i class=\"fa fa-twitter\"></i>\n          <div class=\"chart-wrapper\">\n            <canvas baseChart class=\"chart\"\n            [datasets]=\"brandBoxChartData2\"\n            [labels]=\"brandBoxChartLabels\"\n            [options]=\"brandBoxChartOptions\"\n            [colors]=\"brandBoxChartColours\"\n            [legend]=\"brandBoxChartLegend\"\n            [chartType]=\"brandBoxChartType\"></canvas>\n          </div>\n        </div>\n        <div class=\"brand-card-body\">\n          <div>\n            <div class=\"text-value\">973k</div>\n            <div class=\"text-uppercase text-muted small\">followers</div>\n          </div>\n          <div>\n            <div class=\"text-value\">1.792</div>\n            <div class=\"text-uppercase text-muted small\">tweets</div>\n          </div>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"brand-card\">\n        <div class=\"brand-card-header bg-linkedin\">\n          <i class=\"fa fa-linkedin\"></i>\n          <div class=\"chart-wrapper\">\n            <canvas baseChart class=\"chart\"\n            [datasets]=\"brandBoxChartData3\"\n            [labels]=\"brandBoxChartLabels\"\n            [options]=\"brandBoxChartOptions\"\n            [colors]=\"brandBoxChartColours\"\n            [legend]=\"brandBoxChartLegend\"\n            [chartType]=\"brandBoxChartType\"></canvas>\n          </div>\n        </div>\n        <div class=\"brand-card-body\">\n          <div>\n            <div class=\"text-value\">500+</div>\n            <div class=\"text-uppercase text-muted small\">contacts</div>\n          </div>\n          <div>\n            <div class=\"text-value\">292</div>\n            <div class=\"text-uppercase text-muted small\">feeds</div>\n          </div>\n        </div>\n      </div>\n    </div><!--/.col-->\n    <div class=\"col-sm-6 col-lg-3\">\n      <div class=\"brand-card\">\n        <div class=\"brand-card-header bg-google-plus\">\n          <i class=\"fa fa-google-plus\"></i>\n          <div class=\"chart-wrapper\">\n            <canvas baseChart class=\"chart\"\n            [datasets]=\"brandBoxChartData4\"\n            [labels]=\"brandBoxChartLabels\"\n            [options]=\"brandBoxChartOptions\"\n            [colors]=\"brandBoxChartColours\"\n            [legend]=\"brandBoxChartLegend\"\n            [chartType]=\"brandBoxChartType\"></canvas>\n          </div>\n        </div>\n        <div class=\"brand-card-body\">\n          <div>\n            <div class=\"text-value\">894</div>\n            <div class=\"text-uppercase text-muted small\">followers</div>\n          </div>\n          <div>\n            <div class=\"text-value\">92</div>\n            <div class=\"text-uppercase text-muted small\">circles</div>\n          </div>\n        </div>\n      </div>\n    </div><!--/.col-->\n  </div><!--/.row-->\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          Traffic &amp; Sales\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-sm-6\">\n              <div class=\"row\">\n                <div class=\"col-sm-6\">\n                  <div class=\"callout callout-info\">\n                    <small class=\"text-muted\">New Clients</small>\n                    <br>\n                    <strong class=\"h4\">9,123</strong>\n                  </div>\n                </div><!--/.col-->\n                <div class=\"col-sm-6\">\n                  <div class=\"callout callout-danger\">\n                    <small class=\"text-muted\">Recuring Clients</small>\n                    <br>\n                    <strong class=\"h4\">22,643</strong>\n                  </div>\n                </div><!--/.col-->\n              </div><!--/.row-->\n              <hr class=\"mt-0\">\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Monday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 34%\" aria-valuenow=\"34\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 78%\" aria-valuenow=\"78\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Tuesday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 56%\" aria-valuenow=\"56\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 94%\" aria-valuenow=\"94\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Wednesday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 12%\" aria-valuenow=\"12\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 67%\" aria-valuenow=\"67\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Thursday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 43%\" aria-valuenow=\"43\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 91%\" aria-valuenow=\"91\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Friday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 22%\" aria-valuenow=\"22\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 73%\" aria-valuenow=\"73\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Saturday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 53%\" aria-valuenow=\"53\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 82%\" aria-valuenow=\"82\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-4\">\n                <div class=\"progress-group-prepend\">\n                  <span class=\"progress-group-text\">\n                    Sunday\n                  </span>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 9%\" aria-valuenow=\"9\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 69%\" aria-valuenow=\"69\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n            </div><!--/.col-->\n            <div class=\"col-sm-6\">\n              <div class=\"row\">\n                <div class=\"col-sm-6\">\n                  <div class=\"callout callout-warning\">\n                    <small class=\"text-muted\">Pageviews</small>\n                    <br>\n                    <strong class=\"h4\">78,623</strong>\n                  </div>\n                </div><!--/.col-->\n                <div class=\"col-sm-6\">\n                  <div class=\"callout callout-success\">\n                    <small class=\"text-muted\">Organic</small>\n                    <br>\n                    <strong class=\"h4\">49,123</strong>\n                  </div>\n                </div><!--/.col-->\n              </div><!--/.row-->\n              <hr class=\"mt-0\">\n              <div class=\"progress-group\">\n                <div class=\"progress-group-header\">\n                  <i class=\"icon-user progress-group-icon\"></i>\n                  <div>Male</div>\n                  <div class=\"ml-auto font-weight-bold\">43%</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 43%\" aria-valuenow=\"43\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group mb-5\">\n                <div class=\"progress-group-header\">\n                  <i class=\"icon-user-female progress-group-icon\"></i>\n                  <div>Female</div>\n                  <div class=\"ml-auto font-weight-bold\">37%</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 43%\" aria-valuenow=\"43\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group\">\n                <div class=\"progress-group-header align-items-end\">\n                  <i class=\"icon-globe progress-group-icon\"></i>\n                  <div>Organic Search</div>\n                  <div class=\"ml-auto font-weight-bold mr-2\">191.235</div>\n                  <div class=\"text-muted small\">(56%)</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 56%\" aria-valuenow=\"56\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group\">\n                <div class=\"progress-group-header align-items-end\">\n                  <i class=\"icon-social-facebook progress-group-icon\"></i>\n                  <div>Facebook</div>\n                  <div class=\"ml-auto font-weight-bold mr-2\">51.223</div>\n                  <div class=\"text-muted small\">(15%)</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 15%\" aria-valuenow=\"15\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group\">\n                <div class=\"progress-group-header align-items-end\">\n                  <i class=\"icon-social-twitter progress-group-icon\"></i>\n                  <div>Twitter</div>\n                  <div class=\"ml-auto font-weight-bold mr-2\">37.564</div>\n                  <div class=\"text-muted small\">(11%)</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 11%\" aria-valuenow=\"11\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"progress-group\">\n                <div class=\"progress-group-header align-items-end\">\n                  <i class=\"icon-social-linkedin progress-group-icon\"></i>\n                  <div>LinkedIn</div>\n                  <div class=\"ml-auto font-weight-bold mr-2\">27.319</div>\n                  <div class=\"text-muted small\">(8%)</div>\n                </div>\n                <div class=\"progress-group-bars\">\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 8%\" aria-valuenow=\"8\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </div>\n              </div>\n            </div><!--/.col-->\n          </div><!--/.row-->\n          <br>\n          <table class=\"table table-responsive-sm table-hover table-outline mb-0\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th class=\"text-center\"><i class=\"icon-people\"></i></th>\n                <th>User</th>\n                <th class=\"text-center\">Country</th>\n                <th>Usage</th>\n                <th class=\"text-center\">Payment Method</th>\n                <th>Activity</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/1.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-success\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Yiorgos Avraamu</div>\n                  <div class=\"small text-muted\">\n                    <span>New</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-us h4 mb-0\" title=\"us\" id=\"us\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>50%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 50%\" aria-valuenow=\"50\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-cc-mastercard\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>10 sec ago</strong>\n                </td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/2.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-danger\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Avram Tarasios</div>\n                  <div class=\"small text-muted\">\n\n                    <span>Recurring</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-br h4 mb-0\" title=\"br\" id=\"br\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>10%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 10%\" aria-valuenow=\"10\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-cc-visa\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>5 minutes ago</strong>\n                </td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/3.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-warning\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Quintin Ed</div>\n                  <div class=\"small text-muted\">\n                    <span>New</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-in h4 mb-0\" title=\"in\" id=\"in\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>74%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 74%\" aria-valuenow=\"74\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-cc-stripe\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>1 hour ago</strong>\n                </td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/4.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-secondary\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Enéas Kwadwo</div>\n                  <div class=\"small text-muted\">\n                    <span>New</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-fr h4 mb-0\" title=\"fr\" id=\"fr\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>98%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 98%\" aria-valuenow=\"98\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-paypal\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>Last month</strong>\n                </td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/5.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-success\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Agapetus Tadeáš</div>\n                  <div class=\"small text-muted\">\n                    <span>New</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-es h4 mb-0\" title=\"es\" id=\"es\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>22%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-info\" role=\"progressbar\" style=\"width: 22%\" aria-valuenow=\"22\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-google-wallet\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>Last week</strong>\n                </td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">\n                  <div class=\"avatar\">\n                    <img src=\"assets/img/avatars/6.jpg\" class=\"img-avatar\" alt=\"admin@bootstrapmaster.com\">\n                    <span class=\"avatar-status badge-danger\"></span>\n                  </div>\n                </td>\n                <td>\n                  <div>Friderik Dávid</div>\n                  <div class=\"small text-muted\">\n                    <span>New</span> | Registered: Jan 1, 2015\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"flag-icon flag-icon-pl h4 mb-0\" title=\"pl\" id=\"pl\"></i>\n                </td>\n                <td>\n                  <div class=\"clearfix\">\n                    <div class=\"float-left\">\n                      <strong>43%</strong>\n                    </div>\n                    <div class=\"float-right\">\n                      <small class=\"text-muted\">Jun 11, 2015 - Jul 10, 2015</small>\n                    </div>\n                  </div>\n                  <div class=\"progress progress-xs\">\n                    <div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 43%\" aria-valuenow=\"43\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n                  </div>\n                </td>\n                <td class=\"text-center\">\n                  <i class=\"fa fa-cc-amex\" style=\"font-size:24px\"></i>\n                </td>\n                <td>\n                  <div class=\"small text-muted\">Last login</div>\n                  <strong>Yesterday</strong>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div><!--/.col-->\n  </div><!--/.row-->\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"animated fadeIn\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-6 col-lg-3\">\r\n      <div class=\"brand-card\">\r\n        <div class=\"card-body pb-3 bg-success\">\r\n          <div class=\"btn-group float-right\">\r\n            <i class=\"fa fa-car fa-2x\"></i>\r\n          </div>\r\n          <div class=\"text-value\" id=\"active\"></div>\r\n          <div>Active vehicles</div>\r\n        </div>\r\n        <div class=\"brand-card-body\">\r\n          <div>\r\n            <div class=\"text-uppercase text-muted small\">Number of active vehicles</div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div><!--/.col-->\r\n    <div class=\"col-sm-6 col-lg-3\">\r\n      <div class=\"brand-card\">\r\n        <div class=\"card-body pb-3 bg-danger\">\r\n          <div class=\"btn-group float-right\">\r\n            <i class=\"fa fa-car fa-2x\"></i>\r\n          </div>\r\n          <div class=\"text-value\" id=\"inactive\"></div>\r\n          <div>In-active vehicles</div>\r\n        </div>\r\n        <div class=\"brand-card-body\">\r\n          <div>\r\n            <div class=\"text-uppercase text-muted small\">Number of in-active vehicles</div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div><!--/.col-->\r\n    <div class=\"col-sm-6 col-lg-3\">\r\n      <div class=\"brand-card\">\r\n        <div class=\"card-body pb-3 bg-dark\">\r\n          <div class=\"btn-group float-right\">\r\n            <i class=\"fa fa-car fa-2x\"></i>\r\n          </div>\r\n          <div class=\"text-value\" id=\"repair\"></div>\r\n          <div>Vehicles with issues</div>\r\n        </div>\r\n        <div class=\"brand-card-body\">\r\n          <div>\r\n            <div class=\"text-uppercase text-muted small\">Number of vehicles with issues</div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div><!--/.col-->\r\n    <div class=\"col-sm-6 col-lg-3\">\r\n      <div class=\"brand-card\">\r\n        <div class=\"card-body pb-3 bg-info\">\r\n          <div class=\"btn-group float-right\">\r\n            <i class=\"fa fa-car fa-2x\"></i>\r\n          </div>\r\n          <div class=\"text-value\" id=\"total-assets\"></div>\r\n          <div>Total vehicles</div>\r\n        </div>\r\n        <div class=\"brand-card-body\">\r\n          <div>\r\n            <div class=\"text-uppercase text-muted small\">Total number of vehicles</div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div><!--/.col-->\r\n  </div><!--/.row-->\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Vehicle Activities<span class=\"float-right\" id=\"coordinates-panel\"></span>\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"row\">\r\n            <div class=\"col-sm-12\">\r\n              <div style=\"height:600px;\" id=\"heat-map\"></div>\r\n            </div><!--/.col-->\r\n          </div><!--/.row-->\r\n          <br>\n          <div class=\"row\">\r\n            <div class=\"col-sm-12\">\r\n              <table class=\"table table-responsive-sm table-hover table-outline mb-0\" width=\"100%\">\r\n                <thead class=\"thead-dark\">\r\n                  <tr>\r\n                    <th class=\"text-center\"><i class=\"fa fa-car\"></i></th>\r\n                    <th>Name</th>\r\n                    <th>Device #</th>\r\n                    <th>License Plate Number</th>\r\n                    <th>Make</th>\r\n                    <th>Model</th>\r\n                    <th>Category</th>\r\n                    <th>Transmission</th>\r\n                    <th>Fuel Type</th>\r\n                    <th>Installation Date</th>\r\n                  </tr>\r\n                </thead>\r\n                <tbody id=\"assetDetails\">\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n          </div>\n\r\n        </div>\r\n      </div>\r\n    </div><!--/.col-->\r\n  </div><!--/.row-->\r\n\r\n</div>\n");
 
 /***/ }),
 
@@ -56,6 +56,19 @@ var DashboardRoutingModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/views/dashboard/dashboard.component.css":
+/*!*********************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.component.css ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("/*------------------------------------ Asset Details Table -----------------------------------------*/\n#assetDetails {\n  color: #000 !important;\n}\n#assetDetails i.fa {\n    width: 20px;\n    height: 20px;\n    padding-top: 5px;\n    text-align: center;\n    border-radius: 2px;\n    color: #fff !important;\n  }\n#assetDetails .vehicle-img {\n    width: 60px !important;\n  }\n.table {\n  table-layout: fixed;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlld3MvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHFHQUFxRztBQUNyRztFQUNFLHNCQUFzQjtBQUN4QjtBQUVFO0lBQ0UsV0FBVztJQUNYLFlBQVk7SUFDWixnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixzQkFBc0I7RUFDeEI7QUFFQTtJQUNFLHNCQUFzQjtFQUN4QjtBQUVGO0VBQ0UsbUJBQW1CO0FBQ3JCIiwiZmlsZSI6InNyYy9hcHAvdmlld3MvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gQXNzZXQgRGV0YWlscyBUYWJsZSAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSovXG4jYXNzZXREZXRhaWxzIHtcbiAgY29sb3I6ICMwMDAgIWltcG9ydGFudDtcbn1cblxuICAjYXNzZXREZXRhaWxzIGkuZmEge1xuICAgIHdpZHRoOiAyMHB4O1xuICAgIGhlaWdodDogMjBweDtcbiAgICBwYWRkaW5nLXRvcDogNXB4O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBib3JkZXItcmFkaXVzOiAycHg7XG4gICAgY29sb3I6ICNmZmYgIWltcG9ydGFudDtcbiAgfVxuXG4gICNhc3NldERldGFpbHMgLnZlaGljbGUtaW1nIHtcbiAgICB3aWR0aDogNjBweCAhaW1wb3J0YW50O1xuICB9XG5cbi50YWJsZSB7XG4gIHRhYmxlLWxheW91dDogZml4ZWQ7XG59XG4iXX0= */");
+
+/***/ }),
+
 /***/ "./src/app/views/dashboard/dashboard.component.ts":
 /*!********************************************************!*\
   !*** ./src/app/views/dashboard/dashboard.component.ts ***!
@@ -68,383 +81,295 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @coreui/coreui/dist/js/coreui-utilities */ "./node_modules/@coreui/coreui/dist/js/coreui-utilities.js");
-/* harmony import */ var _coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @coreui/coreui-plugin-chartjs-custom-tooltips */ "./node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/umd/custom-tooltips.js");
-/* harmony import */ var _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment/locale/en-gb */ "./node_modules/moment/locale/en-gb.js");
+/* harmony import */ var moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment_locale_en_gb__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _common_services_constants_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../common/services/constants.service */ "./src/app/common/services/constants.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
 
 
 
 
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent() {
-        this.radioModel = 'Month';
-        // lineChart1
-        this.lineChart1Data = [
-            {
-                data: [65, 59, 84, 84, 51, 55, 40],
-                label: 'Series A'
+    function DashboardComponent(_constant, location, router) {
+        var _this = this;
+        this._constant = _constant;
+        this.router = router;
+        this.router.events.subscribe(function (event) {
+            if (location.path() != "") {
+                _this.route = location.path();
             }
-        ];
-        this.lineChart1Labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-        this.lineChart1Options = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"]
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        gridLines: {
-                            color: 'transparent',
-                            zeroLineColor: 'transparent'
-                        },
-                        ticks: {
-                            fontSize: 2,
-                            fontColor: 'transparent',
-                        }
-                    }],
-                yAxes: [{
-                        display: false,
-                        ticks: {
-                            display: false,
-                            min: 40 - 5,
-                            max: 84 + 5,
-                        }
-                    }],
-            },
-            elements: {
-                line: {
-                    borderWidth: 1
-                },
-                point: {
-                    radius: 4,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                },
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.lineChart1Colours = [
-            {
-                backgroundColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--primary'),
-                borderColor: 'rgba(255,255,255,.55)'
-            }
-        ];
-        this.lineChart1Legend = false;
-        this.lineChart1Type = 'line';
-        // lineChart2
-        this.lineChart2Data = [
-            {
-                data: [1, 18, 9, 17, 34, 22, 11],
-                label: 'Series A'
-            }
-        ];
-        this.lineChart2Labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-        this.lineChart2Options = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"]
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        gridLines: {
-                            color: 'transparent',
-                            zeroLineColor: 'transparent'
-                        },
-                        ticks: {
-                            fontSize: 2,
-                            fontColor: 'transparent',
-                        }
-                    }],
-                yAxes: [{
-                        display: false,
-                        ticks: {
-                            display: false,
-                            min: 1 - 5,
-                            max: 34 + 5,
-                        }
-                    }],
-            },
-            elements: {
-                line: {
-                    tension: 0.00001,
-                    borderWidth: 1
-                },
-                point: {
-                    radius: 4,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                },
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.lineChart2Colours = [
-            {
-                backgroundColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--info'),
-                borderColor: 'rgba(255,255,255,.55)'
-            }
-        ];
-        this.lineChart2Legend = false;
-        this.lineChart2Type = 'line';
-        // lineChart3
-        this.lineChart3Data = [
-            {
-                data: [78, 81, 80, 45, 34, 12, 40],
-                label: 'Series A'
-            }
-        ];
-        this.lineChart3Labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-        this.lineChart3Options = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"]
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        display: false
-                    }],
-                yAxes: [{
-                        display: false
-                    }]
-            },
-            elements: {
-                line: {
-                    borderWidth: 2
-                },
-                point: {
-                    radius: 0,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                },
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.lineChart3Colours = [
-            {
-                backgroundColor: 'rgba(255,255,255,.2)',
-                borderColor: 'rgba(255,255,255,.55)',
-            }
-        ];
-        this.lineChart3Legend = false;
-        this.lineChart3Type = 'line';
-        // barChart1
-        this.barChart1Data = [
-            {
-                data: [78, 81, 80, 45, 34, 12, 40, 78, 81, 80, 45, 34, 12, 40, 12, 40],
-                label: 'Series A',
-                barPercentage: 0.6,
-            }
-        ];
-        this.barChart1Labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'];
-        this.barChart1Options = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"]
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        display: false,
-                    }],
-                yAxes: [{
-                        display: false
-                    }]
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.barChart1Colours = [
-            {
-                backgroundColor: 'rgba(255,255,255,.3)',
-                borderWidth: 0
-            }
-        ];
-        this.barChart1Legend = false;
-        this.barChart1Type = 'bar';
-        // mainChart
-        this.mainChartElements = 27;
-        this.mainChartData1 = [];
-        this.mainChartData2 = [];
-        this.mainChartData3 = [];
-        this.mainChartData = [
-            {
-                data: this.mainChartData1,
-                label: 'Current'
-            },
-            {
-                data: this.mainChartData2,
-                label: 'Previous'
-            },
-            {
-                data: this.mainChartData3,
-                label: 'BEP'
-            }
-        ];
-        /* tslint:disable:max-line-length */
-        this.mainChartLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Thursday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        /* tslint:enable:max-line-length */
-        this.mainChartOptions = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"],
-                intersect: true,
-                mode: 'index',
-                position: 'nearest',
-                callbacks: {
-                    labelColor: function (tooltipItem, chart) {
-                        return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor };
-                    }
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        gridLines: {
-                            drawOnChartArea: false,
-                        },
-                        ticks: {
-                            callback: function (value) {
-                                return value.charAt(0);
-                            }
-                        }
-                    }],
-                yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            maxTicksLimit: 5,
-                            stepSize: Math.ceil(250 / 5),
-                            max: 250
-                        }
-                    }]
-            },
-            elements: {
-                line: {
-                    borderWidth: 2
-                },
-                point: {
-                    radius: 0,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                    hoverBorderWidth: 3,
-                }
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.mainChartColours = [
-            {
-                backgroundColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["hexToRgba"])(Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--info'), 10),
-                borderColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--info'),
-                pointHoverBackgroundColor: '#fff'
-            },
-            {
-                backgroundColor: 'transparent',
-                borderColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--success'),
-                pointHoverBackgroundColor: '#fff'
-            },
-            {
-                backgroundColor: 'transparent',
-                borderColor: Object(_coreui_coreui_dist_js_coreui_utilities__WEBPACK_IMPORTED_MODULE_2__["getStyle"])('--danger'),
-                pointHoverBackgroundColor: '#fff',
-                borderWidth: 1,
-                borderDash: [8, 5]
-            }
-        ];
-        this.mainChartLegend = false;
-        this.mainChartType = 'line';
-        // social box charts
-        this.brandBoxChartData1 = [
-            {
-                data: [65, 59, 84, 84, 51, 55, 40],
-                label: 'Facebook'
-            }
-        ];
-        this.brandBoxChartData2 = [
-            {
-                data: [1, 13, 9, 17, 34, 41, 38],
-                label: 'Twitter'
-            }
-        ];
-        this.brandBoxChartData3 = [
-            {
-                data: [78, 81, 80, 45, 34, 12, 40],
-                label: 'LinkedIn'
-            }
-        ];
-        this.brandBoxChartData4 = [
-            {
-                data: [35, 23, 56, 22, 97, 23, 64],
-                label: 'Google+'
-            }
-        ];
-        this.brandBoxChartLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-        this.brandBoxChartOptions = {
-            tooltips: {
-                enabled: false,
-                custom: _coreui_coreui_plugin_chartjs_custom_tooltips__WEBPACK_IMPORTED_MODULE_3__["CustomTooltips"]
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                        display: false,
-                    }],
-                yAxes: [{
-                        display: false,
-                    }]
-            },
-            elements: {
-                line: {
-                    borderWidth: 2
-                },
-                point: {
-                    radius: 0,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                    hoverBorderWidth: 3,
-                }
-            },
-            legend: {
-                display: false
-            }
-        };
-        this.brandBoxChartColours = [
-            {
-                backgroundColor: 'rgba(255,255,255,.1)',
-                borderColor: 'rgba(255,255,255,.55)',
-                pointHoverBackgroundColor: '#fff'
-            }
-        ];
-        this.brandBoxChartLegend = false;
-        this.brandBoxChartType = 'line';
+        });
     }
-    DashboardComponent.prototype.random = function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    };
     DashboardComponent.prototype.ngOnInit = function () {
-        // generate random values for mainChart
-        for (var i = 0; i <= this.mainChartElements; i++) {
-            this.mainChartData1.push(this.random(50, 200));
-            this.mainChartData2.push(this.random(80, 100));
-            this.mainChartData3.push(65);
+        var base = this._constant.baseAppUrl;
+        var uri = this._constant.uri_track;
+        var user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+        var reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+        var company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+        var api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
+        this.api_assets_individual = this._constant.assetApi;
+        var role_id = this._constant.getSessionstorageValueRoleID;
+        //Filter Dropdown
+        $('#_reports').hide();
+        if (role_id >= 3) {
+            $('#_reseller').hide();
+        }
+        if (this.route == '/reports')
+            $('#_reports').show();
+        else
+            $('#_reports').hide();
+        var _map, heatmap;
+        var locations = new Array();
+        //================================INIT==================================//
+        var latlng = new google.maps.LatLng(1.3521, 103.8198);
+        var heatmapOptions = {
+            zoom: 13,
+            center: latlng,
+            panControl: false,
+            zoomControl: false,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            mapTypeControl: false,
+            mapTypeId: google.maps.MapTypeId.HYBRID,
+            streetViewControl: false,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            fullscreenControl: true,
+            fullscreenControlOptions: {
+                position: google.maps.ControlPosition.TOP_LEFT
+            },
+            scaleControl: false,
+            overviewMapControl: false
+        };
+        _map = new google.maps.Map(document.getElementById("heat-map"), heatmapOptions);
+        setHeatMarkers(updateHeatAssets, api_assets);
+        google.maps.event.addListener(_map, 'mousemove', function (event) {
+            document.getElementById('coordinates-panel').innerHTML =
+                event.latLng.lat() + ', ' + event.latLng.lng();
+        });
+        //=====================================Heat Map=============================================//
+        function setHeatMarkers(callback, api_assets) {
+            axios__WEBPACK_IMPORTED_MODULE_7___default.a.get(api_assets)
+                .then(function (response) {
+                //console.log(response);
+                callback(response.data);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        }
+        function updateHeatAssets(data) {
+            var active = 0;
+            var inactive = 0;
+            var repair = 0;
+            var outputDiv = document.getElementById('assetDetails');
+            for (var i = 0, length = data.length; i < length; i++) {
+                if (data[i]) {
+                    if (data[i].LastPos == null || data[i].LastPos.Engine == null || data[i].LastPos.PosID == 0 || data[i].LastPos === "") {
+                        console.log('Data is Null');
+                        continue;
+                    }
+                    else {
+                        var latLng = new google.maps.LatLng(data[i].LastPos.PosY, data[i].LastPos.PosX);
+                        var id = data[i].AssetID;
+                        var tag = data[i].Tag;
+                        var category = data[i].Category;
+                        var vechs = data[i].Name;
+                        var make = data[i].Make;
+                        var model = data[i].Model;
+                        var plate_no = data[i].LicensePlate;
+                        var transmission = data[i].Transmission;
+                        var fuel_type = data[i].FuelType;
+                        var install_date = moment__WEBPACK_IMPORTED_MODULE_2__["utc"](data[i].InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
+                        var address = data[i].LastPos.Location;
+                        var assetTimestamp = data[i].LastPos.Timestamp;
+                        var timestamp1 = moment__WEBPACK_IMPORTED_MODULE_2__["utc"](assetTimestamp).local().format("DD MMM YYYY");
+                        var d = new Date();
+                        var timestamp2 = moment__WEBPACK_IMPORTED_MODULE_2__["utc"](d).local().format("DD MMM YYYY");
+                        timestamp2 = Date.parse(timestamp2);
+                        timestamp1 = Date.parse(timestamp1);
+                        var timestamp = moment__WEBPACK_IMPORTED_MODULE_2__["utc"](assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
+                        var elapsedTimestamp = moment__WEBPACK_IMPORTED_MODULE_2__["utc"](assetTimestamp).local().format();
+                        var el = get_el(elapsedTimestamp);
+                        var vehicleImg = void 0;
+                        // Category image
+                        switch (category) {
+                            case "Car":
+                                vehicleImg = "../assets/img/car.jpg";
+                                break;
+                            case "Truck":
+                                vehicleImg = "../assets/img/truck.jpg";
+                                break;
+                            case "Van":
+                                vehicleImg = "../assets/img/van.jpg";
+                                break;
+                            case "Bus":
+                                vehicleImg = "../assets/img/bus.jpg";
+                                break;
+                            case "Motorcycle":
+                                vehicleImg = "../assets/img/motorcycle.jpg";
+                                break;
+                            case "Recovery Veh":
+                                vehicleImg = "../assets/img/truck.jpg";
+                                break;
+                            case "Lorry":
+                                vehicleImg = "../assets/img/truck.jpg";
+                                break;
+                            case "10 Footer Lorry":
+                                vehicleImg = "../assets/img/truck.jpg";
+                                break;
+                            case "14 Footer Lorry":
+                                vehicleImg = "../assets/img/truck.jpg";
+                                break;
+                            case "Ambulance":
+                                vehicleImg = "../assets/img/ambulance.jpg";
+                                break;
+                        }
+                        if (el == "Active")
+                            active++;
+                        else if (el == "Inactive")
+                            inactive++;
+                        else if (el == "Repair")
+                            repair++;
+                        if (outputDiv) {
+                            outputDiv.innerHTML += "<tr>"
+                                + "<td>"
+                                + "<img class='vehicle-img' src='" + vehicleImg + "'/>"
+                                + "</td>"
+                                + "<td>"
+                                //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
+                                + "<strong><a style='color:#458FD2;'>" + vechs + '</a></strong>'
+                                + "</td>"
+                                + "<td>"
+                                + tag
+                                + "</td>"
+                                + "<td>"
+                                + plate_no
+                                + "</td>"
+                                + "<td>"
+                                + make
+                                + "</td>"
+                                + "<td>"
+                                + model
+                                + "</td>"
+                                + "<td>"
+                                + category
+                                + "</td>"
+                                + "<td>"
+                                + transmission
+                                + "</td>"
+                                + "<td>"
+                                + fuel_type
+                                + "</td>"
+                                + "<td>"
+                                + install_date
+                                + "</td>"
+                                + "</tr>"
+                                + "<hr style='border: 1px solid #FFFFFF !important'>";
+                            document.getElementById('total-assets').innerHTML = data.length;
+                            document.getElementById('active').innerHTML = active.toString();
+                            document.getElementById('inactive').innerHTML = inactive.toString();
+                            document.getElementById('repair').innerHTML = repair.toString();
+                        }
+                        locations.push(latLng);
+                    } //end of else continue     
+                }
+            } //end of for
+            if (locations.length == 0) {
+                if (data.LastPos == null || data.LastPos.Engine == null || data.LastPos.PosID == 0 || data.LastPos === "") {
+                    console.log('Data is Null');
+                }
+                else {
+                    var latLng = new google.maps.LatLng(data.LastPos.PosY, data.LastPos.PosX);
+                    locations.push(latLng);
+                } //end of else continue     
+            }
+            heatmap = new google.maps.visualization.HeatmapLayer({
+                data: locations,
+                map: _map,
+                dissipating: false,
+            });
+            heatmap.setMap(_map);
+            //heatmap.set('radius', heatmap.get('radius') ? null : 20);
+        }
+        function get_el(timestamp) {
+            var now = moment__WEBPACK_IMPORTED_MODULE_2__().format();
+            var diff = moment__WEBPACK_IMPORTED_MODULE_2__["duration"](moment__WEBPACK_IMPORTED_MODULE_2__(now).diff(moment__WEBPACK_IMPORTED_MODULE_2__(timestamp)));
+            var days = parseInt(diff.asDays()); //84
+            var hours = parseInt(diff.asHours()); //2039 hours, but it gives total hours in given miliseconds which is not expacted.
+            hours = hours - days * 24; // 23 hours
+            var minutes = parseInt(diff.asMinutes()); //122360 minutes,but it gives total minutes in given miliseconds which is not expacted.
+            minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
+            var ms = "";
+            if (days == 0 && hours == 0 && minutes == 0) {
+                ms = "Active";
+            }
+            else if (days == 0) {
+                ms = "Inactive";
+            }
+            else {
+                ms = "Repair";
+            }
+            return ms;
+        }
+        function ClearHeatmapFilter() {
+            locations = [];
+            heatmap.setMap(null);
+            $("#assetDetails").empty();
+        }
+        //=======================================On Change==================================================//
+        $('.SelectResellerFilter').on('change', function () {
+            ClearHeatmapFilter();
+        });
+        $('.SelectCompanyFilter').change({ route: this.route }, function (event) {
+            ClearHeatmapFilter();
+            var api_assets_filter = getAssetsHeatFilter(role_id, base, uri, user_id, reseller_id);
+            setHeatMarkers(updateHeatAssets, api_assets_filter);
+        });
+        $('.SelectAssetFilter').change({ api: this.api_assets_individual }, function (event) {
+            var selected = $(this).find("option:selected").val();
+            var api_assets_filter_new = event.data.api + selected;
+            ClearHeatmapFilter();
+            setHeatMarkers(updateHeatAssets, api_assets_filter_new);
+        }); // end of on change
+        //====================================GET API WITH PARAM=================================//
+        function getAssetsHeatFilter(role_id, base, uri, user_id, reseller_id) {
+            var url;
+            if (role_id == 1) {
+                url = base + uri + 'assetinfo' + '?UserID=' + '&ResellerID=' + $('#load-reseller').val() + '&CompanyID=' + $('#load-company').val();
+            }
+            else if (role_id == 2) {
+                url = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+            }
+            else if (role_id >= 3) {
+                url = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + $('#load-company').val();
+            }
+            return url;
         }
     };
+    DashboardComponent.ctorParameters = function () { return [
+        { type: _common_services_constants_service__WEBPACK_IMPORTED_MODULE_4__["ConstantsService"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_6__["Location"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] }
+    ]; };
     DashboardComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./dashboard.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/views/dashboard/dashboard.component.html")).default
-        })
+            template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./dashboard.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/views/dashboard/dashboard.component.html")).default,
+            encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
+            styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./dashboard.component.css */ "./src/app/views/dashboard/dashboard.component.css")).default]
+        }),
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_common_services_constants_service__WEBPACK_IMPORTED_MODULE_4__["ConstantsService"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
