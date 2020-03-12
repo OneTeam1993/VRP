@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event as RouterEvent, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from "@angular/router";
 import { Location } from "@angular/common";
+import { ConstantsService } from './common/services/constants.service';
 
 declare var $: any;
 console.log(`jQuery version: ${$.fn.jquery}`);
@@ -16,13 +17,46 @@ export class AppComponent implements OnInit {
   loading = true;
   route: string;
 
-  constructor(location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
 
     this.router.events.subscribe((event: RouterEvent) => {
 
+      let role_id = this._constant.getSessionstorageValueRoleID;
+
+      //==============================Filter===================================// 
+      $('#_reports').hide();
+
+      if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather') {
+        $('#_reseller_filter').hide();
+        $('#_company_filter').hide();
+        $('#_asset_filter').hide();
+      }
+      else if (this.route == '/companies') {
+        $('#_reseller_filter').show();
+        $('#_company_filter').hide();
+        $('#_asset_filter').hide();
+      }
+      else {
+        $('#_reseller_filter').show();
+        $('#_company_filter').show();
+        $('#_asset_filter').show();
+      }
+
+
+      if (this.route == '/reports') $('#_reports').show();
+      else $('#_reports').hide();
+
+
+      if (role_id >= 3) {
+        $('#_reseller_filter').hide();
+        
+      }
+
+    //==============================Filter===================================//
+
+
       if (location.path() != "") {
         this.route = location.path();
-        //console.log(this.route)
         if (this.route == "/login") {
           this.loading = false;
         } else {

@@ -13,16 +13,24 @@ let _table: any = $("#resellerData");
 
 @Component({
   templateUrl: 'reseller.component.html',
-  styleUrls: ["./reseller.component.css"],
+  styleUrls: ["reseller.component.css"],
 })
 
 export class ResellerComponent implements OnInit {
 
-
   clickEventsubscription: Subscription;
   route: string;
   api_assets_individual: string;
-  constructor(private _constant: ConstantsService) {}
+
+  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+    this.router.events.subscribe((event: RouterEvent) => {
+
+      if (location.path() != "") {
+        this.route = location.path();
+      }
+
+    });
+  }
 
   ngOnInit(): void {
 
@@ -30,11 +38,14 @@ export class ResellerComponent implements OnInit {
 
     _table = $("#resellerData").DataTable({
       "destroy": true,
-      "responsive": false,
+      "responsive": true,
       "select": true,
       "filter": true,
       //"orderCellsTop": true,
-      //"fixedHeader": true,
+      "fixedHeader": {
+        "header": true,
+        "footer": false
+      },
       "colReorder": false,
       "rowReorder": true,
       "keys": true,
@@ -49,27 +60,20 @@ export class ResellerComponent implements OnInit {
       "ordering": true,
       "order": [[0, 'asc']],
       "info": true,
-      "dom": 'Blfrtip',
+      //"dom": '<"addNew">Blfrtip',
+      "dom": '<"addNew"><"floatRight"B><"top"l>frti<"bottom"p><"clear">',
       "language": {
         "zeroRecords": "Nothing found - sorry",
         "infoEmpty": "No events available",
         "infoFiltered": "(filtered from MAX total events)"
       },
       "buttons": [
-        {
-          text: 'Add New',
-          className: 'addBtn',
-          action: function (e, dt, node, config) {
-            $('#resellerModal').modal("show");
-            $('#resellerFormTitle').text('Add New Reseller');
-          }
-        },
-        { extend: 'colvis', className: 'float-right ml-2' },
+        { extend: 'colvis', className: 'float-right' },
         [
           {
             extend: 'collection',
             text: 'Export',
-            className: 'float-right ml-2',
+            className: 'float-right',
             buttons: [
               'excel',
               'csv',
@@ -78,7 +82,14 @@ export class ResellerComponent implements OnInit {
             ]
           },
         ],
-        { extend: 'copy' },
+        { extend: 'copy', className: 'copyBtn' },
+        {
+          text: 'Refresh',
+          className: 'refreshBtn float-right ml-2',
+          action: function (e, dt, node, config) {
+            $('#resellerData').DataTable().ajax.reload();
+          }
+        },
       ],
       "columns": [
         { data: "ResellerID", title: "ID", className: 'reorder' },
@@ -94,12 +105,11 @@ export class ResellerComponent implements OnInit {
         }
       ],
       "ajax": {
-        url: this._constant.resellerApi,
+        url: api,
         type: 'GET',
         dataType: 'json',
         dataSrc: ''
       },
-
       "columnDefs": [
         {
           // The `data` parameter refers to the data for the cell (defined by the
@@ -111,9 +121,23 @@ export class ResellerComponent implements OnInit {
           "targets": 0
         }
       ],
+      "initComplete": function (data, type, row) {
+
+        $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
+
+        $('#add').on('click', function (e) {
+
+          $('#resellerModal').modal("show");
+          $('#resellerFormTitle').text('Add New Reseller');
+
+        });
+
+
+      },
       "footerCallback": function (row, data, start, end, display) {
       }
-    })
+    });
+
 
     /*------------------ Edit Reseller -----------------*/
 
@@ -157,10 +181,11 @@ export class ResellerComponent implements OnInit {
       });
     });
 
+
   }
 
   onSubmit() {
-    //this.activeModal.close(true);
+
     let obj: any = {
       ResellerID: $('#resellerID').val(),
       Flag: 1,
@@ -173,8 +198,8 @@ export class ResellerComponent implements OnInit {
     function clearForms() {
       $('#resellerName').val('');
       $('#resellerAddress').val(''),
-        $('#resellerEmail').val(''),
-        $('#resellerPhone').val('')
+      $('#resellerEmail').val(''),
+      $('#resellerPhone').val('')
     }
 
     if (obj.ResellerID == 'undefined' || obj.ResellerID == null || obj.ResellerID == 0) {
@@ -210,16 +235,8 @@ export class ResellerComponent implements OnInit {
   clearForms() {
     $('#resellerName').val('');
     $('#resellerAddress').val(''),
-      $('#resellerEmail').val(''),
-      $('#resellerPhone').val('')
+    $('#resellerEmail').val(''),
+    $('#resellerPhone').val('')
   }
-
-  //decline() {
-  //  this.activeModal.close(false);
-  //}
-
-  //dismiss() {
-  //  this.activeModal.dismiss();
-  //}
 
 }

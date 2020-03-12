@@ -18,12 +18,51 @@ let _table: any = $("#companyData");
 
 export class CompaniesComponent implements OnInit {
 
-  constructor(private _constant: ConstantsService) { }
+  base = this._constant.baseAppUrl;
+  uri = this._constant.uri_track;
+  user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+  reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+  company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
+  username = sessionStorage.getItem('setSessionstorageValueUser');
+  company = sessionStorage.getItem('setSessionstorageValueCompany');
+  route: string;
+  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+
+    this.router.events.subscribe((event: RouterEvent) => {
+
+      if (location.path() != "") {
+        this.route = location.path();
+      }
+
+    });
+
+  }
 
   ngOnInit(): void {
 
     let api = this._constant.companyApi;
     let api_reseller = this._constant.resellerApi;
+    let base = this._constant.baseAppUrl;
+    let uri = this._constant.uri_track;
+    let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
+    let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let role_id = this._constant.getSessionstorageValueRoleID;
+    let api_companies: string;
+
+    if (role_id == 1) {
+      api_companies = base + uri + 'companyinfo' + '?ResellerID=' + $('#load-reseller').val();
+    } else if (role_id == 2) {
+      api_companies = base + uri + 'companyinfo' + '?ResellerID=' + reseller_id;
+    }
+    if (role_id >= 3) {
+      $('#_jds').hide();
+      $('#_routing').hide();
+      $('#_limits').hide();
+      $('#company_reseller').hide();
+      api_companies = base + uri + 'companyinfo' + '?ResellerID=' + reseller_id + "&CompanyID=" + company_id;
+    }
 
     $.getJSON(api_reseller, function (data) {
       $.each(data, function (index, item) {
@@ -32,14 +71,16 @@ export class CompaniesComponent implements OnInit {
       $('.selectpicker').selectpicker('refresh');
     });
 
-
     _table = $("#companyData").DataTable({
       "destroy": true,
       "responsive": false,
       "select": true,
       "filter": true,
       //"orderCellsTop": true,
-      //"fixedHeader": true,
+      "fixedHeader": {
+        "header": true,
+        "footer": false
+      },
       "colReorder": false,
       "rowReorder": true,
       "keys": true,
@@ -54,31 +95,19 @@ export class CompaniesComponent implements OnInit {
       "ordering": true,
       "order": [[0, 'asc']],
       "info": true,
-      "dom": 'Blfrtip',
+      "dom": '<"addNew">Blfrtip',
       "language": {
         "zeroRecords": "Nothing found - sorry",
         "infoEmpty": "No events available",
         "infoFiltered": "(filtered from MAX total events)"
       },
       "buttons": [
-        {
-          text: 'Add New',
-          className: 'addBtn',
-          action: function (e, dt, node, config) {
-            $('#companyModal').modal("show");
-            $('#companyFormTitle').text('Add New Company');
-
-            if ($('#companyID').val().length == 0) $("#companyStatus").prop("checked", true);
-
-          }
-        },
-        { extend: 'colvis' },
+        { extend: 'colvis', className: 'float-right' },
         [
-          // Export Button
           {
             extend: 'collection',
             text: 'Export',
-            class: 'button-export',
+            className: 'float-right',
             buttons: [
               'excel',
               'csv',
@@ -87,7 +116,14 @@ export class CompaniesComponent implements OnInit {
             ]
           },
         ],
-        { extend: 'copy' },
+        { extend: 'copy', className: 'copyBtn' },
+        {
+          text: 'Refresh',
+          className: 'refreshBtn float-right ml-2',
+          action: function (e, dt, node, config) {
+            $('#resellerData').DataTable().ajax.reload();
+          }
+        },
       ],
       "columns": [
         //{ data: " ", title: "Status", className: 'reorder' },
@@ -102,11 +138,11 @@ export class CompaniesComponent implements OnInit {
           data: null,
           title: "Action",
           className: "center",
-          defaultContent: '<a class="editCompany"><i class="fa fa-edit"></i></a> &emsp; <a class="deleteCompany" data-toggle="modal"><i class="fa fa-trash"></i></a>'
+          //defaultContent: 
         }
       ],
       "ajax": {
-        url: this._constant.companyApi,
+        url: api_companies,
         type: 'GET',
         dataType: 'json',
         dataSrc: ''
@@ -125,8 +161,35 @@ export class CompaniesComponent implements OnInit {
             }
           },
           "targets": 1
+        },
+        {
+          "render": function (data) {
+
+            if (role_id  <= 2) {
+              return '<a class="editCompany"><i class="fa fa-edit"></i></a> &emsp; <a class="deleteCompany" data-toggle="modal"><i class="fa fa-trash"></i></a>'
+            } else {
+              return '<a class="editCompany"><i class="fa fa-edit"></i></a>'
+            }
+          },
+          "targets": 7
         }
       ],
+      "initComplete": function (data, type, row) {
+   
+
+        $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
+
+        $('#add').on('click', function (e) {
+
+          $('#companyModal').modal("show");
+          $('#companyFormTitle').text('Add New Company');
+          $('#companyReseller').val(Number(sessionStorage.getItem('setSessionstorageValueUserResellerID')));
+          $('.selectpicker').selectpicker('refresh');
+
+        });
+
+
+      },
       "footerCallback": function (row, data, start, end, display) {
       }
     })
@@ -140,7 +203,12 @@ export class CompaniesComponent implements OnInit {
 
       var data = _table.row($(this).parents('tr')).data();
       $('#companyID').val(data.CompanyID);
-      $('#companyImageBox').attr('src', data.Image).width(110).height(110);
+      if (data.Image.includes('http')) {
+        $('#companyImageBox').attr('src', data.Image).width(110).height(110);
+      } else {
+        $('#companyImageBox').attr('src', '../assets/img/avatars/default-company.jpg').width(110).height(110);
+      }
+
       $('#companyStatus').val(data.Flag);
       $('#companyName').val(data.Name);
       $('#companyAddress').val(data.Address);
@@ -156,7 +224,6 @@ export class CompaniesComponent implements OnInit {
       $('.selectpicker').selectpicker('refresh');
 
     });
-
 
     /*------------------ Delete Company -----------------*/
 
@@ -222,6 +289,248 @@ export class CompaniesComponent implements OnInit {
       }
     }
 
+    //=======================================On Change==================================================//
+
+    $('.SelectResellerFilter').on('change', { role_id: this.role_id, base: this.base, uri: this.uri }, function (event) {
+
+      let company_api: string;
+      if (role_id == 1) {
+        company_api = base + uri + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+      } else if (role_id == 2) {
+        company_api = base + uri + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
+      } else if (role_id >= 3) {
+        company_api = base + uri + 'companyinfo' + '?ResellerID=' + $('#load-reseller').val() + "&CompanyID=" + $('#load-company').val();
+      }
+
+      _table = $("#companyData").DataTable({
+        "destroy": true,
+        "responsive": false,
+        "select": true,
+        "filter": true,
+        //"orderCellsTop": true,
+        //"fixedHeader": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "scrollX": true,
+        "scrollCollapse": true,
+        "stateSave": true,
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'All']],
+        "searching": true,
+        "ordering": true,
+        "order": [[0, 'asc']],
+        "info": true,
+        "dom": '<"addNew">Blfrtip',
+        "language": {
+          "zeroRecords": "Nothing found - sorry",
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)"
+        },
+        "buttons": [
+          { extend: 'colvis', className: 'float-right' },
+          [
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right',
+              buttons: [
+                'excel',
+                'csv',
+                'pdf',
+                'print'
+              ]
+            },
+          ],
+          { extend: 'copy', className: 'copyBtn' },
+          {
+            text: 'Refresh',
+            className: 'refreshBtn float-right ml-2',
+            action: function (e, dt, node, config) {
+              $('#resellerData').DataTable().ajax.reload();
+            }
+          },
+        ],
+        "columns": [
+          //{ data: " ", title: "Status", className: 'reorder' },
+          { data: "CompanyID", title: "ID", className: 'reorder' },
+          { data: "Image", title: "Image", className: 'reorder' },
+          { data: "Name", title: "Company", className: 'reorder' },
+          { data: "Address", title: "Address", className: 'reorder' },
+          { data: "Phone", title: "Phone", className: 'reorder' },
+          { data: "Email", title: "Email", className: 'reorder' },
+          { data: "Reseller", title: "Reseller", className: 'reorder' },
+          {
+            data: null,
+            title: "Action",
+            className: "center",
+            defaultContent: '<a class="editCompany"><i class="fa fa-edit"></i></a> &emsp; <a class="deleteCompany" data-toggle="modal"><i class="fa fa-trash"></i></a>'
+          }
+        ],
+        "ajax": {
+          url: company_api,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: ''
+        },
+
+        "columnDefs": [
+          {
+            // The `data` parameter refers to the data for the cell (defined by the
+            // `data` option, which defaults to the column being worked with, in
+            // this case `data: 0`.
+            "render": function (data, type, row) {
+              if (row.ImageFill == "Uniform") {
+                return '<img src="' + data + '" width="50" height="50">'
+              } else {
+                return '<img src="../assets/img/avatars/default-company.jpg" width="50" height="50">'
+              }
+            },
+            "targets": 1
+          }
+        ],
+        "initComplete": function (data, type, row) {
+
+          $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
+
+          $('#add').on('click', function (e) {
+
+            $('#companyModal').modal("show");
+            $('#companyFormTitle').text('Add New Reseller');
+
+          });
+
+
+        },
+        "footerCallback": function (row, data, start, end, display) {
+        }
+      })
+
+
+    });
+
+    $('.SelectResellerModalFilter').on('change', { role_id: this.role_id, base: this.base, uri: this.uri }, function (event) {
+
+      let company_api: string;
+      if (role_id == 1) {
+        company_api = base + uri + 'companyinfo' + '?&ResellerID=' + $('#companyReseller').val();
+      } else if (role_id == 2) {
+        company_api = base + uri + 'companyinfo' + '?&ResellerID=' + $('#companyReseller').val();
+      } else if (role_id >= 3) {
+        company_api = base + uri + 'companyinfo' + '?ResellerID=' + $('#companyReseller').val() + "&CompanyID=" + $('#load-company').val();
+      }
+
+      _table = $("#companyData").DataTable({
+        "destroy": true,
+        "responsive": false,
+        "select": true,
+        "filter": true,
+        //"orderCellsTop": true,
+        //"fixedHeader": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "scrollX": true,
+        "scrollCollapse": true,
+        "stateSave": true,
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'All']],
+        "searching": true,
+        "ordering": true,
+        "order": [[0, 'asc']],
+        "info": true,
+        "dom": '<"addNew">Blfrtip',
+        "language": {
+          "zeroRecords": "Nothing found - sorry",
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)"
+        },
+        "buttons": [
+          { extend: 'colvis', className: 'float-right' },
+          [
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right',
+              buttons: [
+                'excel',
+                'csv',
+                'pdf',
+                'print'
+              ]
+            },
+          ],
+          { extend: 'copy', className: 'copyBtn' },
+          {
+            text: 'Refresh',
+            className: 'refreshBtn float-right ml-2',
+            action: function (e, dt, node, config) {
+              $('#resellerData').DataTable().ajax.reload();
+            }
+          },
+        ],
+        "columns": [
+          //{ data: " ", title: "Status", className: 'reorder' },
+          { data: "CompanyID", title: "ID", className: 'reorder' },
+          { data: "Image", title: "Image", className: 'reorder' },
+          { data: "Name", title: "Company", className: 'reorder' },
+          { data: "Address", title: "Address", className: 'reorder' },
+          { data: "Phone", title: "Phone", className: 'reorder' },
+          { data: "Email", title: "Email", className: 'reorder' },
+          { data: "Reseller", title: "Reseller", className: 'reorder' },
+          {
+            data: null,
+            title: "Action",
+            className: "center",
+            defaultContent: '<a class="editCompany"><i class="fa fa-edit"></i></a> &emsp; <a class="deleteCompany" data-toggle="modal"><i class="fa fa-trash"></i></a>'
+          }
+        ],
+        "ajax": {
+          url: company_api,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: ''
+        },
+
+        "columnDefs": [
+          {
+            // The `data` parameter refers to the data for the cell (defined by the
+            // `data` option, which defaults to the column being worked with, in
+            // this case `data: 0`.
+            "render": function (data, type, row) {
+              if (row.ImageFill == "Uniform") {
+                return '<img src="' + data + '" width="50" height="50">'
+              } else {
+                return '<img src="../assets/img/avatars/default-company.jpg" width="50" height="50">'
+              }
+            },
+            "targets": 1
+          }
+        ],
+        "initComplete": function (data, type, row) {
+
+          $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
+
+          $('#add').on('click', function (e) {
+
+            $('#companyModal').modal("show");
+            $('#companyFormTitle').text('Add New Company');
+
+          });
+
+
+        },
+        "footerCallback": function (row, data, start, end, display) {
+        }
+      })
+
+
+    });
+
   }
 
   /*----------------------------------------------------------- Submit Company -----------------------------------------------------*/
@@ -230,9 +539,6 @@ export class CompaniesComponent implements OnInit {
   onSubmit() {
 
     var GetCompanyID = $('#CompanyID').val();
-
-
-    //this.activeModal.close(true);
 
     var flag;
     if ($('#companyStatus').prop("checked") == true) {
@@ -289,7 +595,6 @@ export class CompaniesComponent implements OnInit {
       Weather: $('#companyWeather').val()
     };
 
-    alert(JSON.stringify(obj))
 
     if (obj.CompanyID == 'undefined' || obj.CompanyID == null || obj.CompanyID == 0) {
 
@@ -395,12 +700,12 @@ export class CompaniesComponent implements OnInit {
       $('#companyID').val('');
       $('#companyName').val('');
       $('#companyAddress').val(''),
-        $('#companyEmail').val(''),
-        $('#companyPhone').val(''),
-        $('#companyReseller').val(''),
-        $('#companyUserLimit').val(''),
-        $('#companyZoneLimit').val(''),
-        $('#companyAssetLimit').val('')
+      $('#companyEmail').val(''),
+      $('#companyPhone').val(''),
+      $('#companyReseller').val(''),
+      $('#companyUserLimit').val(''),
+      $('#companyZoneLimit').val(''),
+      $('#companyAssetLimit').val('')
     }
 
   }
@@ -416,4 +721,40 @@ export class CompaniesComponent implements OnInit {
       $('#companyZoneLimit').val(''),
       $('#companyAssetLimit').val('')
   }
+
+  onOptionsSelectedReseller(value: any) {
+ 
+    Number(sessionStorage.setItem('setSessionstorageValueUserResellerID', value));
+
+    if (this.route == '/companies') {
+
+      $("#companyData").empty();
+      $('#load-reseller').val(value);
+      $(".selectpicker").selectpicker('refresh');
+    }
+
+
+    $('#load-company').empty();
+    $('#load-assets').empty();
+    $('#load-company').append($('<option></option>').val(0).html('---'));
+
+    let company_api: string;
+    if (this.role_id == 1) {
+      company_api = this.base + this.uri + 'companyinfo' + '?&ResellerID=' + value;
+    } else if (this.role_id == 2) {
+      company_api = this.base + this.uri + 'companyinfo' + '?&ResellerID=' + value;
+    } else if (this.role_id >= 3) {
+      company_api = this.base + this.uri + 'companyinfo' + '?ResellerID=' + value;
+    }
+
+    $.getJSON(company_api, function (data) {
+      $.each(data, function (index, item) {
+        $('#load-company').append($('<option></option>').val(item.CompanyID).html(item.Name));
+      });
+      $('.selectpicker').selectpicker('refresh');
+    });
+
+    $(".selectpicker").selectpicker('refresh');
+  }
+
 }

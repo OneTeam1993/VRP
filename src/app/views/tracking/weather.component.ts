@@ -41,14 +41,6 @@ export class WeatherComponent implements OnInit {
     let role_id = this._constant.getSessionstorageValueRoleID;
     let weather_api = this._constant.weatherApi;
 
-    //Filter Dropdown
-    $('#_reports').hide();
-    if (role_id >= 3) {
-      $('#_reseller').hide();
-    }
-    if (this.route == '/reports') $('#_reports').show();
-    else $('#_reports').hide();
-
     //================================INIT==================================//
 
     var latlng = new google.maps.LatLng(1.3521, 103.8198);

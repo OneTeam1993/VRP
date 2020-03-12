@@ -13,6 +13,10 @@ export class NavbarsComponent implements OnInit, AfterViewChecked {
     this._isCollapsed = value;
   }
   get isCollapsed() {
+
+    alert('test')
+    $('#resellerData').DataTable().ajax.reload();
+
     if (this.collapseRef) {
       // temp fix for "overflow: hidden"
       if (getComputedStyle(this.collapseRef.nativeElement).getPropertyValue('display') === 'flex') {
@@ -30,7 +34,9 @@ export class NavbarsComponent implements OnInit, AfterViewChecked {
     private renderer: Renderer2,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   ngAfterViewChecked (): void {
     this.collapseRef = this.collapse;

@@ -1,59 +1,103 @@
-<div  class="card">
-  <div class="card-body">
-    <button class="btn btn-success mr-1 mb-1" (click)="showSuccess()">Try Success</button>
-    <button class="btn btn-danger mr-1 mb-1" (click)="showError()">Try Error</button>
-    <button class="btn btn-warning mr-1 mb-1" (click)="showWarning()">Try Warning</button>
-    <button class="btn btn-info mr-1 mb-1" (click)="showInfo()">Try Info</button>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Playback</span>
+        </div>
+        <div class="card-body">
+          <div style="height:400px;" id="map">Loading Map ...</div>
+          <div class="panel">
+            <div class="control">
+              <button id="play" class="btn btn-md btn-primary"><i class="fa fa-play fa-fw"></i></button>
+              <button id="pause" class="btn btn-md btn-primary"><i class="fa fa-pause fa-fw"></i></button>
+            </div>
+            <div class="controlSlider">
+              <input id="forwind" type="range" min="1" max="0" value="1" style="color:black;" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Charts</span>
+        </div>
+        <div class="card-body">
+          <!-- Position Report -->
+          <div id="positionSection">
+            <div id="chartPosition" class="col-md-12" style="width:100% !important;height: 100%"></div>
+          </div>
+          <!-- Speed Report -->
+          <div id="speedSection">
+            <div id="chartSpeed" class="col-md-12" style="width:100% !important;"></div>
+          </div>
+          <!-- Mileage Report -->
+          <div id="mileageSection">
+            <div style="width: 100%;" id="_mileageR">
+              <div id="chartMileage" class="col-md-12" style="width:100% !important;"></div>
+            </div>
+          </div>
+          <!-- Utilization Report -->
+          <div id="utilizationSection">
+            <div style="width: 100%;" id="_utilizationR">
+              <div id="chartUtilization" class="col-md-12" style="width:100% !important;"></div>
+            </div>
+          </div>
+          <!-- Utilization2 Report -->
+          <div id="utilization2Section">
+            <div style="width: 100%;" id="_utilization2R">
+              <div id="chartUtilization2" class="col-md-12" style="width:100% !important;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="reports-container" class="card">
+        <div id="reportTitle" class="card-header">
+          <span class="font-weight-bold" id="label_reports"></span>
+        </div>
+        <div class="card-body">
+          <!-- Position Report -->
+          <div style="width: 100%;" id="_positionR">
+            <div class="table-responsive pt-3">
+              <table datatable id="positionReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
+
+          <!-- Speed Report -->
+          <div style="width: 100%;" id="_speedR">
+            <div class="table-responsive pt-3">
+              <table datatable id="speedReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
+
+          <!-- Mileage Report -->
+          <div style="width: 100%;" id="_mileageR">
+            <div class="table-responsive pt-3">
+              <table datatable id="mileageReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
+
+          <!-- Utilization Report -->
+          <div style="width: 100%;" id="_utilizationR">
+            <div class="table-responsive pt-3">
+              <table datatable id="utilizationReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
+
+          <!-- Utilization2 Report -->
+          <div style="width: 100%;" id="_utilization2R">
+            <div class="table-responsive pt-3">
+              <table datatable id="utilization2Report" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<div id="reports-container" class="card">
-  <div id="reportTitle" class="card-header">
-    <!--Reports-->
-  </div>
-
-  <div class="card-body">
-
-    <!-- Position Report -->
-    <div style="width: 100%;" id="_positionR">
-      <div class="table-responsive pt-3">
-        <table datatable id="positionReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
-      </div>
-    </div>
-
-    <!-- Speed Report -->
-    <div style="width: 100%;" id="_speedR">
-      <div class="table-responsive pt-3">
-        <table datatable id="speedReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
-      </div>
-    </div>
-
-    <!-- Mileage Report -->
-    <div style="width: 100%;" id="_mileageR">
-      <div class="table-responsive pt-3">
-        <table datatable id="mileageReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
-      </div>
-    </div>
-
-    <!-- Utilization Report -->
-    <div style="width: 100%;" id="_utilizationR">
-      <div class="table-responsive pt-3">
-        <table datatable id="utilizationReport" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
-      </div>
-    </div>
-
-    <!-- Utilization2 Report -->
-    <div style="width: 100%;" id="_utilization2R">
-      <div class="table-responsive pt-3">
-        <table datatable id="utilization2Report" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0" width="100%"></table>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="card-footer">
-
-  </div>
-</div>
-
-

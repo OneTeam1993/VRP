@@ -39,17 +39,6 @@ export class DashboardComponent implements OnInit {
     this.api_assets_individual = this._constant.assetApi;
     let role_id = this._constant.getSessionstorageValueRoleID;
 
-    //Filter Dropdown
-    $('#_reports').hide();
-    if (role_id >= 3) {
-      $('#_reseller').hide();
-    }
-    if (this.route == '/reports') $('#_reports').show();
-    else $('#_reports').hide();
-
-    var _map, heatmap;
-    var locations = new Array();
-
     //================================INIT==================================//
 
     setHeatMarkers(updateHeatAssets, api_assets);

@@ -43,14 +43,6 @@ export class TrafficComponent implements OnInit  {
     let traffic_api = this._constant.trafficApi;
     let traffic_incident_api = this._constant.traffic_incidentApi;
 
-    //Filter Dropdown
-    $('#_reports').hide();
-    if (role_id >= 3) {
-      $('#_reseller').hide();
-    }
-    if (this.route == '/reports') $('#_reports').show();
-    else $('#_reports').hide();
-
     var map, marker, paramtitle, infoBubble;
     let infoBoxList: any = [];
     var markers = new Array();

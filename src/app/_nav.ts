@@ -291,19 +291,19 @@ export const navItems: INavData[] = [
   //  },
   //  attributes: { disabled: true },
   //},
-  //{
-  //  name: 'Download CoreUI',
-  //  url: 'http://coreui.io/angular/',
-  //  icon: 'icon-cloud-download',
-  //  class: 'mt-auto',
-  //  variant: 'success',
-  //  attributes: { target: '_blank', rel: 'noopener' }
-  //},
-  //{
-  //  name: 'Try CoreUI PRO',
-  //  url: 'http://coreui.io/pro/angular/',
-  //  icon: 'icon-layers',
-  //  variant: 'danger',
-  //  attributes: { target: '_blank', rel: 'noopener' }
-  //}
+  {
+    name: 'Download iOS',
+    url: 'http://coreui.io/angular/',
+    icon: 'fa fa-apple fa-2x',
+    class: 'mt-auto',
+    variant: 'primary',
+    attributes: { target: '_blank', rel: 'noopener' }
+  },
+  {
+    name: 'Download Android',
+    url: 'https://play.google.com/store/apps/details?id=sg.com.acecom.trackSGAdmin&hl=en',
+    icon: 'fa fa-android fa-2x',
+    variant: 'success',
+    attributes: { target: '_blank', rel: 'noopener' }
+  }
 ];

@@ -80,28 +80,29 @@
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
   </main>
-  <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+  <app-aside id="aside" [fixed]="true" [display]="false" [ngClass]="'test'">
     <tabset id="asset_list">
       <tab class="tab_aside">
         <ng-template tabHeading><i class="fa fa-filter"></i></ng-template>
         <div class="p-3">
           <div class="row">
-            <div class="form-group col-sm-12" id="_reseller">
+            <div class="form-group col-sm-12" id="_reseller_filter">
               <label>Reseller</label>
               <select #resellerSelect (change)='onOptionsSelectedReseller(resellerSelect.value)' class="selectpicker SelectResellerFilter" data-live-search="true" data-width="100%" id="load-reseller"></select>
             </div>
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-12" id="_company_filter">
               <label>Company</label>
               <select #companySelect (change)='onOptionsSelectedCompany(companySelect.value)' class="selectpicker SelectCompanyFilter" data-live-search="true" data-width="100%" id="load-company"></select>
             </div>
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-12" id="_asset_filter">
               <label>Vehicles</label>
               <select #assetSelect (change)='onOptionsSelectedAsset(assetSelect.value)' class="selectpicker SelectAssetFilter" data-live-search="true" data-width="100%" id="load-assets"></select>
             </div>
-		      	<div id="_reports" class="report-content">
+
+            <div id="_reports" class="report-content">
               <div class="form-group col-sm-12 padding-c">
                 <label>Report</label>
-                <select class="selectpicker" data-live-search="true" data-width="100%" id="load-report"></select>
+                <select #reportSelect (change)='onOptionsSelectedReport(reportSelect.value)' class="selectpicker" data-live-search="true" data-width="100%" id="load-report"></select>
               </div>
               <div class="form-group col-sm-12 padding-c" id="_dateFrom">
                 <input id="dateFrom" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
@@ -117,7 +118,6 @@
                 <button class="btn btn-block btn-info active" type="button" aria-pressed="true" id="generate" value="generate" (click)="generate();">Generate</button>
               </div>
             </div>
-
           </div>
         </div>
       </tab>

@@ -37,6 +37,7 @@ export class ConstantsService {
   readonly carkparkApi: string = 'https://api.data.gov.sg/v1/transport/carpark-availability';
   readonly traffic_incidentApi: string = 'http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents';
   readonly weatherApi: string = 'https://api.data.gov.sg/v1/environment/24-hour-weather-forecast';
+  readonly iconURL: string = "../assets/img/playback-marker/";
  
   //Declare Session Storage
   readonly getSessionstorageValueLanguage: string = sessionStorage.getItem('setSessionstorageValueLanguage');
@@ -78,9 +79,9 @@ export class ConstantsService {
     let url: string;
 
     if (this.getSessionstorageValueRoleID == 1) {
-      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID;
     } else if (this.getSessionstorageValueRoleID == 2) {
-      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID;
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID;
     } else if (this.getSessionstorageValueRoleID >= 3) {
       url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
     }
@@ -95,7 +96,7 @@ export class ConstantsService {
     } else if (this.getSessionstorageValueRoleID == 2) {
       url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#load-reseller').val();
     } else if (this.getSessionstorageValueRoleID >= 3) {
-      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + $('#load-reseller').val() + "&ResellerID=" + $('#load-company').val();
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?ResellerID=' + $('#load-reseller').val() + "&CompanyID=" + $('#load-company').val();
     }
     return url;
   }

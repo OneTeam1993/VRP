@@ -9,6 +9,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -33,7 +35,7 @@ import {
   AppBreadcrumbModule,
   AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule
+  AppSidebarModule,
 } from '@coreui/angular';
 
 // Import routing module
@@ -61,7 +63,8 @@ import { EventEmitterService } from './views/reports/event-emitter.service';
     TabsModule.forRoot(),
     ChartsModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    HighchartsChartModule,
   ],
   declarations: [
     AppComponent,

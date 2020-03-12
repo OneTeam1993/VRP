@@ -61,14 +61,6 @@ export class TrackingComponent implements OnInit {
     let api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
     let api_zones = base + uri + 'zoneinfo' + '?ResellerID=' + reseller_id + '&CompanyID=' + company_id;
 
-    //Filter Dropdown
-    $('#_reports').hide();
-    if (role_id >= 3) {
-      $('#_reseller').hide();
-    }
-    if (this.route == '/reports') $('#_reports').show();
-    else $('#_reports').hide();
-
     //var openmarker= [];
     var openmarker = new Array();
     var map;

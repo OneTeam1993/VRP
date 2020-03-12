@@ -14,11 +14,11 @@ div.dt-button-collection {
 }
 
 .dt-button.buttons-collection {
-  color: #fff;
+  color: #fff !important;
   background: #5a6268 !important;
   border-color: #bab9b9;
-  margin-left: 5px !important;
-  margin-right: 0 !important
+  //margin-left: 5px !important;
+  margin-right: 0 !important;
 }
 
 button.dt-button, div.dt-button, a.dt-button {
@@ -75,4 +75,66 @@ table.dataTable.nowrap th {
 
 .modal.show {
   background: rgba(0,0,0,0.7);
+}
+
+/*------------------------- Responsive Module Datatables -------------------------------*/
+.module-dt .dataTables_scrollHeadInner {
+  width: 100% !important;
+  padding-right: 0 !important;
+}
+
+.module-dt .dataTables_scrollHeadInner table, .module-dt .dataTables_scrollBody table {
+  min-width: 1000px;
+  width: 100% !important;
+}
+
+.module-dt div.dt-buttons {
+  float: right !important;
+}
+
+.copyBtn, .refreshBtn {
+  color: #fff !important;
+  background: #5a6268 !important;
+  border-color: #bab9b9;
+  margin-right: 0 !important;
+}
+
+.addBtn:hover, .copyBtn:hover, .refreshBtn:hover,
+.addBtn:focus, .copyBtn:focus, .refreshBtn:focus,
+.addBtn:active, .copyBtn:active, .refreshBtn:active {
+  background: #3f3f3f !important;
+}
+
+.addBtn {
+  color: #fff !important;
+  background: #5a6268 !important;
+  border-color: #bab9b9;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 0.333em;
+  margin-right: 0.333em;
+  border: 1px solid #999;
+  padding: 0.3em 1em;
+  border-radius: 2px;
+  font-size: 0.88em;
+  line-height: 1.6em;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  text-decoration: none;
+  outline: none;
+  text-overflow: ellipsis;
+}
+
+.module-dt table.dataTable.nowrap th, .module-dt table.dataTable.nowrap td {
+  white-space: unset !important;
+}
+
+.module-dt .table {
+  table-layout: unset !important;
+}
+
+table.fixedHeader-floating.no-footer {
+  margin-top: 50px;
 }
