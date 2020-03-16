@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { ConstantsService } from '../../common/services/constants.service';
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 declare const google: any;
@@ -24,7 +25,7 @@ export class TrafficComponent implements OnInit  {
   slides: any[] = [];
  _slides: any[] = [];
 
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
       if (location.path() != "") {
         this.route = location.path();
@@ -33,7 +34,7 @@ export class TrafficComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let base = this._constant.baseAppUrl;
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
@@ -41,7 +42,7 @@ export class TrafficComponent implements OnInit  {
     let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let traffic_api = this._constant.trafficApi;
-    let traffic_incident_api = this._constant.traffic_incidentApi;
+
 
     var map, marker, paramtitle, infoBubble;
     let infoBoxList: any = [];
@@ -84,7 +85,6 @@ export class TrafficComponent implements OnInit  {
     map = new google.maps.Map(document.getElementById("traffic-map"), trafficmapOptions);
 
     setTrafficMarkers(updateTraffic, traffic_api, this.route, this.slides, this._slides);
-    //setTrafficAlerts(updateTrafficAlert, traffic_incident_api, this.route);
 
     google.maps.event.addListener(map, 'mousemove', function (event) {
       document.getElementById('coordinates-panel').innerHTML =
@@ -336,32 +336,8 @@ export class TrafficComponent implements OnInit  {
 
     //=====================================Traffic Alerts=============================================//
 
-    function setTrafficAlerts(callback: any, traffic_api: string, route: string) {
-
-      $.ajax({
-        url: traffic_api,
-        type: 'GET',
-        datatype: 'json',
-        success: function () { alert("Success"); },
-        error: function () { alert('Failed!'); },
-        headers: {
-          'AccountKey': '81mllMnBSuaCHobzZ61TXQ==',
-          'accept': 'application/json'
-        },
-      });
-    }
-
-    function updateTrafficAlert(data, route) {
-
-      var traffic = data.value;
-      console.log(JSON.stringify(traffic))
-      alert(JSON.stringify(traffic))
-      for (var k = 0, length = traffic.length; k < length; k++) {
-
-      }//end of for
 
 
-    }
-
+    this.spinner.hide();
   }
 }

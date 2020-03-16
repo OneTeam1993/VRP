@@ -6,6 +6,7 @@ import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 let _table: any = $("#companyData");
@@ -27,7 +28,7 @@ export class CompaniesComponent implements OnInit {
   username = sessionStorage.getItem('setSessionstorageValueUser');
   company = sessionStorage.getItem('setSessionstorageValueCompany');
   route: string;
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
 
     this.router.events.subscribe((event: RouterEvent) => {
 
@@ -40,7 +41,7 @@ export class CompaniesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let api = this._constant.companyApi;
     let api_reseller = this._constant.resellerApi;
     let base = this._constant.baseAppUrl;
@@ -157,7 +158,7 @@ export class CompaniesComponent implements OnInit {
             if (row.ImageFill == "Uniform") {
               return '<img src="' + data + '" width="50" height="50">'
             } else {
-              return '<img src="../assets/img/avatars/default-company.jpg" width="50" height="50">'
+              return '<img src="assets/img/avatars/default-company.jpg" width="50" height="50">'
             }
           },
           "targets": 1
@@ -206,7 +207,7 @@ export class CompaniesComponent implements OnInit {
       if (data.Image.includes('http')) {
         $('#companyImageBox').attr('src', data.Image).width(110).height(110);
       } else {
-        $('#companyImageBox').attr('src', '../assets/img/avatars/default-company.jpg').width(110).height(110);
+        $('#companyImageBox').attr('src', 'assets/img/avatars/default-company.jpg').width(110).height(110);
       }
 
       $('#companyStatus').val(data.Flag);
@@ -385,7 +386,7 @@ export class CompaniesComponent implements OnInit {
               if (row.ImageFill == "Uniform") {
                 return '<img src="' + data + '" width="50" height="50">'
               } else {
-                return '<img src="../assets/img/avatars/default-company.jpg" width="50" height="50">'
+                return '<img src="assets/img/avatars/default-company.jpg" width="50" height="50">'
               }
             },
             "targets": 1
@@ -505,7 +506,7 @@ export class CompaniesComponent implements OnInit {
               if (row.ImageFill == "Uniform") {
                 return '<img src="' + data + '" width="50" height="50">'
               } else {
-                return '<img src="../assets/img/avatars/default-company.jpg" width="50" height="50">'
+                return '<img src="assets/img/avatars/default-company.jpg" width="50" height="50">'
               }
             },
             "targets": 1
@@ -531,6 +532,7 @@ export class CompaniesComponent implements OnInit {
 
     });
 
+    this.spinner.hide();
   }
 
   /*----------------------------------------------------------- Submit Company -----------------------------------------------------*/

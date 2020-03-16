@@ -35,9 +35,9 @@ export class ConstantsService {
   readonly GetTrackVersion = "sg";
   readonly trafficApi: string = 'https://api.data.gov.sg/v1/transport/traffic-images';
   readonly carkparkApi: string = 'https://api.data.gov.sg/v1/transport/carpark-availability';
-  readonly traffic_incidentApi: string = 'http://datamall2.mytransport.sg/ltaodataservice/TrafficIncidents';
+  readonly carparkRatesApi: string = 'https://data.gov.sg/api/action/datastore_search?resource_id=85207289-6ae7-4a56-9066-e6090a3684a5';
   readonly weatherApi: string = 'https://api.data.gov.sg/v1/environment/24-hour-weather-forecast';
-  readonly iconURL: string = "../assets/img/playback-marker/";
+  readonly iconURL: string = "assets/img/playback-marker/";
  
   //Declare Session Storage
   readonly getSessionstorageValueLanguage: string = sessionStorage.getItem('setSessionstorageValueLanguage');
@@ -55,7 +55,7 @@ export class ConstantsService {
   readonly getSessionstorageValueDefaultCompany: Number = 14;
 
   //Markers
-  readonly mapTypeIds = ["Mapbox", "OSM", "PublicTransport", "OneMap", "Weather"];
+  readonly mapTypeIds = ["Mapbox", "OSM", "PublicTransport", "OneMap"];
   readonly shape = {
     coord: [16, 0, 18, 1, 21, 2, 24, 3, 26, 4, 27, 5, 28, 6, 29, 7, 29, 8, 29, 9, 29, 10, 29, 11, 29, 12, 29, 13, 29, 14, 29, 15, 29, 16, 29, 17, 29, 18, 29, 19, 29, 20, 29, 21, 29, 22, 29, 23, 29, 24, 29, 25, 29, 26, 29, 27, 29, 28, 28, 29, 3, 29, 2, 28, 2, 27, 1, 26, 1, 25, 1, 24, 0, 23, 0, 22, 0, 21, 0, 20, 0, 19, 0, 18, 0, 17, 0, 16, 0, 15, 0, 14, 0, 13, 0, 12, 0, 11, 0, 10, 0, 9, 0, 8, 0, 7, 1, 6, 2, 5, 2, 4, 3, 3, 5, 2, 6, 1, 8, 0, 16, 0],
     type: 'poly'

@@ -2,8 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
 import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
-import { RouterEvent, Router } from '@angular/router';
+import { RouterEvent, Router, NavigationEnd } from '@angular/router';
 import { Location } from "@angular/common";
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 declare const google: any;
@@ -18,7 +20,8 @@ export class DashboardComponent implements OnInit {
 
   route: string;
   api_assets_individual: string;
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  navigationSubscription: any;
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
@@ -29,7 +32,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let base = this._constant.baseAppUrl;
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
@@ -41,155 +44,295 @@ export class DashboardComponent implements OnInit {
 
     //================================INIT==================================//
 
-    setHeatMarkers(updateHeatAssets, api_assets);
+    initDashboard(loadDashboard, api_assets, role_id, this.toastr);
 
     //=====================================Heat Map=============================================//
 
-    function setHeatMarkers(callback: any, api_assets: string) {
+    function initDashboard(callback: any, api_assets: string, role_id, toastr) {
 
       axios.get(api_assets)
         .then(function (response) {
-          //console.log(response);
-          callback(response.data);
+          callback(response.data, toastr, );
 
         })
         .catch(function (error) {
           console.log(error);
+          if (role_id == 1) {
+            toastr.error('Asset API Error in Dashboard: ' + error, 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          } else {
+            toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
         });
 
     }
 
-    function updateHeatAssets(data) {
+    function loadDashboard(data, toastr) {
 
       var active = 0;
       var inactive = 0;
       var repair = 0;
-      var outputDiv = document.getElementById('assetDetails');
 
-      for (var i = 0, length = data.length; i < length; i++) {
+      if (Array.isArray(data) == true) {
 
-        if (data[i]) {
+        for (var i = 0, length = data.length; i < length; i++) {
 
-          if (data[i].LastPos == null || data[i].LastPos.Engine == null || data[i].LastPos.PosID == 0 || data[i].LastPos === "") {
-            console.log('Data is Null');
-            continue;
+          if (data[i]) {
+
+            if (data[i].LastPos == null || data[i].LastPos.Engine == null || data[i].LastPos.PosID == 0 || data[i].LastPos === "") {
+              console.log('Data is Null');
+              continue;
+            }
+
+            else {
+
+              var latLng = new google.maps.LatLng(data[i].LastPos.PosY, data[i].LastPos.PosX);
+              var id = data[i].AssetID;
+              var tag = data[i].Tag;
+              var category = data[i].Category;
+              var vechs = data[i].Name;
+              var make = data[i].Make;
+              var model = data[i].Model;
+              var plate_no = data[i].LicensePlate;
+              var transmission = data[i].Transmission;
+              var fuel_type = data[i].FuelType;
+              var install_date = moment.utc(data[i].InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
+              var address = data[i].LastPos.Location;
+
+              var assetTimestamp = data[i].LastPos.Timestamp;
+              var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
+              var d = new Date();
+              var timestamp2: any = moment.utc(d).local().format("DD MMM YYYY");
+              timestamp2 = Date.parse(timestamp2);
+              timestamp1 = Date.parse(timestamp1);
+              var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
+              var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
+              var el = get_el(elapsedTimestamp);
+
+              let vehicleImg: string;
+
+              // Category image
+              switch (category) {
+                case "Car":
+                  vehicleImg = "assets/img/car.jpg";
+                  break;
+                case "Truck":
+                  vehicleImg = "assets/img/truck.jpg";
+                  break;
+                case "Van":
+                  vehicleImg = "assets/img/van.jpg";
+                  break;
+                case "Bus":
+                  vehicleImg = "assets/img/bus.jpg";
+                  break;
+                case "Motorcycle":
+                  vehicleImg = "assets/img/motorcycle.jpg";
+                  break;
+                case "Recovery Veh":
+                  vehicleImg = "assets/img/truck.jpg";
+                  break;
+                case "Lorry":
+                  vehicleImg = "assets/img/truck.jpg";
+                  break;
+                case "10 Footer Lorry":
+                  vehicleImg = "assets/img/truck.jpg";
+                  break;
+                case "14 Footer Lorry":
+                  vehicleImg = "assets/img/truck.jpg";
+                  break;
+                case "Ambulance":
+                  vehicleImg = "assets/img/ambulance.jpg";
+                  break;
+              }
+
+
+              if (el == "Active")
+                active++;
+              else if (el == "Inactive")
+                inactive++;
+              else if (el == "Repair")
+                repair++;
+
+              var outputDiv = document.getElementById('assetDetails');
+
+              if (outputDiv) {
+
+                outputDiv.innerHTML += "<tr>"
+                  + "<td>"
+                  + "<img class='vehicle-img' src='" + vehicleImg + "'/>"
+                  + "</td>"
+                  + "<td>"
+                  //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
+                  + "<strong><a style='color:#458FD2;'>" + vechs + '</a></strong>'
+                  + "</td>"
+                  + "<td>"
+                  + tag
+                  + "</td>"
+                  + "<td>"
+                  + plate_no
+                  + "</td>"
+                  + "<td>"
+                  + make
+                  + "</td>"
+                  + "<td>"
+                  + model
+                  + "</td>"
+                  + "<td>"
+                  + category
+                  + "</td>"
+                  + "<td>"
+                  + transmission
+                  + "</td>"
+                  + "<td>"
+                  + fuel_type
+                  + "</td>"
+                  + "<td>"
+                  + install_date
+                  + "</td>"
+                  + "</tr>"
+                  + "<hr style='border: 1px solid #FFFFFF !important'>";
+
+                document.getElementById('total-assets').innerHTML = data.length;
+                document.getElementById('active').innerHTML = active.toString();
+                document.getElementById('inactive').innerHTML = inactive.toString();
+                document.getElementById('repair').innerHTML = repair.toString();
+              }
+            }//end of else continue     
+
+          }
+        }//end of for
+      }
+      else {
+        //Object
+        if (data) {
+
+          var tag = data.Tag;
+          var category = data.Category;
+          var vechs = data.Name;
+          var make = data.Make;
+          var model = data.Model;
+          var plate_no = data.LicensePlate;
+          var transmission = data.Transmission;
+          var fuel_type = data.FuelType;
+          var install_date = moment.utc(data.InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
+
+          var assetTimestamp = data.LastPos.Timestamp;
+          var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
+          var d = new Date();
+          var timestamp2: any = moment.utc(d).local().format("DD MMM YYYY");
+          timestamp2 = Date.parse(timestamp2);
+          timestamp1 = Date.parse(timestamp1);
+          var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
+          var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
+          var el = get_el(elapsedTimestamp);
+
+          let vehicleImg: string;
+
+          // Category image
+          switch (category) {
+            case "Car":
+              vehicleImg = "assets/img/car.jpg";
+              break;
+            case "Truck":
+              vehicleImg = "assets/img/truck.jpg";
+              break;
+            case "Van":
+              vehicleImg = "assets/img/van.jpg";
+              break;
+            case "Bus":
+              vehicleImg = "assets/img/bus.jpg";
+              break;
+            case "Motorcycle":
+              vehicleImg = "assets/img/motorcycle.jpg";
+              break;
+            case "Recovery Veh":
+              vehicleImg = "assets/img/truck.jpg";
+              break;
+            case "Lorry":
+              vehicleImg = "assets/img/truck.jpg";
+              break;
+            case "10 Footer Lorry":
+              vehicleImg = "assets/img/truck.jpg";
+              break;
+            case "14 Footer Lorry":
+              vehicleImg = "assets/img/truck.jpg";
+              break;
+            case "Ambulance":
+              vehicleImg = "assets/img/ambulance.jpg";
+              break;
           }
 
-          else {
+          if (el == "Active")
+            active++;
+          else if (el == "Inactive")
+            inactive++;
+          else if (el == "Repair")
+            repair++;
 
-            var latLng = new google.maps.LatLng(data[i].LastPos.PosY, data[i].LastPos.PosX);
-            var id = data[i].AssetID;
-            var tag = data[i].Tag;
-            var category = data[i].Category;
-            var vechs = data[i].Name;
-            var make = data[i].Make;
-            var model = data[i].Model;
-            var plate_no = data[i].LicensePlate;
-            var transmission = data[i].Transmission;
-            var fuel_type = data[i].FuelType;
-            var install_date = moment.utc(data[i].InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
-            var address = data[i].LastPos.Location;
-    
-            var assetTimestamp = data[i].LastPos.Timestamp;
-            var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
-            var d = new Date();
-            var timestamp2: any = moment.utc(d).local().format("DD MMM YYYY");
-            timestamp2 = Date.parse(timestamp2);
-            timestamp1 = Date.parse(timestamp1);
-            var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
-            var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
-            var el = get_el(elapsedTimestamp);
+          var outputDiv = document.getElementById('assetDetails');
 
-            let vehicleImg: string;
+          if (outputDiv) {
 
-            // Category image
-            switch (category) {
-              case "Car":
-                vehicleImg = "../assets/img/car.jpg";
-                break;
-              case "Truck":
-                vehicleImg = "../assets/img/truck.jpg";
-                break;
-              case "Van":
-                vehicleImg = "../assets/img/van.jpg";
-                break;
-              case "Bus":
-                vehicleImg = "../assets/img/bus.jpg";
-                break;
-              case "Motorcycle":
-                vehicleImg = "../assets/img/motorcycle.jpg";
-                break;
-              case "Recovery Veh":
-                vehicleImg = "../assets/img/truck.jpg";
-                break;
-              case "Lorry":
-                vehicleImg = "../assets/img/truck.jpg";
-                break;
-              case "10 Footer Lorry":
-                vehicleImg = "../assets/img/truck.jpg";
-                break;
-              case "14 Footer Lorry":
-                vehicleImg = "../assets/img/truck.jpg";
-                break;
-              case "Ambulance":
-                vehicleImg = "../assets/img/ambulance.jpg";
-                break;
-            }
+            outputDiv.innerHTML += "<tr>"
+              + "<td>"
+              + "<img class='vehicle-img' src='" + vehicleImg + "'/>"
+              + "</td>"
+              + "<td>"
+              //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
+              + "<strong><a style='color:#458FD2;'>" + vechs + '</a></strong>'
+              + "</td>"
+              + "<td>"
+              + tag
+              + "</td>"
+              + "<td>"
+              + plate_no
+              + "</td>"
+              + "<td>"
+              + make
+              + "</td>"
+              + "<td>"
+              + model
+              + "</td>"
+              + "<td>"
+              + category
+              + "</td>"
+              + "<td>"
+              + transmission
+              + "</td>"
+              + "<td>"
+              + fuel_type
+              + "</td>"
+              + "<td>"
+              + install_date
+              + "</td>"
+              + "</tr>"
+              + "<hr style='border: 1px solid #FFFFFF !important'>";
+
+       
+            document.getElementById('total-assets').innerHTML = "1";
+            document.getElementById('active').innerHTML = active.toString();
+            document.getElementById('inactive').innerHTML = inactive.toString();
+            document.getElementById('repair').innerHTML = repair.toString();
+
+          }
+
+        } else {
+          document.getElementById('total-assets').innerHTML = "0";
+          document.getElementById('active').innerHTML = "0";
+          document.getElementById('inactive').innerHTML = "0";
+          document.getElementById('repair').innerHTML = "0";
+        }
+
+      }
 
 
-            if (el == "Active")
-              active++;
-            else if (el == "Inactive")
-              inactive++;
-            else if (el == "Repair")
-              repair++;
-
-            if (outputDiv) {
-
-              outputDiv.innerHTML += "<tr>"
-                + "<td>"
-                + "<img class='vehicle-img' src='" + vehicleImg + "'/>"
-                + "</td>"
-                + "<td>"
-                //+ "<strong><a href='javascript:google.maps.event.trigger(openmarker[" + k + "],\"click\");' style='color:#458FD2;'>" + markers[k].title + '</a></strong><br>' + markers[k].address + "<br>"
-                + "<strong><a style='color:#458FD2;'>" + vechs + '</a></strong>'
-                + "</td>"
-                + "<td>"
-                + tag
-                + "</td>"
-                + "<td>"
-                + plate_no
-                + "</td>"
-                + "<td>"
-                + make
-                + "</td>"
-                + "<td>"
-                + model
-                + "</td>"
-                + "<td>"
-                + category
-                + "</td>"
-                + "<td>"
-                + transmission
-                + "</td>"
-                + "<td>"
-                + fuel_type
-                + "</td>"
-                + "<td>"
-                + install_date
-                + "</td>"
-                + "</tr>"
-                + "<hr style='border: 1px solid #FFFFFF !important'>";
-              
-              document.getElementById('total-assets').innerHTML = data.length;
-              document.getElementById('active').innerHTML = active.toString();
-              document.getElementById('inactive').innerHTML = inactive.toString();
-              document.getElementById('repair').innerHTML = repair.toString();
-            }
-          }//end of else continue     
-
-        } 
-      }//end of for
     }
 
     function get_el(timestamp) {
@@ -222,21 +365,37 @@ export class DashboardComponent implements OnInit {
 
     $('.SelectResellerFilter').on('change', function () {
       ClearList();
+    });
+
+    $('.SelectCompanyFilter').change({ route: this.route, toastr: this.toastr }, function (event) {
+
+      const awaitOnchangeCompany = async (loadDashboard, toastr) => {
+        const result = await initDashboard(loadDashboard, getAssetsFilter(role_id, base, uri, user_id, reseller_id), role_id, toastr);
+        ClearList();      
+      }
+
+      awaitOnchangeCompany(loadDashboard, event.data.toastr);
 
     });
 
-    $('.SelectCompanyFilter').change({ route: this.route }, function (event) {
-      ClearList();
-      let api_assets_filter = getAssetsFilter(role_id, base, uri, user_id, reseller_id);
-      setHeatMarkers(updateHeatAssets, api_assets_filter);
-    });
-
-    $('.SelectAssetFilter').change({ api: this.api_assets_individual }, function (event) {
+    $('.SelectAssetFilter').change({ api: this.api_assets_individual, toastr: this.toastr, route: this.route }, function (event) {
       var selected = $(this).find("option:selected").val();
       var api_assets_filter_new = event.data.api + selected;
-      ClearList();
-      setHeatMarkers(updateHeatAssets, api_assets_filter_new);
-      
+      if (selected == 0) {
+        api_assets_filter_new = getAssetsFilter(role_id, base, uri, user_id, reseller_id);
+      }
+
+      if (event.data.route = "/dashboard") {
+        const awaitOnchangeAsset = async (loadDashboard, toastr, api_assets_filter_new) => {
+          const result = await initDashboard(loadDashboard, api_assets_filter_new, role_id, toastr);
+
+          ClearList();
+        }
+
+        awaitOnchangeAsset(loadDashboard, event.data.toastr, api_assets_filter_new);
+      }
+
+     
     }); // end of on change
 
     //====================================GET API WITH PARAM=================================//
@@ -257,5 +416,7 @@ export class DashboardComponent implements OnInit {
       return url;
     }
 
+
+    this.spinner.hide();
   }
 }

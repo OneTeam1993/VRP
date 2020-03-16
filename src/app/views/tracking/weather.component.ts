@@ -4,6 +4,7 @@ import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 declare const google: any;
@@ -20,7 +21,7 @@ export class WeatherComponent implements OnInit {
   weathers: any[] = [];
   weather_label: string;
 
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
@@ -32,7 +33,7 @@ export class WeatherComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let base = this._constant.baseAppUrl;
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
@@ -173,5 +174,6 @@ export class WeatherComponent implements OnInit {
 
 
    //====================================================================//
+    this.spinner.hide();
   }
 }

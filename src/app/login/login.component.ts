@@ -5,6 +5,8 @@ import 'moment/locale/pt-br';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ConstantsService } from '../common/services/constants.service';
+import { ToastrService } from 'ngx-toastr';
+import { Compiler } from '@angular/core';
 
 import axios from 'axios';
 
@@ -17,19 +19,20 @@ import axios from 'axios';
 export class LoginComponent implements OnInit {
 
 
-  constructor(private http: HttpClient, private router: Router, private _constant: ConstantsService) {
+  constructor(private http: HttpClient, private router: Router, private _constant: ConstantsService, private toastr: ToastrService, private _compiler: Compiler) {
 
   }
 
   ngOnInit() {
 
     if ($("#ctn-preloader").length > 0) {
-      $('#top-bg').delay(1750).slideUp();
-      $('#bottom-bg').delay(1750).slideUp();
-      $('#loader-middle').delay(1500).fadeOut();
+        $('#top-bg').delay(1750).slideUp();
+        $('#bottom-bg').delay(1750).slideUp();
+        $('#loader-middle').delay(1500).fadeOut();
       // Preloader timeout
       setTimeout(() => {
         $('#ctn-preloader').addClass('d-none');
+        this._compiler.clearCache();
       }, 2000);
     };
 
@@ -130,7 +133,12 @@ export class LoginComponent implements OnInit {
         });
 
       } else {
-         alert('Invalid Username or Password!!!');
+        console.log('Invalid Username or Password!!!');
+        this.toastr.error('Invalid username or password! Pls. try again.', 'Error', {
+          timeOut: 3000,
+          closeButton: true,
+          enableHtml: true,
+        });
       }
     });
 

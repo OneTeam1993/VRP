@@ -3,11 +3,12 @@ import { navItems } from '../../_nav';
 import * as moment from 'moment';
 import 'moment/locale/en-gb';
 import { ConstantsService } from '../../common/services/constants.service';
-import { RouterEvent, Router } from '@angular/router';
+import { RouterEvent, Router, NavigationEnd } from '@angular/router';
 import { Location } from "@angular/common";
 import { EventEmitterService } from '../../views/reports/event-emitter.service';
-
-
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
+import axios from "axios";
 declare var $: any; 
 
 @Component({
@@ -33,102 +34,355 @@ export class DefaultLayoutComponent implements OnInit {
   api_reports = this._constant.getReports();
   time = new Date();
   route: string;
+  default_reseller = this._constant.getSessionstorageValueUserResellerID;
+  default_company = this._constant.getSessionstorageValueCompanyID;
+  navigationSubscription: any;
 
-  constructor(private _constant: ConstantsService, location: Location, private router: Router, private eventEmitterService: EventEmitterService) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private eventEmitterService: EventEmitterService, private toastr: ToastrService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
         this.route = location.path();
       }
 
+      if (this.route) {
+        if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather' || this.route == '/tracking/carpark') {
+          $('#_reseller_filter').hide();
+          $('#_company_filter').hide();
+          $('#_asset_filter').hide();
+          $('#_reports').hide();
+        }
+        else if (this.route == '/dashboard' || this.route == '/tracking' || this.route == '/heatmap') {
+          $('#_reseller_filter').show();
+          $('#_company_filter').show();
+          $('#_asset_filter').show();
+          $('#_reports').hide();
+        }
+        else if (this.route == '/companies') {
+          $('#_reseller_filter').show();
+          $('#_company_filter').hide();
+          $('#_asset_filter').hide();
+          $('#_reports').hide();
+        }
+        else if (this.route == '/reports') {
+          $('#_reseller_filter').show();
+          $('#_company_filter').show();
+          $('#_asset_filter').show();
+          $('#_reports').show();
+        }
+        else {
+          $('#_reseller_filter').show();
+          $('#_company_filter').show();
+          $('#_asset_filter').show();
+          $('#_reports').hide();
+        }
+      }
+      else {
+        console.log('Route Problem')
+      }
+
+      if (this.role_id >= 3) {
+        $('#_reseller_filter').hide();
+      }
+
     });
 
+    //=============Refresh an Angular Component without reloading the same Component =========//
+    //this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    //  return false;
+    //};
+
+    //this.navigationSubscription = this.router.events.subscribe((event) => {
+    //  if (event instanceof NavigationEnd) {
+    //    this.initialiseInvites();
+    //    this.router.navigated = false;
+    //  }
+    //});
+  }
+
+  initialiseInvites() {
+
+    // Set default values and re-fetch any data you need.
+    if (this.route) {
+      if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather') {
+        $('#_reseller_filter').hide();
+        $('#_company_filter').hide();
+        $('#_asset_filter').hide();
+        $('#_reports').hide();
+      }
+      else if (this.route == '/dashboard' || this.route == '/tracking' || this.route == '/heatmap') {
+        $('#_reseller_filter').show();
+        $('#_company_filter').show();
+        $('#_asset_filter').show();
+        $('#_reports').hide();
+      }
+      else if (this.route == '/companies') {
+        $('#_reseller_filter').show();
+        $('#_company_filter').hide();
+        $('#_asset_filter').hide();
+        $('#_reports').hide();
+      }
+      else if (this.route == '/reports') {
+        $('#_reseller_filter').show();
+        $('#_company_filter').show();
+        $('#_asset_filter').show();
+        $('#_reports').show();
+      }
+      else {
+        $('#_reseller_filter').show();
+        $('#_company_filter').show();
+        $('#_asset_filter').show();
+        $('#_reports').hide();
+      }
+    }
+    else {
+      console.log('Route Problem')
+    }
+
+    if (this.role_id >= 3) {
+      $('#_reseller_filter').hide();
+    }
 
   }
 
+  //============Refresh an Angular Component without reloading the same Component =========//
+
+  ngOnDestroy() {
+
+    if (this.navigationSubscription) {
+
+      this.navigationSubscription.unsubscribe();
+
+    }
+
+  }
+
+ 
   ngOnInit() {
 
-    let default_reseller = this._constant.getSessionstorageValueUserResellerID;
-    let default_company = this._constant.getSessionstorageValueCompanyID;
 
-    $.getJSON(this.api_reseller, function (data) {
-      $.each(data, function (index, item) {
+    const initFilters = async (callback: any, api_reseller, api_company, toastr, default_reseller, default_company, role_id, api_assets, api_reports) => {
+      const result = await initCompany(api_company, toastr, default_company, role_id, api_assets, api_reports)
 
-        if (item.ResellerID == default_reseller) {
-          $('#load-reseller').append($('<option selected="selected"></option>').val(item.ResellerID).html(item.Name));
-        } else {
-
-          $('#load-reseller').append($('<option></option>').val(item.ResellerID).html(item.Name));
-        }
-      });
-      $('.selectpicker').selectpicker('refresh');
-    });
-
-    $.getJSON(this.api_company, function (data) {
-      if (this.role_id == 1 || this.role_id == 2) $('#load-company').append($('<option></option>').val(0).html('---'));
-      $.each(data, function (index, item) {
-        if (item.CompanyID == default_company) {
-          $('#load-company').append($('<option selected="selected"></option>').val(item.CompanyID).html(item.Name));
-        } else {
-          $('#load-company').append($('<option></option>').val(item.CompanyID).html(item.Name));
-        }
-      });
-      $('.selectpicker').selectpicker('refresh');
-    });
-
-
-    if (this.role_id >= 3) {
-      let getSessionstorageValueAssetID = sessionStorage.getItem('setSessionstorageValueUserAssetID');
-      let getSessionstorageValueUserReport = sessionStorage.getItem('setSessionstorageValueUserReport');
-
-      $.getJSON(this.api_assets, function (data) {
-        $('#load-assets').append($('<option></option>').val(0).html('---'));
-        $.each(data, function (index, item) {
-          if (item.AssetID == Number(getSessionstorageValueAssetID)) {
-            $('#load-assets').append($('<option selected="selected"></option>').val(item.AssetID).html(item.Name));
+      axios.get(api_reseller)
+        .then(function (response) {
+          callback(response.data, toastr, default_reseller);
+        })
+        .catch(function (error) {
+          console.log(error);
+          if (role_id == 1) {
+            toastr.error('Reseller API Error: ' + error, 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
           } else {
-            $('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
+            toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
           }
-         
-        });
-        $('.selectpicker').selectpicker('refresh');
-      });
-
-      $.getJSON(this.api_reports, function (data) {
-        $('#load-report').append($('<option></option>').val(0).html('---'));
-        $.each(data, function (index, item) {
-          if (item.ReportID == Number(getSessionstorageValueUserReport)) {
-            $('#load-report').append($('<option selected="selected"></option>').val(item.ReportID).html(item.Name));
-          } else {
-            $('#load-report').append($('<option></option>').val(item.ReportID).html(item.Name));
-          }
-
-        });
-        $('.selectpicker').selectpicker('refresh');
-      });
-
-      $(".selectpicker").selectpicker('refresh');
-    } else {
-
-      $.getJSON(this.api_assets, function (data) {
-        $('#load-assets').append($('<option></option>').val(0).html('---'));
-        $.each(data, function (index, item) {
-          $('#load-assets').append($('<option></option>').val(item.AssetID).html(item.Name));
-        });
-        $('.selectpicker').selectpicker('refresh');
-      });
-
-      $.getJSON(this.api_reports, function (data) {
-        $('#load-report').append($('<option></option>').val(0).html('---'));
-        $.each(data, function (index, item) {
-          $('#load-report').append($('<option></option>').val(item.ReportID).html(item.Name));
-        });
-        $('.selectpicker').selectpicker('refresh');
       });
 
     }
 
-  
+    initFilters(loadReseller, this.api_reseller, this.api_company, this.toastr, this.default_reseller, this.default_company, this.role_id, this.api_assets, this.api_reports);
+
+    function loadReseller(data, toastr, default_reseller) {
+      for (var i = 0, length = data.length; i < length; i++) {
+        if (data[i]) {
+          if (data[i].ResellerID == default_reseller) {
+            $('#load-reseller').append($('<option selected="selected"></option>').val(data[i].ResellerID).html(data[i].Name));
+          } else {
+            $('#load-reseller').append($('<option></option>').val(data[i].ResellerID).html(data[i].Name));
+          }
+
+        } else {
+          toastr.error('Error: Data not found! Pls. try again.', 'Error', {
+            timeOut: 3000,
+            closeButton: true,
+            enableHtml: true,
+          });
+        }
+      }
+
+      $('.selectpicker').selectpicker('refresh');
+
+      return true;
+    }
+
+    function initCompany(api_company, toastr, default_company, role_id, api_assets, api_reports) {
+
+      const awaitCompany = async (callback: any, api_company, toastr, default_company, role_id) => {
+        const result = await initAssets(api_assets, toastr, role_id, api_reports)
+
+        axios.get(api_company)
+          .then(function (response) {
+            callback(response.data, toastr, default_company, role_id);
+          })
+          .catch(function (error) {
+            console.log(error);
+            if (role_id == 1) {
+              toastr.error('Company API Error: ' + error, 'Error', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+
+          });
+      }
+
+      awaitCompany(loadCompany, api_company, toastr, default_company, role_id);
+    }
+
+    function loadCompany(data, toastr, default_company, role_id) {
+
+      if (role_id == 1 || role_id == 2) $('#load-company').append($('<option></option>').val(0).html('---'));
+      for (var i = 0, length = data.length; i < length; i++) {
+        if (data[i]) {
+          if (data[i].CompanyID == default_company) {
+            $('#load-company').append($('<option selected="selected"></option>').val(data[i].CompanyID).html(data[i].Name));
+          } else {
+            $('#load-company').append($('<option></option>').val(data[i].CompanyID).html(data[i].Name));
+          }
+
+        } else {
+          toastr.error('Error: Data not found! Pls. try again.', 'Error', {
+            timeOut: 3000,
+            closeButton: true,
+            enableHtml: true,
+          });
+        }
+      }
+
+      $('.selectpicker').selectpicker('refresh');
+
+      return true;
+
+    }
+
+    function initAssets(api_assets, toastr, role_id, api_reports) {
+
+      const awaitAssets = async (callback: any, toastr, role_id) => {
+        const result = await initReports(loadReports, api_reports, toastr, role_id)
+
+        axios.get(api_assets)
+          .then(function (response) {
+            callback(response.data, toastr, role_id);
+          })
+          .catch(function (error) {
+            console.log(error);
+            if (role_id == 1) {
+              toastr.error('Asset API Error: ' + error, 'Error', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+
+          });
+      }
+
+      awaitAssets(loadAssets, toastr, role_id);
+    }
+
+    function loadAssets(data, toastr, role_id) {
+
+      $('#load-assets').append($('<option></option>').val(0).html('---'));
+      for (var i = 0, length = data.length; i < length; i++) {
+        if (data[i]) {
+          if (role_id >= 3) {
+            if (data[i].AssetID == sessionStorage.getItem('setSessionstorageValueUserAssetID')) {
+              $('#load-assets').append($('<option selected="selected"></option>').val(data[i].AssetID).html(data[i].Name));
+            } else {
+              $('#load-assets').append($('<option></option>').val(data[i].AssetID).html(data[i].Name));
+            }
+          } else {
+            $('#load-assets').append($('<option></option>').val(data[i].AssetID).html(data[i].Name));
+          }
+        } else {
+          toastr.error('Error: Data not found! Pls. try again.', 'Error', {
+            timeOut: 3000,
+            closeButton: true,
+            enableHtml: true,
+          });
+        }
+      }
+
+      $('.selectpicker').selectpicker('refresh');
+
+      return true;
+
+    }
+
+    function initReports(callback_reports: any, api_reports, toastr, role_id) {
+
+      axios.get(api_reports)
+        .then(function (response) {
+          callback_reports(response.data, toastr, role_id);
+        })
+        .catch(function (error) {
+          console.log(error);
+          if (role_id == 1) {
+            toastr.error('Reports API Error: ' + error, 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          } else {
+            toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
+
+        });
+
+    }
+
+    function loadReports(data, toastr, role_id) {
+      $('#load-report').append($('<option></option>').val(0).html('---'));
+      for (var i = 0, length = data.length; i < length; i++) {
+        if (data[i]) {
+          if (role_id >= 3) {
+            if (data[i].ReportID == sessionStorage.getItem('setSessionstorageValueUserReport')) {
+              $('#load-report').append($('<option selected="selected"></option>').val(data[i].ReportID).html(data[i].Name));
+            } else {
+              $('#load-report').append($('<option></option>').val(data[i].ReportID).html(data[i].Name));
+            }
+          } else {
+            $('#load-report').append($('<option></option>').val(data[i].ReportID).html(data[i].Name));
+          }
+        } else {
+          toastr.error('Error: Data not found! Pls. try again.', 'Error', {
+            timeOut: 3000,
+            closeButton: true,
+            enableHtml: true,
+          });
+        }
+      }
+
+      $('.selectpicker').selectpicker('refresh');
+
+      return true;
+    }
+
+
     var dateFormat = "D-MMM-YYYY HH:mm A";
     var d1 = new Date();
     d1.setHours(0);
@@ -162,11 +416,6 @@ export class DefaultLayoutComponent implements OnInit {
     });
 
 
-    //Timer 
-    setInterval(() => {
-      this.time = new Date();
-    }, 1000);
-
     //Setup new Nav bar
     if (this.role_id >= 3) {
 
@@ -192,6 +441,11 @@ export class DefaultLayoutComponent implements OnInit {
           {
             name: 'Traffic',
             url: '/tracking/traffic',
+            icon: 'icon-puzzle'
+          },
+          {
+            name: 'Carpark',
+            url: '/tracking/carpark',
             icon: 'icon-puzzle'
           },
           {
@@ -271,6 +525,11 @@ export class DefaultLayoutComponent implements OnInit {
       }
     }
 
+    //Timer 
+    setInterval(() => {
+      this.time = new Date();
+    }, 1000);
+
   }
 
   generate() {
@@ -300,7 +559,6 @@ export class DefaultLayoutComponent implements OnInit {
 
     $('#load-company').empty();
     $('#load-assets').empty();
-
     $('#load-company').append($('<option></option>').val(0).html('---'));
 
     let company_api: string;

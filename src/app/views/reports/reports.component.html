@@ -1,6 +1,9 @@
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.96)" size="medium" type="ball-spin-clockwise">
+  <p style="color: white">Please Wait. </p>
+</ngx-spinner>
 <div class="animated fadeIn">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" id="_playback">
       <div class="card">
         <div class="card-header">
           <span class="font-weight-bold">Playback</span>
@@ -19,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6" id="_charts">
       <div class="card">
         <div class="card-header">
           <span class="font-weight-bold">Charts</span>
@@ -27,7 +30,7 @@
         <div class="card-body">
           <!-- Position Report -->
           <div id="positionSection">
-            <div id="chartPosition" class="col-md-12" style="width:100% !important;height: 100%"></div>
+            <div id="chartPosition" class="col-md-12" style="width:100% !important; height: 450px;"></div>
           </div>
           <!-- Speed Report -->
           <div id="speedSection">
@@ -56,8 +59,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
-      <div id="reports-container" class="card">
+    <div class="col-sm-12" id="_reports_table">
+      <div class="card">
         <div id="reportTitle" class="card-header">
           <span class="font-weight-bold" id="label_reports"></span>
         </div>

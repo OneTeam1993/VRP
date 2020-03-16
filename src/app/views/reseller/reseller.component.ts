@@ -6,7 +6,7 @@ import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 let _table: any = $("#resellerData");
@@ -22,7 +22,7 @@ export class ResellerComponent implements OnInit {
   route: string;
   api_assets_individual: string;
 
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
@@ -33,7 +33,7 @@ export class ResellerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let api = this._constant.resellerApi;
 
     _table = $("#resellerData").DataTable({
@@ -181,7 +181,7 @@ export class ResellerComponent implements OnInit {
       });
     });
 
-
+    this.spinner.hide();
   }
 
   onSubmit() {

@@ -11,8 +11,9 @@ import { DataTablesModule } from 'angular-datatables';
 import { TrafficComponent } from './traffic.component';
 import { HeatmapComponent } from './heatmap.component';
 import { WeatherComponent } from './weather.component';
+import { CarparkComponent } from './carpark.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   imports: [
@@ -23,8 +24,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     ButtonsModule.forRoot(),
     TrackingRoutingModule,
     DataTablesModule,
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    NgxSpinnerModule
   ],
-  declarations: [TrackingComponent, TrafficComponent, HeatmapComponent, WeatherComponent]
+  declarations: [TrackingComponent, TrafficComponent, HeatmapComponent, WeatherComponent, CarparkComponent]
 })
 export class TrackingModule { }

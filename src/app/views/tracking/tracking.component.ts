@@ -5,7 +5,7 @@ import { ConstantsService } from '../../common/services/constants.service';
 import axios from "axios";
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
-
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $: any;
 
 declare const google: any;
@@ -21,7 +21,7 @@ declare const MarkerWithLabel: any;
 
 export class TrackingComponent implements OnInit {
   route: string;
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
 
     this.router.events.subscribe((event: RouterEvent) => {
 
@@ -34,7 +34,7 @@ export class TrackingComponent implements OnInit {
   }
 
   ngOnInit(): void {
- 
+    this.spinner.show();
     //Call StyledMarker Library
     var sm = document.createElement("script");
     sm.type = "text/javascript";
@@ -1394,43 +1394,43 @@ export class TrackingComponent implements OnInit {
             switch (category) {
               case "Car":
                 markerCategory = "car";
-                vehicleImg = "../assets/img/car.jpg";
+                vehicleImg = "assets/img/car.jpg";
                 break;
               case "Truck":
                 markerCategory = "truck";
-                vehicleImg = "../assets/img/truck.jpg";
+                vehicleImg = "assets/img/truck.jpg";
                 break;
               case "Van":
                 markerCategory = "van";
-                vehicleImg = "../assets/img/van.jpg";
+                vehicleImg = "assets/img/van.jpg";
                 break;
               case "Bus":
                 markerCategory = "bus";
-                vehicleImg = "../assets/img/bus.jpg";
+                vehicleImg = "assets/img/bus.jpg";
                 break;
               case "Motorcycle":
                 markerCategory = "motorcycle";
-                vehicleImg = "../assets/img/motorcycle.jpg";
+                vehicleImg = "assets/img/motorcycle.jpg";
                 break;
               case "Recovery Veh":
                 markerCategory = "truck";
-                vehicleImg = "../assets/img/truck.jpg";
+                vehicleImg = "assets/img/truck.jpg";
                 break;
               case "Lorry":
                 markerCategory = "truck";
-                vehicleImg = "../assets/img/truck.jpg";
+                vehicleImg = "assets/img/truck.jpg";
                 break;
               case "10 Footer Lorry":
                 markerCategory = "truck";
-                vehicleImg = "../assets/img/truck.jpg";
+                vehicleImg = "assets/img/truck.jpg";
                 break;
               case "14 Footer Lorry":
                 markerCategory = "truck";
-                vehicleImg = "../assets/img/truck.jpg";
+                vehicleImg = "assets/img/truck.jpg";
                 break;
               case "Ambulance":
                 markerCategory = "ambulance";
-                vehicleImg = "../assets/img/ambulance.jpg";
+                vehicleImg = "assets/img/ambulance.jpg";
                 break;
             }
 
@@ -2271,7 +2271,7 @@ export class TrackingComponent implements OnInit {
     }
 
     //====================================END===============================================//
-
+    this.spinner.hide();
   } //end of ngOnInit
 
 }

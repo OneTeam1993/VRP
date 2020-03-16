@@ -4,6 +4,8 @@ import 'moment/locale/en-gb';
 import { ConstantsService } from '../../common/services/constants.service';
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
 declare const google: any;
@@ -18,7 +20,7 @@ export class HeatmapComponent implements OnInit {
 
   route: string;
   api_assets_individual: string;
-  constructor(private _constant: ConstantsService, location: Location, private router: Router) {
+  constructor(private _constant: ConstantsService, location: Location, private router: Router, private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if (location.path() != "") {
@@ -29,7 +31,7 @@ export class HeatmapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     let base = this._constant.baseAppUrl;
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
@@ -70,7 +72,7 @@ export class HeatmapComponent implements OnInit {
 
     _map = new google.maps.Map(document.getElementById("heat-map"), heatmapOptions);
 
-    setHeatMarkers(updateHeatAssets, api_assets);
+    setHeatMarkers(updateHeatAssets, api_assets, this.toastr);
 
     google.maps.event.addListener(_map, 'mousemove', function (event) {
       document.getElementById('coordinates-panel').innerHTML =
@@ -79,7 +81,7 @@ export class HeatmapComponent implements OnInit {
 
     //=====================================Heat Map=============================================//
 
-    function setHeatMarkers(callback: any, api_assets: string) {
+    function setHeatMarkers(callback: any, api_assets: string, toastr) {
 
       axios.get(api_assets)
         .then(function (response) {
@@ -89,6 +91,19 @@ export class HeatmapComponent implements OnInit {
         })
         .catch(function (error) {
           console.log(error);
+          if (role_id == 1) {
+            toastr.error('Heatmap API Error: ' + error, 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          } else {
+            toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
         });
 
     }
@@ -175,17 +190,17 @@ export class HeatmapComponent implements OnInit {
 
     });
 
-    $('.SelectCompanyFilter').change({ route: this.route }, function (event) {
+    $('.SelectCompanyFilter').change({ route: this.route, toastr: this.toastr }, function (event) {
       ClearHeatmapFilter();
       let api_assets_filter = getAssetsHeatFilter(role_id, base, uri, user_id, reseller_id);
-      setHeatMarkers(updateHeatAssets, api_assets_filter);
+      setHeatMarkers(updateHeatAssets, api_assets_filter, event.data.toastr);
     });
 
-    $('.SelectAssetFilter').change({ api: this.api_assets_individual }, function (event) {
+    $('.SelectAssetFilter').change({ api: this.api_assets_individual, toastr: this.toastr }, function (event) {
       var selected = $(this).find("option:selected").val();
       var api_assets_filter_new = event.data.api + selected;
       ClearHeatmapFilter();
-      setHeatMarkers(updateHeatAssets, api_assets_filter_new);
+      setHeatMarkers(updateHeatAssets, api_assets_filter_new, event.data.toastr);
       
     }); // end of on change
 
@@ -206,6 +221,6 @@ export class HeatmapComponent implements OnInit {
       }
       return url;
     }
-
+    this.spinner.hide();
   }
 }

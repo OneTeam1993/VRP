@@ -30,6 +30,11 @@ export const navItems: INavData[] = [
         icon: 'icon-puzzle'
       },
       {
+        name: 'Carpark',
+        url: '/tracking/carpark',
+        icon: 'icon-puzzle'
+      },
+      {
         name: 'Weather',
         url: '/tracking/weather',
         icon: 'icon-puzzle'

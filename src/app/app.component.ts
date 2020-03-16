@@ -21,89 +21,18 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((event: RouterEvent) => {
 
-      let role_id = this._constant.getSessionstorageValueRoleID;
-
-      //==============================Filter===================================// 
-      $('#_reports').hide();
-
-      if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather') {
-        $('#_reseller_filter').hide();
-        $('#_company_filter').hide();
-        $('#_asset_filter').hide();
-      }
-      else if (this.route == '/companies') {
-        $('#_reseller_filter').show();
-        $('#_company_filter').hide();
-        $('#_asset_filter').hide();
-      }
-      else {
-        $('#_reseller_filter').show();
-        $('#_company_filter').show();
-        $('#_asset_filter').show();
-      }
-
-
-      if (this.route == '/reports') $('#_reports').show();
-      else $('#_reports').hide();
-
-
-      if (role_id >= 3) {
-        $('#_reseller_filter').hide();
-        
-      }
-
-    //==============================Filter===================================//
-
-
       if (location.path() != "") {
         this.route = location.path();
-        if (this.route == "/login") {
-          this.loading = false;
-        } else {
-          this.navigationInterceptor(event);
-        }
-      } else {
-        this.loading = false;
-        //console.log(this.route)
       }
 
     });
 
   }
 
-  // Shows and hides the loading spinner during RouterEvent changes
-  navigationInterceptor(event: RouterEvent): void {
-
-    if (event instanceof NavigationStart) {
-      this.loading = true;
-    }
-    if (event instanceof NavigationEnd) {
-      setTimeout(() => { // here
-        this.loading = false;
-      }, 800);
-    }
-
-    // Set loading state to false in both of the below events to hide the spinner in case a request fails
-    if (event instanceof NavigationCancel) {
-      setTimeout(() => { // here
-        this.loading = false;
-      }, 800);
-    }
-    if (event instanceof NavigationError) {
-      setTimeout(() => { // here
-        this.loading = false;
-      }, 800);
-    }
-  }
 
   ngOnInit() {
 
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0);
-    });
+
   }
 
 }

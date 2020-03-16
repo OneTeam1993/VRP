@@ -4,6 +4,7 @@ import { TrackingComponent } from './tracking.component';
 import { TrafficComponent } from './traffic.component';
 import { HeatmapComponent } from './heatmap.component';
 import { WeatherComponent } from './weather.component';
+import { CarparkComponent } from './carpark.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
     component: TrafficComponent,
     data: {
       title: 'Traffic'
+    }
+  },
+  {
+    path: 'carpark',
+    component: CarparkComponent,
+    data: {
+      title: 'Carpark'
     }
   },
   {
