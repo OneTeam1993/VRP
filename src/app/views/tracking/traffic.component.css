@@ -100,34 +100,7 @@
   font-size: 12px !important;
 }
 
-#assetDetails {
-  font-size: 13px;
-  line-height: 1.57;
-  color: #ffffff;
-}
 
-#assetInfo i {
-  color: #FFF;
-  border-radius: 4px;
-  padding: 5px 8px;
-  font-size: 13px;
-}
-
-.move {
-  background-color: #2B7C21;
-}
-
-.stop {
-  background-color: #B60003;
-}
-
-.idle {
-  background-color: #fea82c;
-}
-
-.down {
-  background-color: #696969;
-}
 
 
 .form-inline .form-control {
@@ -144,11 +117,6 @@
   }
 /*Custom Style End*/
 /*==========================================================================*/
-
-.table {
-  color: white;
-  /*table-layout: fixed;*/
-}
 
 button.gm-ui-hover-effect {
   margin-top: 10px !important;

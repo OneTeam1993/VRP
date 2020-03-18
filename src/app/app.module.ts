@@ -65,7 +65,7 @@ import { EventEmitterService } from './views/reports/event-emitter.service';
     ChartsModule,
     RouterModule,
     HttpClientModule,
-    HighchartsChartModule,
+    HighchartsChartModule
   ],
   declarations: [
     AppComponent,

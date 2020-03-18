@@ -196,8 +196,7 @@ export class DashboardComponent implements OnInit {
                   + "<td>"
                   + install_date
                   + "</td>"
-                  + "</tr>"
-                  + "<hr style='border: 1px solid #FFFFFF !important'>";
+                  + "</tr>";
 
                 document.getElementById('total-assets').innerHTML = data.length;
                 document.getElementById('active').innerHTML = active.toString();

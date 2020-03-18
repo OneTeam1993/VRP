@@ -128,6 +128,7 @@ export class LoginComponent implements OnInit {
         this.http.post<any>(this._constant.url_events, getUserLogin, this._constant.httpOptions).subscribe(events => {
           console.log(events);
           this.router.navigate(['/dashboard']);
+          this._compiler.clearCache();
           return false;
 
         });

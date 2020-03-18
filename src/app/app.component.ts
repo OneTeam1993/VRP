@@ -3,10 +3,12 @@ import { Event as RouterEvent, Router, NavigationStart, NavigationEnd, Navigatio
 import { Location } from "@angular/common";
 import { ConstantsService } from './common/services/constants.service';
 
+
 declare var $: any;
 console.log(`jQuery version: ${$.fn.jquery}`);
 
 @Component({
+
   // tslint:disable-next-line
   selector: 'body',
   //template: '<div *ngIf="loading" class="lds-roller"><div></div><div></div><div></div><div></div></div><div *ngIf="!loading"><router-outlet></router-outlet></div>',

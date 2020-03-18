@@ -1,0 +1,486 @@
+<div class="card">
+  <div class="card-header">
+    Assets
+  </div>
+  <div class="card-body module-dt">
+
+    <div>
+      <div class="table-responsive pt-3">
+        <table id="assetsData" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0"></table>
+      </div>
+    </div>
+
+    <div id="assetsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="assetsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="assetsFormTitle">Reseller</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="assetsModalForm" novalidate>
+              <div class="form-group d-none">
+                <label for="assetID">Asset ID</label>
+                <input type="text" class="form-control" placeholder="Enter Asset ID" id="assetID" name="assetID">
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" id="assetImage">
+                  <img src="http://placehold.it/180" class="img-responsive" alt="" width="110" height="110" id="assetImageBox">
+                  <span data-l11n class="btn btn-mint btn-file">
+                    <input type="file" name="UploadFile" id="uploadAsset"><br />
+                    <span id="assetLabelUpload"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-10 float-left p-0">
+                  <div class="form-group">
+                    <label for="assetName">Asset Name</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Asset Name" name="assetName" id="assetName" data-by-field="assetName" required>
+                  </div>
+                </div>
+                <div class="col-md-2 pr-0">
+                  <div class="form-group">
+                    <div class="activateAsset">
+                      <label for="assetStatus">Status</label>
+                      <label class="switch switch-label switch-pill switch-primary" style="margin: 4px 0 0 0;">
+                        <input data-switchery="true" class="assetStatus switch-input" name="assetStatus" id="assetStatus" data-by-field="assetStatus" type="checkbox" checked>
+                        <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                  <label for="assetLicense">License Plate</label>
+                  <input data-l11n type="text" class="form-control" placeholder="License Plate" name="assetModel" id="assetLicense" data-by-field="assetLicense" required>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="form-group col-md-6">
+                <label for="assetMake">Make</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetMake"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetCategory">Category</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetCategory"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetModel">Model</label>
+                <input data-l11n type="text" class="form-control" placeholder="Model" name="assetModel" id="assetModel" data-by-field="assetModel" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetModelYear">Model Year</label>
+                <input data-l11n type="text" class="form-control" placeholder="Model Year" name="assetModelYear" id="assetModelYear" data-by-field="assetModelYear" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetReseller">Reseller</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetReseller"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetCompany">Company</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetCompany"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetZone">Zone</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetZone"></select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetDriver">Driver</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetDriver"></select>
+              </div>
+              <hr />
+              <div class="form-group col-md-6">
+                <label for="assetDevice">Device Name</label>
+                <input data-l11n type="text" class="form-control" placeholder="Asset Device" name="assetDevice" id="assetDevice" data-by-field="assetDevice" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetIMEI" title="Device's unique number">IMEI Code</label>
+                <input data-l11n type="text" class="form-control" placeholder="IMEI Code" name="assetIMEI" id="assetIMEI" data-by-field="assetIMEI" required>
+              </div>
+              <div class="form-group col-md-6" id="_dateInstall">
+                <label for="dateInstall" title="Device installation date">Install Date</label>
+                <input id="dateInstall" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-6" id="_assetContractDate">
+                <label for="assetContractDate" title="Device's contract start date">First Contract Date</label>
+                <input id="assetContractDate" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetPhone" title="Phone number where alerts will be sent to">Alert Phone Number</label>
+                <input data-l11n type="text" class="form-control" placeholder="Alert Phone Number" name="assetPhone" id="assetPhone" data-by-field="assetPhone" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetEmail" title="Email address where alerts will be sent to">Alert Email</label>
+                <input data-l11n type="text" class="form-control" placeholder="Email" name="assetEmail" id="assetEmail" data-by-field="assetEmail" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetIdleLimit" title="Maximum duration on idling mode allowed">Idling Limit (min)</label>
+                <input data-l11n type="text" class="form-control" placeholder="Idling Limit" name="assetIdleLimit" id="assetIdleLimit" data-by-field="assetIdleLimit" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetSpeedLimit" title="Maximum speed limit allowed">Speed Limit (km/h)</label>
+                <input data-l11n type="text" class="form-control" placeholder="Speed Limit" name="assetSpeedLimit" id="assetSpeedLimit" data-by-field="assetSpeedLimit" required>
+              </div>
+              <hr />
+              <div class="form-group col-md-6">
+                <label for="assetTransmission">Transmission</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetTransmission">
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetFuelType">Fuel Type</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="assetFuelType">
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetChassis" title="Unique number written on vehicle motor (VIN/SN Number)">Chassis Number</label>
+                <input data-l11n type="text" class="form-control" placeholder="Chassis Number" name="assetChassis" id="assetChassis" data-by-field="assetChassis" required>
+              </div>
+              <div class="form-group col-md-6" id="_assetImmatriculation">
+                <label for="assetImmatriculation" title="Actual date of vehicle being officially registered">Immatriculation Date</label>
+                <input id="assetImmatriculation" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetCatalogValue" title="Value of bought vehicle">Catalog Value (VAT incl.)</label>
+                <input data-l11n type="text" class="form-control" placeholder="Catalog Value" name="assetCatalogValue" id="assetCatalogValue" data-by-field="assetCatalogValue" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetResidualValue" title="Estimated value of the vehicle at the end of its lease term">Residual Value</label>
+                <input data-l11n type="text" class="form-control" placeholder="Residual Value" name="assetResidualValue" id="assetResidualValue" data-by-field="assetResidualValue" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetHorsepower" title="The power the vehicle's engine produces">Horsepower</label>
+                <input data-l11n type="text" class="form-control" placeholder="Horsepower" name="assetHorsepower" id="assetHorsepower" data-by-field="assetHorsepower" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetHorsepowerTax" title="Taxation rates for the vehicle">Horsepower Taxation</label>
+                <input data-l11n type="text" class="form-control" placeholder="Horsepower Taxation" name="assetHorsepowerTax" id="assetHorsepowerTax" data-by-field="assetHorsepowerTax" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetCO2" title="Carbon dioxide emmissions of the vehicle">CO2 Emissions (g/km)</label>
+                <input data-l11n type="text" class="form-control" placeholder="CO2 Emmissions" name="assetCO2" id="assetCO2" data-by-field="assetCO2" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="assetPower" title="Power in kW of the vehicle">Power (KW)</label>
+                <input data-l11n type="text" class="form-control" placeholder="Power" name="assetPower" id="assetPower" data-by-field="assetPower" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="assetSeatsNumber">Number of Seats</label>
+                <input data-l11n type="text" class="form-control" placeholder="Number of Seats" name="assetSeatsNumber" id="assetSeatsNumber" data-by-field="assetSeatsNumber" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="assetDoorsNumber">Number of Doors</label>
+                <input data-l11n type="text" class="form-control" placeholder="Number of Seats" name="assetDoorsNumber" id="assetDoorsNumber" data-by-field="assetDoorsNumber" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="assetColor">Color</label>
+                <input data-l11n type="text" class="form-control" placeholder="Color" name="assetColor" id="assetColor" data-by-field="assetColor" required>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="assetRemarks">Remarks</label>
+                <textarea data-l11n type="text" class="form-control" placeholder="Remarks" name="assetRemarks" id="assetRemarks" data-by-field="assetRemarks" required></textarea>
+              </div>
+              <br />
+              <div class="clearfix"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                <button id="submit-reseller" data-toggle="modal" type="button" href="#confirmAsset" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="confirmAsset" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Please Confirm...</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you wish to proceed with the updates?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onSubmit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteAsset" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger deleteAssetsBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!------------------------------------------- Servicing Modal -------------------------------------------------->
+
+    <div id="servicingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="servicingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xxl modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="serviceFormTitle">Servicing</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="servicingModalForm" novalidate>
+              <div class="form-group d-none">
+                <label>Asset ID</label>
+                <input type="text" class="form-control" placeholder="Enter Asset ID" id="serviceAssetID" name="serviceAssetID">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Service Company</label>
+                <input data-l11n type="text" class="form-control" placeholder="Service Company" name="serviceCompany" id="serviceCompany" data-by-field="serviceCompany" required>
+              </div>
+              <div class="form-group col-md-2" id="_serviceDate">
+                <label title="Date of Servicing">Service Date</label>
+                <input id="serviceDate" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Invoice Reference</label>
+                <input data-l11n type="text" class="form-control" placeholder="Invoice Reference" name="serviceInvoice" id="serviceInvoice" data-by-field="serviceInvoice" required>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Total Price ($)</label>
+                <input type="text" class="form-control" placeholder="Odometer Value" id="serviceOdometer" name="serviceOdometer">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Service Type</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="serviceType"></select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="serviceAddress">Address</label>
+                <input type="text" class="form-control" placeholder="Service Address" id="serviceAddress" name="serviceAddress">
+              </div>
+              <div class="form-group col-md-2">
+                <label for="serviceOdometer">Odometer Value (km)</label>
+                <input type="text" class="form-control" placeholder="Odometer Value" id="serviceOdometer" name="serviceOdometer">
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="serviceDriver">Driver</label><span class="float-right"><input type="checkbox" placeholder="Notify Driver" id="serviceNotify" name="serviceNotify"> Notify Driver</span>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="serviceDriver"></select>
+              </div>
+              <div class="form-group col-md-4" style="vertical-align: top;">
+                <label for="assetRemarks">Remarks</label>
+                <textarea data-l11n type="text" class="form-control" placeholder="Remarks" name="assetRemarks" id="assetRemarks" data-by-field="assetRemarks" required></textarea>
+              </div>
+              <br />
+              <div class="clearfix"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                <button id="addService" data-toggle="modal" type="button" href="#confirmService" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Add Service</button>
+              </div>
+            </form>
+
+            <div class="table-responsive pt-3">
+              <table id="assetsService" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0"></table>
+            </div>
+
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="confirmService" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Please Confirm...</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you wish to proceed with the updates?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onServiceSubmit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteService" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger deleteServiceBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!------------------------------------------- Contract Modal -------------------------------------------------->
+
+    <div id="contractModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contractModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xxl modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="contractFormTitle">Contract</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="contractModalForm" novalidate>
+              <div class="form-group d-none">
+                <label>Asset ID</label>
+                <input type="text" class="form-control" placeholder="Enter Asset ID" id="contractAssetID" name="contractAssetID">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Contract Name</label>
+                <input data-l11n type="text" class="form-control" placeholder="Contract Name" name="contractName" id="contractName" data-by-field="contractName" required>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Contract Number</label>
+                <input data-l11n type="text" class="form-control" placeholder="Contract Number" name="contractNumber" id="contractNumber" data-by-field="contractNumber" required>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Contract Price ($)</label>
+                <input data-l11n type="text" class="form-control" placeholder="Contract Price" name="contractPrice" id="contractPrice" data-by-field="contractPrice" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Contract Type</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="contractType"></select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Invoice Date</label>
+                <input id="invoiceDate" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Contract Start Date</label>
+                <input id="contractStart" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Contract End Date</label>
+                <input id="contractEnd" type="text" class="form-control" placeholder="DD-MMM-YYYY HH:MM">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Contract Interval</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="contractInterval"></select>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="col-md-6 p-0">
+                  <label>Notification Interval</label>
+                  <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="notificationInterval"></select>
+                </div>
+                <div class="col-md-6 p-0">
+                  <label>Unit</label>
+                  <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="notificationUnit"></select>
+                </div>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="contractOdometer">Odometer at Creation (km)</label>
+                <input type="text" class="form-control" placeholder="Odometer at Creation" id="contractOdometer" name="contractOdometer">
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Driver</label>
+                <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="contractDriver"></select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Phone</label>
+                <input type="text" class="form-control" placeholder="Phone" id="serviceAddress" name="contractPhone">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Email</label>
+                <input type="text" class="form-control" placeholder="Email" id="serviceAddress" name="contractEmail">
+              </div>
+
+              <div class="form-group col-md-4" style="vertical-align: top;">
+                <label>Terms and Conditions</label>
+                <textarea data-l11n type="text" class="form-control" placeholder="Terms and Conditions" name="assetTermsConditions" id="assetTermsConditions" data-by-field="assetTermsConditions" required></textarea>
+              </div>
+              <br />
+              <div class="clearfix"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                <button id="addContract" data-toggle="modal" type="button" href="#confirmContract" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Add Contract</button>
+              </div>
+            </form>
+            <div class="table-responsive pt-3">
+              <table id="assetsContract" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0"></table>
+            </div>
+
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="confirmContract" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Please Confirm...</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you wish to proceed with the updates?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onContractSubmit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteContract" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+            <button type="button" class="btn btn-danger deleteContractBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

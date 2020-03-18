@@ -27,22 +27,44 @@ export const navItems: INavData[] = [
       {
         name: 'Traffic',
         url: '/tracking/traffic',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-warning'
       },
       {
         name: 'Carpark',
         url: '/tracking/carpark',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-th'
       },
       {
         name: 'Weather',
         url: '/tracking/weather',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-cloud'
       },
       {
         name: 'Heat Map',
         url: '/tracking/heatmap',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-thermometer'
+      },
+    ]
+  },
+  {
+    name: 'Route Optimization',
+    url: '/vrp',
+    icon: 'icon-map',
+    class: 'd-none',
+    //badge: {
+    //  variant: 'info',
+    //  text: 'Routing'
+    //},
+    children: [
+      {
+        name: 'Travelling Salesman',
+        url: '/vrp/tsp',
+        icon: 'fa fa-car'
+      },
+      {
+        name: 'Standard VRP',
+        url: '/vrp',
+        icon: 'fa fa-car'
       },
     ]
   },
@@ -57,9 +79,19 @@ export const navItems: INavData[] = [
     icon: 'cui-cog icons',
     children: [
       {
+        name: 'Assets',
+        url: '/assets',
+        icon: 'fa fa-truck'
+      },
+      {
+        name: 'Drivers',
+        url: '/drivers',
+        icon: 'fa fa-users'
+      },
+      {
         name: 'Users',
         url: '/users',
-        icon: 'icon-user'
+        icon: 'fa fa-user'
       },
       {
         name: 'Companies',
@@ -298,7 +330,7 @@ export const navItems: INavData[] = [
   //},
   {
     name: 'Download iOS',
-    url: 'http://coreui.io/angular/',
+    url: 'https://track-asia.com',
     icon: 'fa fa-apple fa-2x',
     class: 'mt-auto',
     variant: 'primary',

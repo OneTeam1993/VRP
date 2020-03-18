@@ -1,0 +1,169 @@
+<!--<ngx-spinner bdColor="rgba(51, 51, 51, 0.96)" size="medium" type="ball-spin-clockwise">
+  <p style="color: white">Please Wait. </p>
+</ngx-spinner> -->
+
+<div class="animated fadeIn">
+  <div class="card module-dt">
+    <div class="card-header">
+      <span class="font-weight-bold">Users</span>
+    </div>
+    <div class="card-body module-dt">
+      <div style="width: 100%;">
+        <div class="table-responsive pt-3">
+          <table id="userData" class="table table-outline"></table>
+        </div>
+      </div>
+      <div id="userModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="userFormTitle">Users</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForms()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="userModalForm" novalidate>
+                <div class="col-md-12">
+
+                  <div class="form-group d-none">
+                    <label for="userID">User ID</label>
+                    <input type="text" class="form-control" placeholder="Enter User ID" id="userID" name="userID">
+                  </div>
+
+                  <div>
+                    <div class="form-group" id="userImage">
+                      <img src="http://placehold.it/180" class="img-responsive" alt="" width="110" height="110" id="userImageBox">
+                      <span data-l11n class="btn btn-mint btn-file">
+                        <input type="file" name="UploadFile" id="uploadUser">
+                        <span id="userLabelUpload"></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="userFullName">Full Name</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Full Name" name="userFullName" id="userFullName" data-by-field="userFullName" required>
+                  </div>
+                  <div class="col-md-10 float-left p-0">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input data-l11n type="text" class="form-control" placeholder="Username" name="username" id="username" data-by-field="username" required>
+                    </div>
+                  </div>
+                  <div class="col-md-2 float-left pr-0">
+                    <div class="form-group">
+                      <div class="activateUser">
+                        <label for="userStatus">Status</label>
+                        <label class="switch switch-label switch-pill switch-primary" style="margin: 4px 0 0 0;">
+                          <input data-switchery="true" class="userStatus switch-input" name="userStatus" id="userStatus" data-by-field="userStatus" type="checkbox" checked>
+                          <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-6 float-left form-group pl-0">
+                    <label for="userPassword">Password</label>
+                    <input data-l11n type="password" class="form-control" placeholder="Password" name="userPassword" id="userPassword" data-by-field="userPassword" required>
+                  </div>
+                  <div class="col-md-6 float-left form-group p-0">
+                    <label for="userConfirmPassword">Confirm Password</label>
+                    <input data-l11n type="password" class="form-control" placeholder="Confirm Password" name="userConfirmPassword" id="userConfirmPassword" data-by-field="userConfirmPassword" required>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-6 float-left form-group pl-0">
+                    <label for="userPhone">Phone</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Phone Number" name="userPhone" id="userPhone" data-by-field="userPhone" required>
+                  </div>
+                  <div class="col-md-6 float-left form-group p-0">
+                    <label for="userEmail">Email</label>
+                    <input data-l11n type="text" class="form-control" placeholder="Email" name="userEmail" id="userEmail" data-by-field="userEmail" required>
+                  </div>
+                  <div class="col-md-6 float-left form-group pl-0">
+                    <label for="userReseller">Reseller</label>
+                    <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" #resellerSelect (change)='onOptionsSelectedReseller(resellerSelect.value)' id="userReseller"></select>
+                  </div>
+                  <div class="col-md-6 float-left form-group p-0">
+                    <label>Company</label>
+                    <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" #companySelect (change)='onOptionsSelectedCompany(companySelect.value)' id="userCompany"></select>
+                  </div>
+                  <div class="form-group">
+                    <label>Assign Vehicle(s)</label>
+                    <select class="selectpicker form-control show-tick" multiple data-live-search="true" data-width="100%" #assetSelect id="userAssets"></select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="userRole">User Role</label>
+                    <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="userRole"></select>
+                  </div>
+                  <div class="col-md-6 float-left form-group pl-0">
+                    <label for="userNotifications">Notifications</label>
+                    <select class="selectpicker form-control show-tick" multiple data-live-search="true" data-width="100%" id="userNotifications"></select>
+                  </div>
+                  <div class="col-md-6 float-left form-group p-0">
+                    <label for="userNotificationsType">Notifications Type</label>
+                    <select class="selectpicker form-control show-tick" multiple data-live-search="true" data-width="100%" id="userNotificationsType">
+                      <option value="1E" data-icon="fa fa-envelope-o">Email</option>
+                      <option value="1S" data-icon="fa fa-tablet">SMS</option>
+                      <option value="1U" data-icon="fa fa-desktop">UI</option>
+                    </select>
+                  </div>
+                  <br />
+                </div>
+                <div class="clearfix"></div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForms()"><i class="fa fa-times fa-fw"></i> Close</button>
+                  <button id="submit-user" data-toggle="modal" type="button" href="#confirmUser" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Save changes</button>
+                </div>
+              </form>
+
+            </div>
+
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
+
+      <div id="confirmUser" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-confirm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Please Confirm...</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p>Do you wish to proceed with the updates?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+              <button type="button" class="btn btn-danger" (click)="onSubmit()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div id="deleteUser" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-confirm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Are you sure?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-dismiss="modal" (click)="decline()">Cancel</button>
+              <button type="button" class="btn btn-danger deleteUserBtn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

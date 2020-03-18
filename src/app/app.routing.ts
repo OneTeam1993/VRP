@@ -75,13 +75,25 @@ export const routes: Routes = [
         loadChildren: () => import('./views/tracking/tracking.module').then(m => m.TrackingModule)
       },
       {
+        path: 'vrp',
+        loadChildren: () => import('./views/vrp/vrp.module').then(m => m.VrpModule)
+      },
+      {
         path: 'reports',
         loadChildren: () => import('./views/reports/reports.module').then(m => m.ReportsModule)
       },
-      //{
-      //  path: 'users',
-      //  loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
-      //},
+      {
+        path: 'drivers',
+        loadChildren: () => import('./views/drivers/drivers.module').then(m => m.DriversModule)
+      },
+      {
+        path: 'assets',
+        loadChildren: () => import('./views/assets/assets.module').then(m => m.AssetsModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
+      },
       {
         path: 'companies',
         loadChildren: () => import('./views/companies/companies.module').then(m => m.CompaniesModule)

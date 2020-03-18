@@ -122,17 +122,11 @@ export class ResellerComponent implements OnInit {
         }
       ],
       "initComplete": function (data, type, row) {
-
         $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
-
         $('#add').on('click', function (e) {
-
           $('#resellerModal').modal("show");
           $('#resellerFormTitle').text('Add New Reseller');
-
         });
-
-
       },
       "footerCallback": function (row, data, start, end, display) {
       }

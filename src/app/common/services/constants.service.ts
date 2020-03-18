@@ -29,6 +29,8 @@ export class ConstantsService {
   readonly zoneApi: string = this.baseAppUrl + this.uri_track + "zoneinfo/";
   readonly zonetypeApi: string = this.baseAppUrl + this.uri_track + "zonetypeinfo/";
   readonly reportApi: string = this.baseAppUrl + this.uri_track + "reportinfo/";
+  readonly userApi: string = this.baseAppUrl + this.uri_track + "userinfo/";
+  readonly driverApi: string = this.baseAppUrl + this.uri_track + "driverinfo/";
   readonly param_put: string = "?id=";
   readonly url_login = 'https://app.track-asia.com/tracksgwebapi/api/login';
   readonly url_events = 'https://app.track-asia.com/tracksgwebapi/api/eventinfo';
@@ -37,7 +39,16 @@ export class ConstantsService {
   readonly carkparkApi: string = 'https://api.data.gov.sg/v1/transport/carpark-availability';
   readonly carparkRatesApi: string = 'https://data.gov.sg/api/action/datastore_search?resource_id=85207289-6ae7-4a56-9066-e6090a3684a5';
   readonly weatherApi: string = 'https://api.data.gov.sg/v1/environment/24-hour-weather-forecast';
+  readonly userroleApi: string = this.baseAppUrl + this.uri_track + "roleinfo/";
+  readonly userNotificationsApi: string = this.baseAppUrl + this.uri_track + "statusinfo/";
   readonly iconURL: string = "assets/img/playback-marker/";
+  readonly apiUserImage: string = this.baseAppUrl + this.uri_track + "/fileupload/uploadfileuser";
+  readonly apiTransmissionType: string = this.baseAppUrl + this.uri_track + '/transmissioninfo';
+  readonly apiFuelType: string = this.baseAppUrl + this.uri_track + '/fueltypeinfo';
+  readonly apiMake: string = this.baseAppUrl + this.uri_track + '/makeinfo';
+  readonly apiCategory: string = this.baseAppUrl + this.uri_track + '/categoryinfo';
+  readonly apiDevice: string = this.baseAppUrl + this.uri_track + '/deviceinfo';
+  readonly apiServiceType: string = this.baseAppUrl + this.uri_track + '/servicetypeinfo/';
  
   //Declare Session Storage
   readonly getSessionstorageValueLanguage: string = sessionStorage.getItem('setSessionstorageValueLanguage');
@@ -168,5 +179,39 @@ export class ConstantsService {
     return url;
   }
 
+  getUsers() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.baseAppUrl + this.uri_track + 'userinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'userinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = this.baseAppUrl + this.uri_track + 'userinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
+    }
+    return url;
+  }
 
+  getCompaniesUserFilter() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#userReseller').val();
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?&ResellerID=' + $('#userReseller').val();
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = this.baseAppUrl + this.uri_track + 'companyinfo' + '?CompanyID=' + $('#userCompany').val() + "&ResellerID=" + $('#userReseller').val();
+    }
+    return url;
+  }
+
+  getDrivers() {
+    let url: string;
+    if (this.getSessionstorageValueRoleID == 1) {
+      url = this.baseAppUrl + this.uri_track + 'driverinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    } else if (this.getSessionstorageValueRoleID == 2) {
+      url = this.baseAppUrl + this.uri_track + 'driverinfo' + '?&ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID;
+    } else if (this.getSessionstorageValueRoleID >= 3) {
+      url = this.baseAppUrl + this.uri_track + 'driverinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
+    }
+    return url;
+  }
 }

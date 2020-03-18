@@ -288,7 +288,7 @@ export class ReportsComponent implements OnInit {
         "ordering": true,
         "order": [[0, 'asc']],
         "info": true,
-        "dom": 'Blfrtip',
+        "dom": 'lBfrtip',
         "processing": true,
         "language": {
         "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',

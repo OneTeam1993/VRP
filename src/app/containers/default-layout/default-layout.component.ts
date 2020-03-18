@@ -9,7 +9,8 @@ import { EventEmitterService } from '../../views/reports/event-emitter.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
-declare var $: any; 
+declare var $: any;
+
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ declare var $: any;
 })
 
 export class DefaultLayoutComponent implements OnInit {
+
   public sidebarMinimized = false;
   public navItems = navItems;
   base = this._constant.baseAppUrl;

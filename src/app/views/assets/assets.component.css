@@ -1,0 +1,79 @@
+span.btn.btn-mint.btn-file {
+  position: absolute;
+  top: 40px;
+  width: 60%;
+}
+
+#assetImage img {
+  vertical-align: unset;
+}
+
+@media screen and (min-width: 991px) {
+  .form-group.col-md-2 {
+    display: inline-block;
+    max-width: 16.5% !important;
+  }
+
+  .form-group.col-md-4 {
+    display: inline-block;
+    max-width: 32.9% !important;
+  }
+
+  .form-group.col-md-5, .form-group.col-md-7, .modal-body .col-md-2 {
+    display: inline-block;
+  }
+
+  .form-group.col-md-6, .modal-body .col-md-6 {
+    display: inline-block;
+    max-width: 49.7% !important;
+  }
+
+  .modal-body .col-md-8 {
+    max-width: 65.9% !important;
+  }
+}
+
+
+@media screen and (min-width: 767px) and (max-width: 991px) {
+
+  .form-group.col-md-4 {
+    display: inline-block;
+    max-width: 100% !important;
+  }
+
+  .form-group.col-md-5, .form-group.col-md-7, .modal-body .col-md-2 {
+    display: inline-block;
+  }
+
+  .form-group.col-md-6, .modal-body .col-md-6 {
+    display: inline-block;
+    max-width: 100% !important;
+  }
+
+  .modal-body .col-md-10 {
+    max-width: 65.9% !important;
+  }
+}
+
+/*---------------------- Servicing Modal ----------------------*/
+#servicingModal .col-md-3, #contractModal .col-md-3 {
+  display: inline-block;
+  max-width: 24.7%;
+}
+
+#servicingModal .modal-xxl, #contractModal .modal-xxl {
+  max-width: 90% !important;
+}
+
+#servicingModal .col-md-4 {
+  display: inline-block;
+  max-width: 32.8% !important;
+}
+
+#contractModal .col-md-6 {
+  max-width: 49.5% !important;
+}
+
+#contractModal .col-md-2 {
+  max-width: 16.4% !important;
+}

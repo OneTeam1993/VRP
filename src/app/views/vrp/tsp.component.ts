@@ -14,12 +14,12 @@ declare const StyledIcon: any;
 declare const MarkerWithLabel: any;
 
 @Component({
-  templateUrl: 'tracking.component.html',
-  styleUrls: ["./tracking.component.css"],
+  templateUrl: 'tsp.component.html',
+  styleUrls: ["./tsp.component.css"],
   encapsulation: ViewEncapsulation.None
 })
 
-export class TrackingComponent implements OnInit {
+export class TspComponent implements OnInit {
   route: string;
   constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
 
@@ -1661,7 +1661,7 @@ export class TrackingComponent implements OnInit {
         firstData = false;
       }
 
-      if (route == "/tracking") {
+      if (route == "/tsp") {
         var outputDiv = document.getElementById('assetStatus');
         if (outputDiv) {
           for (k = 0; k < markers.length; k++) {
