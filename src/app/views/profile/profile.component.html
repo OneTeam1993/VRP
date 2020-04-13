@@ -1,0 +1,114 @@
+<!--<ngx-spinner bdColor="rgba(51, 51, 51, 0.96)" size="medium" type="ball-spin-clockwise">
+  <p style="color: white">Please Wait. </p>
+</ngx-spinner> -->
+
+<div class="animated fadeIn">
+  <div class="card module-dt">
+    <div class="card-header">
+      <span class="font-weight-bold">Profile</span>
+    </div>
+    <div class="card-body module-dt">
+      <div style="width: 100%;">
+
+        <form id="profileModalForm" novalidate>
+          <div class="col-md-12">
+            <div class="form-group d-none">
+              <label>Profile ID</label>
+              <input type="text" class="form-control" placeholder="Enter Profile ID" id="profileID" name="profileID">
+            </div>
+            <div>
+              <div class="form-group" id="profileImage">
+                <img src="http://placehold.it/180" class="img-responsive" alt="" width="110" height="110" id="profileImageBox">
+                <span data-l11n class="btn btn-mint btn-file">
+                  <input type="file" name="UploadFile" id="uploadProfile">
+                  <span id="profileLabelUpload"></span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6 form-group float-left">
+              <label>Full Name</label>
+              <input data-l11n type="text" class="form-control" placeholder="Full Name" name="profileFullName" id="profileFullName" data-by-field="profileFullName" required>
+            </div>
+            <div class="col-md-6 form-group float-left">
+              <label>Username</label>
+              <input data-l11n type="text" disabled class="form-control" placeholder="Username" name="username" id="username" data-by-field="username" required>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6 float-left form-group">
+              <label>Password</label>
+              <input data-l11n type="password" class="form-control" placeholder="Password" name="profilePassword" id="profilePassword" data-by-field="profilePassword" required>
+            </div>
+            <div class="col-md-6 float-left form-group">
+              <label>Confirm Password</label>
+              <input data-l11n type="password" class="form-control" placeholder="Confirm Password" name="profileConfirmPassword" id="profileConfirmPassword" data-by-field="profileConfirmPassword" required>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6 float-left form-group">
+              <label>Phone</label>
+              <input data-l11n type="text" class="form-control" placeholder="Phone Number" name="profilePhone" id="profilePhone" data-by-field="profilePhone" required>
+            </div>
+            <div class="col-md-6 float-left form-group">
+              <label>Email</label>
+              <input data-l11n type="text" class="form-control" placeholder="Email" name="profileEmail" id="profileEmail" data-by-field="profileEmail" required>
+            </div>
+            <div class="col-md-6 float-left form-group d-none">
+              <label>Reseller</label>
+              <select class="selectpicker form-control show-tick" data-live-search="true" data-width="100%" id="profileReseller"></select>
+            </div>
+            <div class="col-md-6 float-left form-group">
+              <label>Company</label>
+              <select class="selectpicker form-control show-tick" disabled data-live-search="true" data-width="100%" id="profileCompany"></select>
+            </div>
+            <br />
+          </div>
+          <div class="clearfix"></div>
+          <div class="modal-footer">
+            <button id="delete-user" data-toggle="modal" type="button" href="#deleteProfile" class="btn btn-danger float-left"><i class="fa fa-trash fa-fw"></i> Delete Account</button>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times fa-fw"></i> Close</button>
+            <button id="submit-user" data-toggle="modal" type="button" href="#confirmProfile" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Save changes</button>
+          </div>
+        </form>
+      </div>
+
+
+      <div id="confirmProfile" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-confirm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Please Confirm...</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p>Do you wish to proceed with the updates?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" (click)="onSubmit()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div id="deleteProfile" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-confirm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Are you sure?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p>Do you really want to delete your account? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger deleteProfileBtn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

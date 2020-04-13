@@ -1,3 +1,6 @@
+div.dt-buttons {
+  float: right !important;
+}
 
 // Here you can add other styles
 #reports-container .dt-buttons {
@@ -79,14 +82,27 @@ table.dataTable.nowrap th {
 }
 
 /*------------------------- Responsive Module Datatables -------------------------------*/
-.module-dt .dataTables_scrollHeadInner {
-  width: 100% !important;
-  padding-right: 0 !important;
+
+.w30 {
+    width: 30px;
 }
 
-.module-dt .dataTables_scrollHeadInner table, .module-dt .dataTables_scrollBody table {
-  min-width: 1000px;
+#messagesReport_wrapper .dataTables_scrollHeadInner, #messagesReport_wrapper .dataTables_scrollHeadInner table,
+#messagesData_wrapper .dataTables_scrollHeadInner, #messagesData_wrapper .dataTables_scrollHeadInner table,
+.drivers .dataTables_scrollHeadInner, .dataTables_scrollHeadInner table,
+#importPersonnelModal .dataTables_scrollHeadInner, #importPersonnelModal .dataTables_scrollHeadInner table,
+#eventReport_wrapper .dataTables_scrollHeadInner, #eventReport_wrapper .dataTables_scrollHeadInner table {
+  min-width: 100% !important;
   width: 100% !important;
+}
+
+
+
+
+table.dataTable th, .tableth {
+  color: #5c6873 !important;
+  background-color: #e4e7ea;
+  border-color: #c8ced3;
 }
 
 .module-dt div.dt-buttons {
@@ -100,13 +116,13 @@ table.dataTable.nowrap th {
   margin-right: 0 !important;
 }
 
-.addBtn:hover, .copyBtn:hover, .refreshBtn:hover,
-.addBtn:focus, .copyBtn:focus, .refreshBtn:focus,
-.addBtn:active, .copyBtn:active, .refreshBtn:active {
+.addBtn:hover, .importBtn:hover, .copyBtn:hover, .refreshBtn:hover,
+.addBtn:focus, .importBtn:focus, .copyBtn:focus, .refreshBtn:focus,
+.addBtn:active, .importBtn:active, .copyBtn:active, .refreshBtn:active {
   background: #3f3f3f !important;
 }
 
-.addBtn {
+.addBtn, .importBtn {
   color: #fff !important;
   background: #5a6268 !important;
   border-color: #bab9b9;
@@ -128,14 +144,63 @@ table.dataTable.nowrap th {
   text-overflow: ellipsis;
 }
 
-.module-dt table.dataTable.nowrap th, .module-dt table.dataTable.nowrap td {
-  white-space: unset !important;
-}
-
 .module-dt .table {
-  table-layout: unset !important;
+  table-layout: fixed !important;
 }
 
 table.fixedHeader-floating.no-footer {
   margin-top: 50px;
+}
+
+
+
+/*================================== Responsive Module - Mobile ===================================*/
+@media screen and (max-width: 870px) {
+
+  /*----------------- Logo ---------------*/
+  img.navbar-brand-full {
+    display: none;
+  }
+
+  /*------------------------------ DataTable ----------------------*/
+  /*---------- Buttons ------*/
+  .module-dt .copyBtn, .module-dt .buttons-colvis, .module-dt .refreshBtn {
+    display: none !important;
+  }
+
+  .module-dt .buttons-collection {
+    margin-left: 10px;
+  }
+}
+
+/*================================ Responsive Reports - Tablet ==============================*/
+
+@media screen and (max-width: 1250px) {
+
+  #_playback.col-md-6, #_charts.col-md-6 {
+    max-width: 100% !important;
+    float: none !important;
+    flex: 0 0 100%;
+  }
+
+  #_playback .panel {
+    height: 0 !important;
+    margin-top: 0 !important;
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 1110px) {
+
+  #_reports_table .dataTables_wrapper .dataTables_length {
+    text-align: left;
+  }
+
+  #_reports_table .dataTables_wrapper .dataTables_filter {
+    text-align: right;
+  }
+
+  #_reports_table .buttons-colvis {
+    display: none;
+  }
 }

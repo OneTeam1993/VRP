@@ -9,6 +9,7 @@ import { VrpComponent } from './vrp.component';
 import { VrpRoutingModule } from './vrp-routing.module';
 import { DataTablesModule } from 'angular-datatables';
 import { TspComponent } from './tsp.component';
+import { DirectionComponent } from './direction.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -25,6 +26,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     CarouselModule.forRoot(),
     NgxSpinnerModule
   ],
-  declarations: [VrpComponent, TspComponent]
+  declarations: [VrpComponent, TspComponent, DirectionComponent]
 })
 export class VrpModule { }

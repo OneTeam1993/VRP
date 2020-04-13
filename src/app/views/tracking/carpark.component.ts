@@ -36,7 +36,7 @@ export class CarparkComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let api_carparkrates = this._constant.carparkRatesApi;
     let api_carparkavailability = this._constant.carkparkApi;

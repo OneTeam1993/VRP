@@ -1,19 +1,13 @@
 declare var $: any;
 import { Component, OnInit } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import * as moment from 'moment';
 import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
-
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import axios from "axios";
 import * as CryptoJS from 'crypto-js';
 
 let _table: any = $("#driverData");
-
-//import { ModalDirective } from 'ngx-bootstrap/modal';
+let _import: any = $("#importPersonnelTable");
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -29,7 +23,7 @@ export class DriversComponent implements OnInit {
   uri = this._constant.uri_track;
   user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
   reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-  company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
   role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
   username = sessionStorage.getItem('setSessionstorageValueUser');
   company = sessionStorage.getItem('setSessionstorageValueCompany');
@@ -45,7 +39,6 @@ export class DriversComponent implements OnInit {
 
     let api = this.api_drivers;
     let driverApi = this._constant.driverApi;
-
     let default_reseller = this._constant.getSessionstorageValueUserResellerID;
     let default_company = this._constant.getSessionstorageValueCompanyID;
 
@@ -99,6 +92,7 @@ export class DriversComponent implements OnInit {
     _table = $("#driverData").DataTable({
       "destroy": true,
       "responsive": false,
+      "fixedHeader": false,
       "select": true,
       "filter": true,
       "colReorder": false,
@@ -115,7 +109,7 @@ export class DriversComponent implements OnInit {
       "ordering": true,
       "order": [[0, 'asc']],
       "info": true,
-      "dom": '<"addNew"><"floatRight"B><"top"l>frti<"bottom"p><"clear">',
+       "dom": '<"addNew"><"import"><"floatRight"B><"top"l>frti<"bottom"p><"clear">',
       "language": {
         "zeroRecords": "Nothing found - sorry",
         "infoEmpty": "No events available",
@@ -146,15 +140,14 @@ export class DriversComponent implements OnInit {
         },
       ],
       "columns": [
-        { data: "DriverID", title: "ID", className: 'reorder' },
+        { data: "DriverID", title: "ID", className: 'reorder w30' },
         { data: "Image", title: "Image", className: 'reorder' },
-        { data: "Name", title: "Driver", className: 'reorder' },
+        { data: "Name", title: "Name", className: 'reorder' },
         { data: "Phone", title: "Phone", className: 'reorder' },
         { data: "Email", title: "Email", className: 'reorder' },
         { data: "Address", title: "Address", className: 'reorder' },
         { data: "DateOfBirth", title: "Date of Birth", className: 'reorder' },
         { data: "Company", title: "Company", className: 'reorder' },
-        { data: "Asset", title: "Assigned Vehicle", className: 'reorder' },
         { data: "Remarks", title: "Remarks", className: 'reorder' },
         {
           data: null,
@@ -164,7 +157,7 @@ export class DriversComponent implements OnInit {
         }
       ],
       "ajax": {
-        url: this.api_drivers,
+        url: api,
         type: 'GET',
         dataType: 'json',
         dataSrc: ''
@@ -205,36 +198,134 @@ export class DriversComponent implements OnInit {
         $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
         $('#add').on('click', function (e) {
           $('#driverModal').modal("show");
-          $('#driverFormTitle').text('Add New Driver');
+          $('#driverFormTitle').text('Add New Personnel');
+          clearForms();
+        });
+	
+       $(".import").html('<button id="import" class="importBtn float-left">Import</button>');
+        $('#import').on('click', function (e) {
+          $('#importPersonnelModal').modal("show");
+          $('#importPersonnelFormTitle').text('Import Personnel');
+          clearImportForms();
         });
       },
       "footerCallback": function (row, data, start, end, display) {
       }
     })
 
+    function clearForms() {
+      $('#driverID').val('');
+      $('#driverImageBox').attr('src', 'assets/img/default-avatar.png').width(110).height(110);
+      $("#uploadDriver").val('');
+      $('#driverName').val('');
+      $('#driverPassword').val('');
+      $('#driverConfirmPassword').val('');
+      $('#driverPhone').val('');
+      $('#driverEmail').val('');
+      $('#driverAddress').val('');
+      $('#driverBirthDate').val('');
+      $('#driverRemarks').val('');
+    }
+    _import = $("#importPersonnelTable").DataTable({
+      "destroy": true,
+      "responsive": false,
+      "select": true,
+      "filter": true,
+      "colReorder": false,
+      "rowReorder": true,
+      "keys": true,
+      "scrollX": true,
+      "scrollCollapse": true,
+      "stateSave": true,
+      "paging": true,
+      "pagingType": "full_numbers",
+      "pageLength": 10,
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, 'All']],
+      "searching": true,
+      "ordering": true,
+      "order": [[0, 'asc']],
+      "info": true,
+      "dom": '<"floatRight"B><"top"l>frti<"bottom"p><"clear">',
+      "language": {
+        "zeroRecords": "Nothing found - sorry",
+        "infoEmpty": "No events available",
+        "infoFiltered": "(filtered from MAX total events)"
+      },
+      "buttons": [
+        { extend: 'colvis', className: 'float-right' }, 
+        {
+          text: 'Refresh',
+          className: 'refreshBtn float-right ml-2',
+          action: function (e, dt, node, config) {
+            $('#importPersonnelTable').DataTable().ajax.reload();
+          }
+        },
+      ],
+      "columns": [
+        { data: "DriverID", title: "ID", className: 'reorder' },
+        { data: "Name", title: "Personnel", className: 'reorder' },
+        { data: "Phone", title: "Phone", className: 'reorder' },
+        { data: "Email", title: "Email", className: 'reorder' },
+        { data: "Address", title: "Address", className: 'reorder' },
+        { data: "DateOfBirth", title: "Date of Birth", className: 'reorder' },
+        { data: "Company", title: "Company", className: 'reorder' },
+        { data: "Asset", title: "Assigned Vehicle", className: 'reorder' },
+        { data: "Remarks", title: "Remarks", className: 'reorder' },
+      ],
+      "columnDefs": [
+        {
+          "render": function (data, type, row) {
+            if (row.DateOfBirth == "0001-01-01T00:00:00") {
+              return '---'
+            } else {
+              return moment(data).add('hours', 8).format('D-MMM-YYYY, hh:mm:ss A');
+            }
+          },
+          "targets": 5
+        },
+        {
+          "render": function (data, type, row) {
+            if (row.AssetID == "0") {
+              return '---'
+            } else {
+              return data;
+            }
+          },
+          "targets": 7
+        }
+      ],
+      "footerCallback": function (row, data, start, end, display) {
+      }
+    })
+
+
+    function clearImportForms() {
+      $("#uploadImportPersonnel").val('');
+    }
+
 
     /*------------------- Add Driver Date & Time Dropdown - Keep ---------------------------*/
 
-    //var dateFormat = "D-MMM-YYYY HH:mm A";
+    var dateFormat = "D-MMM-YYYY HH:mm A";
 
-    //var dDBD = new Date();
-    //dDBD.setHours(0);
-    //dDBD.setMinutes(0);
-    //var dateBirthDate = moment(dDBD).format(dateFormat);
+    var dDBD = new Date();
+    dDBD.setHours(0);
+    dDBD.setMinutes(0);
+    var dateBirthDate = moment(dDBD).format(dateFormat);
      
-    //$('#driverBirthDate').datetimepicker({
-    //  format: 'd-M-Y H:i A',
-    //  theme: 'dark',
-    //  lang: 'en',
-    //  value: dateBirthDate
-    //});
+    $('#driverBirthDate').datetimepicker({
+      format: 'd-M-Y H:i A',
+      theme: 'dark',
+      lang: 'en',
+      value: dateBirthDate
+    });
 
   /*----------------------------------------------------------- Edit Driver -----------------------------------------------------*/
 
     $('#driverData').on('click', 'a.editDriver', {param: this.user_id}, function (e) {
 
       $('#driverModal').modal('show');
-      $('#driverFormTitle').text('Edit Driver');
+      $('#driverFormTitle').text('Edit Personnel');
 
       $('#driverCompany').empty();
       $('#driverAssets').empty();
@@ -275,17 +366,17 @@ export class DriversComponent implements OnInit {
       $('#driverPhone').val(data.Phone);
       $('#driverEmail').val(data.Email);
       $('#driverAddress').val(data.Address);
-      $('#driverBirthDate').val(data.DateOfBirth);
+      var stillUtc = moment.utc(data.DateOfBirth).toDate();
+      var date_birth = moment(stillUtc).local().format(dateFormat);
+      $('#driverBirthDate').val(date_birth);
       $('#driverReseller').val(data.ResellerID);
       $('#driverCompany').val(data.CompanyID);
       $('#driverRemarks').val(data.Remarks);
 
       /*---------------------------------- Assets in Edit ------------------------------------*/
 
-      setTimeout(function () {
         $('#driverAssets').val(data.AssetID);
         $('#driverAssets').selectpicker('refresh');
-      }, 1000);
 
       /*---------------------------------------------------------------*/
 
@@ -301,7 +392,6 @@ export class DriversComponent implements OnInit {
       var data = _table.row($(this).parents('tr')).data();
       $('#driverID').val(data.DriverID);
       $('#deleteDriver').on('click', '.deleteDriverBtn', function (e) {
-
         let obj: any = {
           DriverID: data.DriverID,
         };
@@ -374,7 +464,7 @@ export class DriversComponent implements OnInit {
     $(".selectpicker").selectpicker('refresh');
   }
   onOptionsSelectedCompany(value: any) {
-    Number(sessionStorage.setItem('setSessionstorageValueCompanyID', value));
+    Number(sessionStorage.setItem('setSessionstorageValueUserCompanyID', value));
     let selected_reseller = $('#driverReseller').val();
     let selected_company = $('#driverCompany').val();
     let api_assets_filter: string = getAssetsUserFilter(this.role_id, this.base, this.uri, selected_reseller, selected_company);
@@ -398,8 +488,6 @@ export class DriversComponent implements OnInit {
 
   onSubmit() {
 
-    let apiUserImage = this._constant.apiUserImage;
-
     var flag;
     if ($('#driverStatus').prop("checked") == true) {
       flag = 1;
@@ -407,7 +495,7 @@ export class DriversComponent implements OnInit {
       flag = 0;
     }
 
-    this.activeModal.close(true);
+    //this.activeModal.close(true);
 
     /*------------------------------------------ Vehicle Array to String ----------------------------------------*/
     var getAssets = $('#driverAssets').val();
@@ -440,63 +528,16 @@ export class DriversComponent implements OnInit {
     catch (e) {
       console.log('You got this error: ' + e);
     }
-  
-  /*------------------------------------------------- Driver Image ----------------------------------------------*/
 
-    var data = new FormData();
-    var files = $("#uploadDriver").get(0).files;
-    if (files.length > 0) {
-      data.append("UploadedImage", files[0], GetDriverID + ".png");
-    }
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#showImage')
-            .attr('src', e.target.result)
-            .width(110)
-            .height(110);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    var ajaxRequest = $.ajax({
-      type: "POST",
-      url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfile",
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (data) {
-        console.log('success');
-      }
-    });
-
-    ajaxRequest.done(function (responseData, textStatus) {
-      if (textStatus == 'success') {
-        if (responseData != null) {
-          if (responseData.Key) {
-            alert(responseData.Value);
-            $("#uploadDriver").val('');
-          } else {
-            alert(responseData.Value);
-          }
-        }
-      } else {
-        alert(responseData.Value);
-      }
-    });
+    
 
     /*---------------------------------------------------------- Save Data to DataTable ------------------------------------*/
 
     let obj: any = {
       DriverID: $('#driverID').val(),
-      Image: $('#driverImage').val(),
       Flag: flag,
       Name: $('#driverName').val(),
       Password: hashPassword,
-      ConfirmPassword: $('#userConfirmPassword').val(),
       Phone: $('#driverPhone').val(),
       Email: $('#driverEmail').val(),
       Address: $('#driverAddress').val(),
@@ -507,11 +548,40 @@ export class DriversComponent implements OnInit {
       Remarks: $('#driverRemarks').val(),
     };
 
+  /*------------------------------------------------- Driver Image ----------------------------------------------*/
+
     if (obj.DriverID == 'undefined' || obj.DriverID == null || obj.DriverID == 0) {
 
       axios.post(this._constant.driverApi, obj)
-        .then(function (response) {
-          console.log(response);
+        .then(function (res) {
+
+          var data = new FormData();
+          var files = $("#uploadDriver").get(0).files;
+          if (files.length > 0) {
+            data.append("UploadedImageDriver", files[0], res.data.DriverID + ".png");
+
+            $.ajax({
+              type: "POST",
+              url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfile",
+              contentType: false,
+              processData: false,
+              data: data,
+              success: function (data) {
+                console.log('success');
+                $('#driverModal').modal('hide');
+                $('#confirmDriver').modal('hide');
+                $("#driverData").DataTable().ajax.reload();
+                clearForms();
+              }
+            });
+
+          } else {
+            $('#driverModal').modal('hide');
+            $('#confirmDriver').modal('hide');
+            $("#driverData").DataTable().ajax.reload();
+            clearForms();
+          }
+          console.log(res);
         })
         .catch(function (error) {
           console.log(error);
@@ -528,37 +598,27 @@ export class DriversComponent implements OnInit {
           var files = $("#uploadDriver").get(0).files;
           if (files.length > 0) {
             data.append("UploadedImageDriver", files[0], obj.DriverID + ".png");
-          }
 
-          var ajaxRequest = $.ajax({
-            type: "POST",
-            url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfile",
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (data) {
-              console.log('success');
-              clearForms();
-              $('#driverModal').modal('hide');
-              $('#confirmDriver').modal('hide');
-              $("#driverData").DataTable().ajax.reload();
-            }
-          });
-
-          ajaxRequest.done(function (responseData, textStatus) {
-            if (textStatus == 'success') {
-              if (responseData != null) {
-                if (responseData.Key) {
-                  alert(responseData.Value);
-                  $("#uploadDriver").val('');
-                } else {
-                  alert(responseData.Value);
-                }
+            $.ajax({
+              type: "POST",
+              url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfile",
+              contentType: false,
+              processData: false,
+              data: data,
+              success: function (data) {
+                console.log('success');
+                $('#driverModal').modal('hide');
+                $('#confirmDriver').modal('hide');
+                $("#driverData").DataTable().ajax.reload();
+                clearForms();           
               }
-            } else {
-              alert(responseData.Value);
-            }
-          });
+            });
+          } else {
+            $('#driverModal').modal('hide');
+            $('#confirmDriver').modal('hide');
+            $("#driverData").DataTable().ajax.reload();
+            clearForms();     
+          }
 
         })
         .catch(function (error) {
@@ -567,8 +627,10 @@ export class DriversComponent implements OnInit {
     }
 
     function clearForms() {
+      $("#uploadDriver").val('');
       $('#driverID').val('');
-      $('#driverImage').val('');
+      $('#driverImageBox').attr('src', 'assets/img/default-avatar.png').width(110).height(110);
+      $("#uploadDriver").val('');
       $('#driverName').val('');
       $('#driverPassword').val('');
       $('#driverConfirmPassword').val('');
@@ -576,39 +638,25 @@ export class DriversComponent implements OnInit {
       $('#driverEmail').val('');
       $('#driverAddress').val('');
       $('#driverBirthDate').val('');
-      $('#driverReseller').val('');
-      $('#driverCompany').val('');
-      $('#driverAssets').val('');
       $('#driverRemarks').val('');
     }
 
-
   }
+
 
   clearForms() {
-    $('#driverID').val('');
-    $('#driverImage').val('');
-    $('#driverName').val('');
-    $('#driverPassword').val('');
-    $('#driverConfirmPassword').val('');
-    $('#driverPhone').val('');
-    $('#driverEmail').val('');
-    $('#driverAddress').val('');
-    $('#driverBirthDate').val('');
-    $('#driverReseller').val('');
-    $('#driverCompany').val('');
-    $('#driverAssets').val('');
-    $('#driverRemarks').val('');
-  }
 
-  decline() {
-    this.activeModal.close(false);
-  }
-
-  dismiss() {
-    this.activeModal.dismiss();
-  }
-
-  
+        $('#driverID').val('');
+        $('#driverImageBox').attr('src', 'assets/img/default-avatar.png').width(110).height(110);
+        $("#uploadDriver").val('');
+        $('#driverName').val('');
+        $('#driverPassword').val('');
+        $('#driverConfirmPassword').val('');
+        $('#driverPhone').val('');
+        $('#driverEmail').val('');
+        $('#driverAddress').val('');
+        $('#driverBirthDate').val('');
+        $('#driverRemarks').val('');
+    }
 
 }

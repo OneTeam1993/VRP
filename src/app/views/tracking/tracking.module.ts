@@ -12,6 +12,7 @@ import { TrafficComponent } from './traffic.component';
 import { HeatmapComponent } from './heatmap.component';
 import { WeatherComponent } from './weather.component';
 import { CarparkComponent } from './carpark.component';
+import { StreetComponent } from './street.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -28,6 +29,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     CarouselModule.forRoot(),
     NgxSpinnerModule
   ],
-  declarations: [TrackingComponent, TrafficComponent, HeatmapComponent, WeatherComponent, CarparkComponent]
+  declarations: [TrackingComponent, TrafficComponent, HeatmapComponent, WeatherComponent, CarparkComponent, StreetComponent]
 })
 export class TrackingModule { }

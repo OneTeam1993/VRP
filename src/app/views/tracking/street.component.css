@@ -1,0 +1,10 @@
+#street-map, map {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin: 0 auto 0;
+  padding: 0px 0px 0;
+  overflow: hidden;
+  max-width: none !important;
+  box-shadow: none !important;
+}

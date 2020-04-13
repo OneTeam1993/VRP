@@ -19,3 +19,19 @@
 .table {
   table-layout: fixed;
 }
+
+.move {
+  background-color: #2B7C21;
+}
+
+.stop {
+  background-color: #B60003;
+}
+
+.idle {
+  background-color: #fea82c;
+}
+
+.down {
+  background-color: #696969;
+}

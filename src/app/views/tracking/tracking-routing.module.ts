@@ -5,6 +5,7 @@ import { TrafficComponent } from './traffic.component';
 import { HeatmapComponent } from './heatmap.component';
 import { WeatherComponent } from './weather.component';
 import { CarparkComponent } from './carpark.component';
+import { StreetComponent } from './street.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,13 @@ const routes: Routes = [
     component: HeatmapComponent,
     data: {
       title: 'Heat Map'
+    }
+  },
+  {
+    path: 'street',
+    component: StreetComponent,
+    data: {
+      title: 'Street Map'
     }
   }
 ];

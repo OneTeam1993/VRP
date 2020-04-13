@@ -10,7 +10,7 @@ import { UsersComponent } from './users.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   imports: [
@@ -22,7 +22,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
     UsersRoutingModule,
     DataTablesModule,
     ModalModule.forRoot(),
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule
   ],
   providers: [NgbActiveModal],
   declarations: [UsersComponent],

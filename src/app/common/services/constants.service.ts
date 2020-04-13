@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import * as moment from 'moment';
+import 'moment/locale/en-gb';
 
 declare var $: any;
 
@@ -31,9 +31,12 @@ export class ConstantsService {
   readonly reportApi: string = this.baseAppUrl + this.uri_track + "reportinfo/";
   readonly userApi: string = this.baseAppUrl + this.uri_track + "userinfo/";
   readonly driverApi: string = this.baseAppUrl + this.uri_track + "driverinfo/";
+  readonly jobApi: string = this.baseAppUrl + this.uri_track + "jobinfo/";
+  readonly statusApi: string = this.baseAppUrl + this.uri_track + "flaginfo/";
+  readonly messagesApi: string = this.baseAppUrl + this.uri_track + "messageinfo/";
   readonly param_put: string = "?id=";
-  readonly url_login = 'https://app.track-asia.com/tracksgwebapi/api/login';
-  readonly url_events = 'https://app.track-asia.com/tracksgwebapi/api/eventinfo';
+  readonly url_login: string = this.baseAppUrl + this.uri_track + "login/";
+  readonly url_events: string = this.baseAppUrl + this.uri_track + "eventinfo/";
   readonly GetTrackVersion = "sg";
   readonly trafficApi: string = 'https://api.data.gov.sg/v1/transport/traffic-images';
   readonly carkparkApi: string = 'https://api.data.gov.sg/v1/transport/carpark-availability';
@@ -49,13 +52,15 @@ export class ConstantsService {
   readonly apiCategory: string = this.baseAppUrl + this.uri_track + '/categoryinfo';
   readonly apiDevice: string = this.baseAppUrl + this.uri_track + '/deviceinfo';
   readonly apiServiceType: string = this.baseAppUrl + this.uri_track + '/servicetypeinfo/';
- 
+  readonly eventsApi: string = this.baseAppUrl + this.uri_track + "statusinfo/";
+  readonly covid_news_sg = 'https://api.apify.com/v2/key-value-stores/yaPbKe9e5Et61bl7W/records/LATEST?disableRedirect=true';
+
   //Declare Session Storage
   readonly getSessionstorageValueLanguage: string = sessionStorage.getItem('setSessionstorageValueLanguage');
   readonly getSessionstorageValueUserID: number = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
   readonly getSessionstorageValueUser: string = sessionStorage.getItem('setSessionstorageValueUser');
   readonly getSessionstorageValueCompany: string = sessionStorage.getItem('setSessionstorageValueCompany');
-  readonly getSessionstorageValueCompanyID: number = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  readonly getSessionstorageValueCompanyID: number = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
   readonly getSessionstorageValueUserNotifications: string = sessionStorage.getItem('setSessionstorageValueUserNotifications');
   readonly getSessionstorageValueRoleID: number = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
   readonly getSessionstorageValueEmail: string = sessionStorage.getItem('setSessionstorageValueEmail');
@@ -212,6 +217,48 @@ export class ConstantsService {
     } else if (this.getSessionstorageValueRoleID >= 3) {
       url = this.baseAppUrl + this.uri_track + 'driverinfo' + '?CompanyID=' + this.getSessionstorageValueCompanyID + "&ResellerID=" + this.getSessionstorageValueUserResellerID;
     }
+    return url;
+  }
+
+  getJobs() {
+
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d1 = new Date();
+    d1.setHours(0);
+    d1.setMinutes(0);
+    var dateFrom = moment.utc(d1).format(dateFormat);
+
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d2 = new Date();
+    d2.setHours(0);
+    d2.setMinutes(0);
+    d2.setDate(d2.getDate() + 1);
+    var dateTo = moment.utc(d2).format(dateFormat);
+
+    let url: string = this.baseAppUrl + this.uri_track + 'jobinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID + '&Timestamp=' + dateFrom + '&RxTime=' + dateTo;
+    
+
+    return url;
+  }
+
+  getMessages() {
+
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d1 = new Date();
+    d1.setHours(0);
+    d1.setMinutes(0);
+    var dateFrom = moment.utc(d1).format(dateFormat);
+
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d2 = new Date();
+    d2.setHours(0);
+    d2.setMinutes(0);
+    d2.setDate(d2.getDate() + 1);
+    var dateTo = moment.utc(d2).format(dateFormat);
+
+    let url: string = this.baseAppUrl + this.uri_track + 'messageinfo' + '?ResellerID=' + this.getSessionstorageValueUserResellerID + '&CompanyID=' + this.getSessionstorageValueCompanyID + '&Timestamp=' + dateFrom + '&RxTime=' + dateTo;
+
+
     return url;
   }
 }

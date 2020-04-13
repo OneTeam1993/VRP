@@ -1,0 +1,36 @@
+#map-canvas {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin: 0 auto 0;
+  padding: 0px 0px 0;
+  overflow: hidden;
+  max-width: none !important;
+  box-shadow: none !important;
+}
+
+#directions-panel {
+  margin-top: 10px;
+  background-color: azure;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 340px;
+}
+
+#directions-result {
+  margin-top: 10px;
+  background-color: azure;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 460px;
+}
+
+#total-panel {
+  background-color: azure;
+  padding: 5px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 120px;
+}

@@ -36,7 +36,7 @@ export class HeatmapComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
     this.api_assets_individual = this._constant.assetApi;
     let role_id = this._constant.getSessionstorageValueRoleID;

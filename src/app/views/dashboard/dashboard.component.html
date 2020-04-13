@@ -3,18 +3,116 @@
 </ngx-spinner>
 <div class="animated fadeIn">
   <div class="row">
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="infected"></div>
+          <div>Infected</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Number of infected</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="stableHospitalized"></div>
+          <div>Stable Hospitalized</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Number of stable</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="criticalHospitalized"></div>
+          <div>Critical Hospitalized</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Number of critical</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="activeCases"></div>
+          <div>Active Cases</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Number of Active Cases</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="deceased"></div>
+          <div>Deceased</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Total number of deceased</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6 col-lg-2">
+      <div class="brand-card">
+        <div class="card-body pb-3 bg-primary">
+          <div class="btn-group float-right">
+            <i class="fa fa-male fa-2x"></i>
+          </div>
+          <div class="text-value" id="recovered"></div>
+          <div>Recovered</div>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-uppercase text-muted small">Total number of recovered</div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+  <div class="row">
     <div class="col-sm-6 col-lg-3">
       <div class="brand-card">
         <div class="card-body pb-3 bg-success">
           <div class="btn-group float-right">
-            <i class="fa fa-car fa-2x"></i>
+            <i class="fa fa-male fa-2x"></i>
           </div>
           <div class="text-value" id="active"></div>
-          <div>Active vehicles</div>
+          <div>Online Personnels</div>
         </div>
         <div class="brand-card-body">
           <div>
-            <div class="text-uppercase text-muted small">Number of active vehicles</div>
+            <div class="text-uppercase text-muted small">Number of active personnels</div>
           </div>
         </div>
       </div>
@@ -23,14 +121,14 @@
       <div class="brand-card">
         <div class="card-body pb-3 bg-danger">
           <div class="btn-group float-right">
-            <i class="fa fa-car fa-2x"></i>
+            <i class="fa fa-male fa-2x"></i>
           </div>
           <div class="text-value" id="inactive"></div>
-          <div>In-active vehicles</div>
+          <div>Offline Personnels</div>
         </div>
         <div class="brand-card-body">
           <div>
-            <div class="text-uppercase text-muted small">Number of in-active vehicles</div>
+            <div class="text-uppercase text-muted small">Number of offline personnels</div>
           </div>
         </div>
       </div>
@@ -39,14 +137,14 @@
       <div class="brand-card">
         <div class="card-body pb-3 bg-dark">
           <div class="btn-group float-right">
-            <i class="fa fa-car fa-2x"></i>
+            <i class="fa fa-mobile-phone fa-2x"></i>
           </div>
           <div class="text-value" id="repair"></div>
-          <div>Vehicles with issues</div>
+          <div>Applications with issues</div>
         </div>
         <div class="brand-card-body">
           <div>
-            <div class="text-uppercase text-muted small">Number of vehicles with issues</div>
+            <div class="text-uppercase text-muted small">Number of applications with issues</div>
           </div>
         </div>
       </div>
@@ -55,14 +153,14 @@
       <div class="brand-card">
         <div class="card-body pb-3 bg-info">
           <div class="btn-group float-right">
-            <i class="fa fa-car fa-2x"></i>
+            <i class="fa fa-male fa-2x"></i>
           </div>
           <div class="text-value" id="total-assets"></div>
-          <div>Total vehicles</div>
+          <div>Total Personnels</div>
         </div>
         <div class="brand-card-body">
           <div>
-            <div class="text-uppercase text-muted small">Total number of vehicles</div>
+            <div class="text-uppercase text-muted small">Total number of assets</div>
           </div>
         </div>
       </div>
@@ -72,7 +170,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <span class="font-weight-bold">Vehicle List</span><span class="float-right" id="coordinates-panel"></span>
+          <span class="font-weight-bold">Personnel Lists</span><span class="float-right" id="coordinates-panel"></span>
         </div>
         <div class="card-body">
           <div class="row">
@@ -80,16 +178,19 @@
               <table class="table table-responsive-sm table-hover table-outline mb-0 info-table" width="100%">
                 <thead class="thead-dark">
                   <tr>
-                    <th class="text-center"><i class="fa fa-car"></i></th>
+                    <th></th>
                     <th>Name</th>
                     <th>Device #</th>
-                    <th>License Plate Number</th>
-                    <th>Make</th>
-                    <th>Model</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Last Location Update</th>
                     <th>Category</th>
-                    <th>Transmission</th>
-                    <th>Fuel Type</th>
-                    <th>Installation Date</th>
+                    <th>Speed</th>
+                    <th>Setup Date</th>
+                    <th>Fix</th>
+                    <th class="text-center" width="80">Status</th>
+                    <th class="text-center" width="50">GPS</th>
+                    <th class="text-center" width="78">Network</th>
                   </tr>
                 </thead>
                 <tbody id="assetDetails">

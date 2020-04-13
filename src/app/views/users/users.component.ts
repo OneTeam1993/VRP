@@ -5,9 +5,6 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import * as moment from 'moment';
 import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
-
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import axios from "axios";
 import * as CryptoJS from 'crypto-js';
 
@@ -30,7 +27,7 @@ export class UsersComponent implements OnInit {
   uri = this._constant.uri_track;
   user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
   reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-  company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
   role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
   username = sessionStorage.getItem('setSessionstorageValueUser');
   company = sessionStorage.getItem('setSessionstorageValueCompany');
@@ -49,6 +46,7 @@ export class UsersComponent implements OnInit {
     let api_usernotifications = this._constant.userNotificationsApi;
     let default_reseller = this._constant.getSessionstorageValueUserResellerID;
     let default_company = this._constant.getSessionstorageValueCompanyID;
+    let apiusers = this._constant.userApi;
 
     axios.get(this.api_reseller)
       .then(function (response) {
@@ -115,7 +113,8 @@ export class UsersComponent implements OnInit {
 
     _table = $("#userData").DataTable({
       "destroy": true,
-      "responsive": false,
+      "responsive": true,
+      "fixedHeader": false,
       "select": true,
       "filter": true,
       "colReorder": false,
@@ -198,33 +197,32 @@ export class UsersComponent implements OnInit {
           },
           "targets": 1
         },
-        {
-          "render": function (data, type, row) {
-            if (row.AssetID == "0") {
-              return '---'
-            } else {
-              return data;
-            }
-          },
-          "targets": 9
-        }
+
       ],
       "initComplete": function (data, type, row) {
-
         $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
-
         $('#add').on('click', function (e) {
-
           $('#userModal').modal("show");
           $('#userFormTitle').text('Add New User');
-
+          clearForms();
         });
       },
       "footerCallback": function (row, data, start, end, display) {
       }
     })
 
-    _table.column(10).visible(false);
+    
+    function clearForms() {
+      $('#userID').val('');
+      $('#userImageBox').attr('src', 'assets/img/default-avatar.png').width(110).height(110);
+      $('#userFullName').val('');
+      $('#userLoginName').val('');
+      $('#userLoginPassword').val('');
+      $('#userConfirmPassword').val('');
+      $('#userPhone').val('');
+      $('#userEmail').val('');
+    }
+    _table.column(9).visible(false);
 
 
   /*----------------------------------------------------------- Edit User -----------------------------------------------------*/
@@ -252,13 +250,10 @@ export class UsersComponent implements OnInit {
         $('.selectpicker').selectpicker('refresh');
       });
 
-
       axios.get("https://app.track-asia.com/tracksgwebapi/api/assetinfo?&UserID=" + e.data.param + "&ResellerID=" + data.ResellerID + "&CompanyID=" + data.CompanyID)
         .then(function (response) {
           var data = response.data;
-
           for (var i = 0; i < data.length; i++) {
-            var assets_ID = data[i].AssetID;
             $('#userAssets').append($('<option></option>').val(data[i].AssetID).html(data[i].Name));
           }
           $('.selectpicker').selectpicker('refresh');
@@ -271,13 +266,12 @@ export class UsersComponent implements OnInit {
       $('#userID').val(data.UserID);
       $('#userImageBox').attr('src', data.Image).width(110).height(110);
       $('#userFullName').val(data.Name);
-      $('#username').val(data.User);
+      $('#userLoginName').val(data.User);
       $('#userStatus').val(data.Flag);
-      $('#userPassword').val(data.Password);
+      $('#userLoginPassword').val(data.Password);
       $('#userConfirmPassword').val(data.Password);
       $('#userPhone').val(data.Phone);
       $('#userEmail').val(data.Email);
-      $('#userBirthDate').val(data.DateOfBirth);
       $('#userReseller').val(data.ResellerID);
       $('#userCompany').val(data.CompanyID);
       $('#userRole').val(data.RoleID);
@@ -337,7 +331,7 @@ export class UsersComponent implements OnInit {
         let obj: any = {
           UserID: data.UserID,
         };
-        axios.delete(api + obj.UserID, obj)
+        axios.delete(apiusers + obj.UserID, obj)
           .then(function (response) {
             console.log(response);
             $('#userModal').modal('hide');
@@ -408,14 +402,13 @@ export class UsersComponent implements OnInit {
     $(".selectpicker").selectpicker('refresh');
   }
   onOptionsSelectedCompany(value: any) {
-    Number(sessionStorage.setItem('setSessionstorageValueCompanyID', value));
+    Number(sessionStorage.setItem('setSessionstorageValueUserCompanyID', value));
     let selected_reseller = $('#userReseller').val();
     let selected_company = $('#userCompany').val();
     let api_assets_filter: string = getAssetsUserFilter(this.role_id, this.base, this.uri, selected_reseller, selected_company);
 
     function getAssetsUserFilter(role_id: Number, base: string, uri: string, selected_reseller: Number, selected_company: Number) {
       let url: string;
-
       if (role_id == 1) {
         url = base + uri + 'assetinfo' + '?UserID=' + '&ResellerID=' + selected_reseller + '&CompanyID=' + selected_company;
       } else if (role_id == 2) {
@@ -433,8 +426,6 @@ export class UsersComponent implements OnInit {
 
   onSubmit() {
 
-    let apiUserImage = this._constant.apiUserImage;
-
     var flag;
     if ($('#userStatus').prop("checked") == true) {
       flag = 1;
@@ -442,18 +433,20 @@ export class UsersComponent implements OnInit {
       flag = 0;
     }
 
-    this.activeModal.close(true);
+    //this.activeModal.close(true);
 
     /*------------------------------------------ Vehicle Array to String ----------------------------------------*/
     var getAssets = $('#userAssets').val();
     var ObjAssets = JSON.stringify(getAssets);
     var parseObjAssets = ObjAssets.replace(/\[|\"|\]/g, "");
 
+
+
    /*------------------------------------------------- User Password ----------------------------------------------*/
 
     var GetUserID = $('#userID').val();
     var hashPassword = "";
-    var getPassword = $('#userPassword').val();
+    var getPassword = $('#userLoginPassword').val();
     try {
       if (GetUserID == null || GetUserID == "" || GetUserID == "undefined") {
         var hash = CryptoJS.SHA3(getPassword, { outputLength: 256 }).toString();
@@ -500,78 +493,56 @@ export class UsersComponent implements OnInit {
     }
 
 
-
-  /*------------------------------------------------- User Image ----------------------------------------------*/
-
-    var data = new FormData();
-    var files = $("#uploadUser").get(0).files;
-    if (files.length > 0) {
-      data.append("UploadedImage", files[0], GetUserID + ".png");
-    }
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#showImage')
-            .attr('src', e.target.result)
-            .width(110)
-            .height(110);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    var ajaxRequest = $.ajax({
-      type: "POST",
-      url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfileuser",
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (data) {
-        console.log('success');
-      }
-    });
-
-    ajaxRequest.done(function (responseData, textStatus) {
-      if (textStatus == 'success') {
-        if (responseData != null) {
-          if (responseData.Key) {
-            alert(responseData.Value);
-            $("#uploadUser").val('');
-          } else {
-            alert(responseData.Value);
-          }
-        }
-      } else {
-        alert(responseData.Value);
-      }
-    });
-
     /*---------------------------------------------------------- Save Data to DataTable ------------------------------------*/
 
     let obj: any = {
       UserID: $('#userID').val(),
-      Image: $('#userImage').val(),
       Flag: flag,
       Name: $('#userFullName').val(),
-      User: $('#username').val(),
+      User: $('#userLoginName').val(),
       Password: hashPassword,
-      ConfirmPassword: $('#userConfirmPassword').val(),
       Phone: $('#userPhone').val(),
       Email: $('#userEmail').val(),
       ResellerID: $('#userReseller').val(),
       CompanyID: $('#userCompany').val(),
-      RoleDesc: $('#userRole').val(),
+      LoginRetry: 10,
+      Reports: "",
+      Language: "English",
+      ApiKey: '',
+      RoleID: $('#userRole').val(),
+      Assets: parseObjAssets,
       Notifications: parseObjAlerts,
-      NotificationsType: $('#userNotificationsType').val()
     };
 
     if (obj.UserID == 'undefined' || obj.UserID == null || obj.UserID == 0) {
 
       axios.post(this._constant.userApi, obj)
-        .then(function (response) {
-          console.log(response);
+        .then(function (res) {
+
+          /*------------------------------------------------- User Image ----------------------------------------------*/
+
+          var data = new FormData();
+          var files = $("#uploadUser").get(0).files;
+          if (files.length > 0) {
+            data.append("UploadedImageUser", files[0], res.data.UserID  + ".png");
+
+            $.ajax({
+              type: "POST",
+              url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfileuser",
+              contentType: false,
+              processData: false,
+              data: data,
+              success: function (data) {
+                console.log('success');
+
+                $('#userModal').modal('hide');
+                $('#confirmUser').modal('hide');
+                $("#userData").DataTable().ajax.reload();
+              }
+            });
+          }
+
+          console.log(res);
         })
         .catch(function (error) {
           console.log(error);
@@ -590,7 +561,7 @@ export class UsersComponent implements OnInit {
             data.append("UploadedImageUser", files[0], obj.UserID + ".png");
           }
 
-          var ajaxRequest = $.ajax({
+          $.ajax({
             type: "POST",
             url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfileuser",
             contentType: false,
@@ -598,25 +569,10 @@ export class UsersComponent implements OnInit {
             data: data,
             success: function (data) {
               console.log('success');
-              clearForms();
+
               $('#userModal').modal('hide');
               $('#confirmUser').modal('hide');
               $("#userData").DataTable().ajax.reload();
-            }
-          });
-
-          ajaxRequest.done(function (responseData, textStatus) {
-            if (textStatus == 'success') {
-              if (responseData != null) {
-                if (responseData.Key) {
-                  alert(responseData.Value);
-                  $("#uploadUser").val('');
-                } else {
-                  alert(responseData.Value);
-                }
-              }
-            } else {
-              alert(responseData.Value);
             }
           });
 
@@ -626,47 +582,8 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    function clearForms() {
-      $('#userID').val('');
-      $('#userImage').val('');
-      $('#userFullName').val('');
-      $('#username').val('');
-      $('#userPassword').val('');
-      $('#userConfirmPassword').val('');
-      $('#userPhone').val('');
-      $('#userEmail').val('');
-      $('#userReseller').val('');
-      $('#userCompany').val('');
-      $('#userRole').val('');
-      $('#userNotifications').val('');
-      $('#userNotificationsType').val('');
-    }
 
 
-  }
-
-  clearForms() {
-    $('#userID').val('');
-    $('#userImage').val('');
-    $('#userFullName').val('');
-    $('#username').val('');
-    $('#userPassword').val('');
-    $('#userConfirmPassword').val('');
-    $('#userPhone').val('');
-    $('#userEmail').val('');
-    $('#userReseller').val('');
-    $('#userCompany').val('');
-    $('#userRole').val('');
-    $('#userNotifications').val('');
-    $('#userNotificationsType').val('');
-  }
-
-  decline() {
-    this.activeModal.close(false);
-  }
-
-  dismiss() {
-    this.activeModal.dismiss();
   }
 
   

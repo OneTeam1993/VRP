@@ -1,0 +1,98 @@
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.96)" size="medium" type="ball-spin-clockwise">
+  <p style="color: white">Please Wait. </p>
+</ngx-spinner>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Settings</span>
+        </div>
+        <div class="card-body">
+          <div style="height:470px;">
+            <div class="form-group">
+              <select class="selectpicker form-control show-tick" data-width="100%" id="autocomplete" name="autocomplete" data-table="searchable" data-dropup-auto="false">
+                <option value="['establishment']">Establishment</option>
+                <option value="['address']" selected="selected">Address</option>
+                <option value="['(regions)']">Postal Code</option>
+              </select>
+              <small class="text-muted">Search by</small>
+            </div>
+            <div class="form-group">
+              <select class="selectpicker form-control show-tick" data-width="100%" id="traffic_mode" name="traffic_mode" data-dropup-auto="true" required>
+                <option value="bestguess" selected="selected">Best</option>
+                <option value="pessimistic">Pessimistic</option>
+                <option value="optimistic">Optimistic</option>
+              </select>
+              <small class="text-muted">Traffic Model</small>
+            </div>
+            <div class="form-group">
+              <label for="">Avoid Highways</label>
+              <span class="form-group pull-right">
+                <label class="switch switch-label switch-pill switch-primary" style="margin: 4px 0 0 0;">
+                  <input data-switchery="true" class="highwayStatus switch-input" name="highways" id="highways" type="checkbox" checked>
+                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                </label>
+              </span>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+              <label for="">Avoid Toll Gate</label>
+              <span class="form-group pull-right">
+                <label class="switch switch-label switch-pill switch-primary" style="margin: 4px 0 0 0;">
+                  <input data-switchery="true" class="tollStatus switch-input" name="tolls" id="tolls" type="checkbox" checked>
+                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                </label>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="start">Start</label>
+              <input type="search" class="form-control" placeholder="Enter an origin location" id="start" required>
+            </div>
+            <div class="form-group">
+              <label for="end">End</label>
+              <input type="search" class="form-control" placeholder="Enter a destination location" id="end" required>
+            </div>
+            <div class="form-group">
+              <button class="text text-thin btn btn-lg btn-success pull-right" type="submit" id="calcRoute">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Results&nbsp;</span>
+        </div>
+        <div class="card-body">
+          <div class="form-control" placeholder="Results" name="directions-panel" id="directions-panel" data-by-field="directions-panel"></div>
+          <div id="total-panel" style="color:black;"><span id="total"></span></div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Maps&nbsp;</span><span class="float-right" id="coordinates-panel"></span>
+        </div>
+        <div class="card-body">
+          <div style="height:470px;" id="map-canvas"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-weight-bold">Directions&nbsp;</span>
+        </div>
+        <div class="card-body">
+          <div class="form-control" placeholder="Results" id="directions-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

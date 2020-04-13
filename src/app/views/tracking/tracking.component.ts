@@ -27,25 +27,27 @@ export class TrackingComponent implements OnInit {
 
       if (location.path() != "") {
         this.route = location.path();
-      } 
+      }
 
     });
+
 
   }
 
   ngOnInit(): void {
     this.spinner.show();
+
     //Call StyledMarker Library
-    var sm = document.createElement("script");
-    sm.type = "text/javascript";
-    sm.src = "https://track-asia.com/sg/Dashboard/plugins/StyledMarker/StyledMarker.js";
-    $("head").append(sm);
+    //var sm = document.createElement("script");
+    //sm.type = "text/javascript";
+    //sm.src = "https://track-asia.com/sg/Dashboard/plugins/StyledMarker/StyledMarker.js";
+    //$("head").append(sm);
 
     //Call Marker with Library
-    var ml = document.createElement("script");
-    ml.type = "text/javascript";
-    ml.src = "https://track-asia.com/sg/Dashboard/plugins/marker-with-label/markerwithlabel.js";
-    $("head").append(ml);
+    //var ml = document.createElement("script");
+    //ml.type = "text/javascript";
+    //ml.src = "https://track-asia.com/sg/Dashboard/plugins/marker-with-label/markerwithlabel.js";
+    //$("head").append(ml);
 
     $('#panel').hide();
     $('#infobubbleDrawing').hide();
@@ -54,7 +56,7 @@ export class TrackingComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let api_zonetype = this._constant.zonetypeApi;
     let api_post_zones = this._constant.zoneApi;
@@ -140,46 +142,7 @@ export class TrackingComponent implements OnInit {
     var ge_ = gm_.event;
     var gmi_ = gm_.MarkerImage;
 
-    StyledIconTypes.BUBBLE = {
-      defaults: {
-        text: '',
-        color: '00ff00',
-        fore: '000000',
-        starcolor: null
-      },
-      getURL: function (props) {
-        var _url = bu_ + 'd_bubble_text_small_withshadow&chld=bb|';
-        _url += props.get('text') + '|';
-        _url += props.get('color').replace(/#/, '') + '|';
-        _url += props.get('fore').replace(/#/, '');
-        return _url;
-      },
-      getShadowURL: function (props) {
-        return bu_ + 'd_bubble_text_small_withshadow&chld=bb|' + props.get('text');
-      },
-      getAnchor: function (props, width, height) {
-        return new google.maps.Point(0, 42);
-      },
-      getShadowAnchor: function (props, width, height) {
-        return new google.maps.Point(0, 44);
-      },
-      getShape: function (props, width, height) {
-        var _iconmap: any = {};
-        _iconmap.coord = [
-          0, 44,
-          13, 26,
-          13, 6,
-          17, 1,
-          width - 4, 1,
-          width, 6,
-          width, 21,
-          width - 4, 26,
-          21, 26
-        ];
-        _iconmap.type = 'poly';
-        return _iconmap;
-      }
-    };
+
 
     //================================INIT==================================//
     var latlng = new google.maps.LatLng(1.3521, 103.8198);
@@ -217,8 +180,8 @@ export class TrackingComponent implements OnInit {
 
     var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('panel'));
+
     Layers();
-   
     setZones(handleZones, api_zones);
     setMarkers(updateAssets, api_assets, this.route);
 
@@ -237,7 +200,7 @@ export class TrackingComponent implements OnInit {
     // Creates a drawing manager attached to the map that allows the user to draw
     // markers, lines, and shapes.
     drawingManager = new google.maps.drawing.DrawingManager({
-      drawingControl: true,
+      drawingControl: false,
       drawingControlOptions: {
         position: google.maps.ControlPosition.BOTTOM_CENTER,
         drawingModes: [
@@ -1157,7 +1120,7 @@ export class TrackingComponent implements OnInit {
           ZoneID: 0,
           Name: $('#zname').val(),
           TypeID: $('#getZoneTypes').val(),
-          CompanyID: Number(sessionStorage.getItem('setSessionstorageValueCompanyID')),
+          CompanyID: Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID')),
           CreatedDate: timestamp,
           Perimeter: finalString,
           CellIds: '',
@@ -1362,6 +1325,7 @@ export class TrackingComponent implements OnInit {
             var gps = data[i].Gps;
             var gprs = data[i].Gprs;
             var engine = data[i].Engine;
+            var battery = data[i].LastPos.Battery;
             var fix = data[i].LastPos.Fix;
             var make = data[i].Make;
             var model = data[i].Model;
@@ -1390,51 +1354,12 @@ export class TrackingComponent implements OnInit {
 
             let vehicleImg: string;
             let markerCategory: string;
-            // Category image
-            switch (category) {
-              case "Car":
-                markerCategory = "car";
-                vehicleImg = "assets/img/car.jpg";
-                break;
-              case "Truck":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Van":
-                markerCategory = "van";
-                vehicleImg = "assets/img/van.jpg";
-                break;
-              case "Bus":
-                markerCategory = "bus";
-                vehicleImg = "assets/img/bus.jpg";
-                break;
-              case "Motorcycle":
-                markerCategory = "motorcycle";
-                vehicleImg = "assets/img/motorcycle.jpg";
-                break;
-              case "Recovery Veh":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "10 Footer Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "14 Footer Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Ambulance":
-                markerCategory = "ambulance";
-                vehicleImg = "assets/img/ambulance.jpg";
-                break;
-            }
-
+            let path: string;
+            let scale: any;
+            let _iconcolor: string;
             let color: string;
+            let icon_style_anchor: any;
+            let icon_style_shadow: any;
 
             if (engine == 'MOVE') {
               color = "#5cb85c";
@@ -1449,17 +1374,131 @@ export class TrackingComponent implements OnInit {
               color = "#d9534f";
             }
 
+            // Category image
+            switch (category) {
+              case "Car":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "car";
+                scale = 0.6;
+                vehicleImg = "assets/img/car.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Truck":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "truck";
+                scale = 0.6;
+                vehicleImg = "assets/img/truck.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Van":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "van";
+                scale = 0.6;
+                vehicleImg = "assets/img/van.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Bus":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "bus";
+                scale = 0.6;
+                vehicleImg = "assets/img/bus.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Motorcycle":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "motorcycle";
+                scale = 0.07;
+                vehicleImg = "assets/img/motorcycle.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Recovery Veh":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "truck";
+                scale = 0.6;
+                vehicleImg = "assets/img/truck.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "truck";
+                scale = 0.6;
+                vehicleImg = "assets/img/truck.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "10 Footer Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "truck";
+                scale = 0.6;
+                vehicleImg = "assets/img/truck.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "14 Footer Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "truck";
+                scale = 0.6;
+                vehicleImg = "assets/img/truck.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Ambulance":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                markerCategory = "ambulance";
+                scale = 0.6;
+                vehicleImg = "assets/img/ambulance.jpg";
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                break;
+              case "Personnel":
+                icon_style_anchor = new google.maps.Point(-4, 24);
+                icon_style_shadow = new google.maps.Point(-4, 26);
+                _iconcolor = color;
+                course = 0;
+                scale = 0.06;
+                markerCategory = "personnel";
+                vehicleImg = "assets/img/personnel.jpg";
+                path = 'M96 0c35.346 0 64 28.654 64 64s-28.654 64-64 64-64-28.654-64-64S60.654 0 96 0m48 144h-11.36c-22.711 10.443-49.59 10.894-73.28 0H48c-26.51 0-48 21.49-48 48v136c0 13.255 10.745 24 24 24h16v136c0 13.255 10.745 24 24 24h64c13.255 0 24-10.745 24-24V352h16c13.255 0 24-10.745 24-24V192c0-26.51-21.49-48-48-48z';
+                break;
+              case "Mobile":
+                icon_style_anchor = new google.maps.Point(-7, 30);
+                icon_style_shadow = new google.maps.Point(-7, 32);
+                _iconcolor = color;
+                course = 0;
+                scale = 0.05;
+                markerCategory = "mobile";
+                vehicleImg = "assets/img/mobile.jpg";
+                path = 'M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z';
+                break;
+            }
+
             let icon: any;
             if (timestamp2 > timestamp1) {
               //down
               icon = {
-                path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-                scale: 0.6,
+                path: path,
+                scale: scale,
                 strokeColor: color,
                 strokeWeight: 1,
                 strokeOpacity: 1,
                 fillOpacity: 1,
-                fillColor: 'white',
+                fillColor: _iconcolor,
                 offset: '5%',
                 rotation: course,
                 anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
@@ -1467,13 +1506,13 @@ export class TrackingComponent implements OnInit {
             }
             else {
               icon = {
-                path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-                scale: 0.6,
+                path: path,
+                scale: scale,
                 strokeColor: color,
                 strokeWeight: 1,
                 strokeOpacity: 1,
                 fillOpacity: 1,
-                fillColor: 'white',
+                fillColor: _iconcolor,
                 offset: '5%',
                 rotation: course,
                 anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
@@ -1482,7 +1521,7 @@ export class TrackingComponent implements OnInit {
 
             let driverName: string;
             if (assets.Driver.Name == null) {
-              driverName = "No Driver Assigned";
+              driverName = "No Personnel Assigned";
             } else {
               driverName = assets.Driver.Name;
             }
@@ -1504,7 +1543,7 @@ export class TrackingComponent implements OnInit {
               nogprs++;
 
             let assetContent: any = "<div id='assetInfo' class='form-group row' style='padding:0px !important;'>";
-            if (plate_no !== "Unknown") assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + " - (" + plate_no + ")</h6></div>";
+            if (plate_no !== "Unknown") assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + "</h6></div>";
             else assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + "</h6></div>";
 
             assetContent += "<div class='col-md-4'><p style='text-align:right; padding-right:30px; padding-bottom:0px !important'>"
@@ -1519,11 +1558,11 @@ export class TrackingComponent implements OnInit {
               "<br />" +
               "<span class='font-weight-bold'>Date:&nbsp;</span>" + timestamp +
               "<br />" +
-              "<span>Speed:&nbsp;</span>" + speedFormatter(speed) +
+              "<span class='font-weight-bold'>Speed:&nbsp;</span>" + speedFormatter(speed) +
+              "<br />" +
+              "<span class='font-weight-bold'>Battery:&nbsp;</span>" + batteryFormatter(battery) +
               "<br />" +
               "<span class='font-weight-bold'>GPS Status:&nbsp;</span>" + fix +
-              "<br />" +
-              "<span class='font-weight-bold'>Driver:&nbsp;</span>" + driverName +
               "<br />" +
               "<span class='font-weight-bold'>Zones:&nbsp;</span>" + zone +
               "<br />" +
@@ -1561,6 +1600,7 @@ export class TrackingComponent implements OnInit {
               gprs: gprs,
               title: vechs,
               zone: zone,
+              battery: battery,
               fix: fix,
               engine: engine,
               speed: speed,
@@ -1573,10 +1613,52 @@ export class TrackingComponent implements OnInit {
               assetBattery: assetBattery,
               content: assetContent,
               driver: driverName,
-              elapsed_timestamp: el
+              elapsed_timestamp: el,
+              path: path
             });
 
             marker.setMap(map);
+
+            StyledIconTypes.BUBBLE = {
+              defaults: {
+                text: '',
+                color: '00ff00',
+                fore: '000000',
+                starcolor: null
+              },
+              getURL: function (props) {
+                var _url = bu_ + 'd_bubble_text_small_withshadow&chld=bb|';
+                _url += props.get('text') + '|';
+                _url += props.get('color').replace(/#/, '') + '|';
+                _url += props.get('fore').replace(/#/, '');
+                return _url;
+              },
+              getShadowURL: function (props) {
+                return bu_ + 'd_bubble_text_small_withshadow&chld=bb|' + props.get('text');
+              },
+              getAnchor: function (props, width, height) {
+                return icon_style_anchor;
+              },
+              getShadowAnchor: function (props, width, height) {
+                return icon_style_shadow;
+              },
+              getShape: function (props, width, height) {
+                var _iconmap: any = {};
+                _iconmap.coord = [
+                  0, 44,
+                  13, 26,
+                  13, 6,
+                  17, 1,
+                  width - 4, 1,
+                  width, 6,
+                  width, 21,
+                  width - 4, 26,
+                  21, 26
+                ];
+                _iconmap.type = 'poly';
+                return _iconmap;
+              }
+            };
 
             styleMaker = new StyledMarker({
               styleIcon: new StyledIcon(StyledIconTypes.BUBBLE, {
@@ -1589,7 +1671,7 @@ export class TrackingComponent implements OnInit {
               shadow: 'none'
             });
 
-  
+
             if (markers[i] && markers[i].setPosition) {
               $("#assetStatus").empty();
 
@@ -1609,12 +1691,14 @@ export class TrackingComponent implements OnInit {
                 markers[i].gps = gps;
                 markers[i].gprs = gprs;
                 markers[i].engine = engine;
+                markers[i].battery = battery;
                 markers[i].fix = fix;
                 markers[i].tag = tag;
                 markers[i].speed = speed;
                 markers[i].cat_img = vehicleImg;
                 markers[i].driver = driverName;
                 markers[i].elapsed_timestamp = el;
+
 
                 if ($('#assetInfo').val() != null || $('#assetInfo').val() != undefined) {
                   document.getElementById('assetInfo').innerHTML = assetContent
@@ -1629,6 +1713,7 @@ export class TrackingComponent implements OnInit {
                 markers[i].gps = gps;
                 markers[i].gprs = gprs;
                 markers[i].engine = engine;
+                markers[i].battery = battery;
                 markers[i].fix = fix;
                 markers[i].tag = tag;
                 markers[i].speed = speed;
@@ -1661,8 +1746,10 @@ export class TrackingComponent implements OnInit {
         firstData = false;
       }
 
+      var outputDiv = document.getElementById('assetStatus');
+
       if (route == "/tracking") {
-        var outputDiv = document.getElementById('assetStatus');
+
         if (outputDiv) {
           for (k = 0; k < markers.length; k++) {
 
@@ -1689,6 +1776,9 @@ export class TrackingComponent implements OnInit {
                 + "</td>"
                 + "<td>"
                 + markers[k].driver
+                + "</td>"
+                + "<td>"
+                + batteryFormatter(markers[k].battery)
                 + "</td>"
                 + "<td>"
                 + markers[k].fix
@@ -1721,7 +1811,8 @@ export class TrackingComponent implements OnInit {
     }
 
     /*------------------ Open Tracking Modal -----------------*/
-    $('#assetStatus').on('click', 'a.openTrackingModal', function (e) {
+    $('#assetStatus').on('click', 'a.openTrackingModal', { spinner: this.spinner }, function (e) {
+      e.data.spinner.show();
       $('#trackingModal').modal('show');
       let asset_id = e.target.innerHTML;
       let api_asset = base + uri + 'assetinfo/' + asset_id;
@@ -1764,7 +1855,6 @@ export class TrackingComponent implements OnInit {
 
         axios.get(api_asset)
           .then(function (response) {
-            //console.log(response.data);
             callback(response.data);
           })
           .catch(function (error) {
@@ -1791,6 +1881,7 @@ export class TrackingComponent implements OnInit {
             var gps = data.Gps;
             var gprs = data.Gprs;
             var engine = data.Engine;
+            var battery = data.LastPos.Battery;
             var fix = data.LastPos.Fix;
             var make = data.Make;
             var model = data.Model;
@@ -1819,51 +1910,12 @@ export class TrackingComponent implements OnInit {
 
             let vehicleImg: string;
             let markerCategory: string;
-            // Category image
-            switch (category) {
-              case "Car":
-                markerCategory = "car";
-                vehicleImg = "assets/img/car.jpg";
-                break;
-              case "Truck":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Van":
-                markerCategory = "van";
-                vehicleImg = "assets/img/van.jpg";
-                break;
-              case "Bus":
-                markerCategory = "bus";
-                vehicleImg = "assets/img/bus.jpg";
-                break;
-              case "Motorcycle":
-                markerCategory = "motorcycle";
-                vehicleImg = "assets/img/motorcycle.jpg";
-                break;
-              case "Recovery Veh":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "10 Footer Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "14 Footer Lorry":
-                markerCategory = "truck";
-                vehicleImg = "assets/img/truck.jpg";
-                break;
-              case "Ambulance":
-                markerCategory = "ambulance";
-                vehicleImg = "assets/img/ambulance.jpg";
-                break;
-            }
-
+            let path: string;
+            let scale: any;
+            let _iconcolor: string;
             let color: string;
+            let icon_style_anchor: any;
+            let icon_style_shadow: any;
 
             if (engine == 'MOVE') {
               color = "#5cb85c";
@@ -1878,31 +1930,147 @@ export class TrackingComponent implements OnInit {
               color = "#d9534f";
             }
 
+            // Category image
+            switch (category) {
+              case "Car":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "car";
+                vehicleImg = "assets/img/car.jpg";
+                break;
+              case "Truck":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "truck";
+                vehicleImg = "assets/img/truck.jpg";
+                break;
+              case "Van":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "van";
+                vehicleImg = "assets/img/van.jpg";
+                break;
+              case "Bus":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "bus";
+                vehicleImg = "assets/img/bus.jpg";
+                break;
+              case "Motorcycle":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "motorcycle";
+                vehicleImg = "assets/img/motorcycle.jpg";
+                break;
+              case "Recovery Veh":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "truck";
+                vehicleImg = "assets/img/truck.jpg";
+                break;
+              case "Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "truck";
+                vehicleImg = "assets/img/truck.jpg";
+                break;
+              case "10 Footer Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "truck";
+                vehicleImg = "assets/img/truck.jpg";
+                break;
+              case "14 Footer Lorry":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "truck";
+                vehicleImg = "assets/img/truck.jpg";
+                break;
+              case "Ambulance":
+                icon_style_anchor = new google.maps.Point(0, 42);
+                icon_style_shadow = new google.maps.Point(0, 44);
+                _iconcolor = 'white';
+                scale = 0.6;
+                path = 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z';
+                markerCategory = "ambulance";
+                vehicleImg = "assets/img/ambulance.jpg";
+                break;
+              case "Personnel":
+                icon_style_anchor = new google.maps.Point(-4, 24);
+                icon_style_shadow = new google.maps.Point(-4, 26);
+                _iconcolor = color;
+                course = 0;
+                scale = 0.06;
+                markerCategory = "personnel";
+                vehicleImg = "assets/img/personnel.jpg";
+                path = 'M96 0c35.346 0 64 28.654 64 64s-28.654 64-64 64-64-28.654-64-64S60.654 0 96 0m48 144h-11.36c-22.711 10.443-49.59 10.894-73.28 0H48c-26.51 0-48 21.49-48 48v136c0 13.255 10.745 24 24 24h16v136c0 13.255 10.745 24 24 24h64c13.255 0 24-10.745 24-24V352h16c13.255 0 24-10.745 24-24V192c0-26.51-21.49-48-48-48z';
+                break;
+              case "Mobile":
+                icon_style_anchor = new google.maps.Point(-7, 30);
+                icon_style_shadow = new google.maps.Point(-7, 32);
+                _iconcolor = color;
+                course = 0;
+                scale = 0.05;
+                markerCategory = "mobile";
+                vehicleImg = "assets/img/mobile.jpg";
+                path = 'M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z';
+                break;
+            }
+
+
             let icon: any;
             if (timestamp2 > timestamp1) {
               //down
               icon = {
-                path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-                scale: 0.6,
+                path: path,
+                scale: scale,
                 strokeColor: color,
                 strokeWeight: 1,
                 strokeOpacity: 1,
                 fillOpacity: 1,
-                fillColor: 'white',
+                fillColor: _iconcolor,
                 offset: '5%',
                 rotation: course,
                 anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
               }
             }
             else {
+
               icon = {
-                path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-                scale: 0.6,
+                path: path,
+                scale: scale,
                 strokeColor: color,
                 strokeWeight: 1,
                 strokeOpacity: 1,
                 fillOpacity: 1,
-                fillColor: 'white',
+                fillColor: _iconcolor,
                 offset: '5%',
                 rotation: course,
                 anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
@@ -1915,9 +2083,9 @@ export class TrackingComponent implements OnInit {
             } else {
               driverName = data.Driver.Name;
             }
-      
+
             let assetContent: any = "<div id='assetInfo' class='form-group row' style='padding:0px !important;'>";
-            if (plate_no !== "Unknown") assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + " - (" + plate_no + ")</h6></div>";
+            if (plate_no !== "Unknown") assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + "</h6></div>";
             else assetContent += "<div class='col-md-8'><h6 class='map-heading'>" + finaldata + "</h6></div>";
 
             assetContent += "<div class='col-md-4'><p style='text-align:right; padding-right:30px; padding-bottom:0px !important'>"
@@ -1932,11 +2100,11 @@ export class TrackingComponent implements OnInit {
               "<br />" +
               "<span class='font-weight-bold'>Date:&nbsp;</span>" + timestamp +
               "<br />" +
-              "<span>Speed:&nbsp;</span>" + speedFormatter(speed) +
+              "<span class='font-weight-bold'>Speed:&nbsp;</span>" + speedFormatter(speed) +
+              "<br />" +
+              "<span class='font-weight-bold'>Battery:&nbsp;</span>" + batteryFormatter(battery) +
               "<br />" +
               "<span class='font-weight-bold'>GPS Status:&nbsp;</span>" + fix +
-              "<br />" +
-              "<span class='font-weight-bold'>Driver:&nbsp;</span>" + driverName +
               "<br />" +
               "<span class='font-weight-bold'>Zones:&nbsp;</span>" + zone +
               "<br />" +
@@ -1973,20 +2141,10 @@ export class TrackingComponent implements OnInit {
               zone: zone,
               engine: engine,
               speed: speed,
+              battery: battery,
               fix: fix,
               driver: driverName,
-              icon: {
-                path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-                scale: 0.6,
-                strokeColor: color,
-                strokeWeight: 1,
-                strokeOpacity: 1,
-                fillOpacity: 1,
-                fillColor: 'white',
-                offset: '5%',
-                rotation: course,
-                anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
-              },
+              icon: icon,
               shape: shape,
               content: assetContent,
               tag: tag,
@@ -1994,7 +2152,7 @@ export class TrackingComponent implements OnInit {
               elapsed_timestamp: el
             });
 
-            
+
             newMarker.setMap(map_asset);
 
             if (newMarker.content) {
@@ -2010,7 +2168,7 @@ export class TrackingComponent implements OnInit {
                 this.getMap().setCenter(this.position);
                 map_asset.panTo(this.getPosition());
 
-              });  
+              });
 
               infoBubble = newMarker.getMap().newMarker = new google.maps.InfoWindow({
                 zIndex: 999999
@@ -2024,22 +2182,23 @@ export class TrackingComponent implements OnInit {
 
             if (markers_modal[0] && markers_modal[0].setPosition) {
 
-                newMarker.setMap(null);
-                markers_modal[0].setPosition(latLng);
-                markers_modal[0].setIcon(icon);
-                markers_modal[0].id = id;
-                markers_modal[0].content = assetContent;
-                markers_modal[0].address = address;
-                markers_modal[0].timestamp = timestamp;
-                markers_modal[0].gps = gps;
-                markers_modal[0].gprs = gprs;
-                markers_modal[0].engine = engine;
-                markers_modal[0].fix = fix;
-                markers_modal[0].tag = tag;
-                markers_modal[0].speed = speed;
-                markers_modal[0].cat_img = vehicleImg;
-                markers[0].driver = driverName;
-                markers_modal[0].elapsed_timestamp = el;
+              newMarker.setMap(null);
+              markers_modal[0].setPosition(latLng);
+              markers_modal[0].setIcon(icon);
+              markers_modal[0].id = id;
+              markers_modal[0].content = assetContent;
+              markers_modal[0].address = address;
+              markers_modal[0].timestamp = timestamp;
+              markers_modal[0].gps = gps;
+              markers_modal[0].gprs = gprs;
+              markers_modal[0].engine = engine;
+              markers_modal[0].battery = battery;
+              markers_modal[0].fix = fix;
+              markers_modal[0].tag = tag;
+              markers_modal[0].speed = speed;
+              markers_modal[0].cat_img = vehicleImg;
+              markers[0].driver = driverName;
+              markers_modal[0].elapsed_timestamp = el;
 
             } else {
 
@@ -2062,9 +2221,9 @@ export class TrackingComponent implements OnInit {
 
       }
 
+      e.data.spinner.hide();
     });
-  /*-------------------------------------------------------*/
-
+    /*-------------------------------------------------------*/
     function findMarker(pt: any) {
       openmarker = [];
       for (var i = 0; i < markers.length; i++) {
@@ -2090,20 +2249,10 @@ export class TrackingComponent implements OnInit {
         zone: param.zone,
         engine: param.engine,
         speed: param.speed,
+        battery: param.battery,
         fix: param.fix,
         driver: param.driver,
-        icon: {
-          path: 'M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z',
-          scale: 0.6,
-          strokeColor: param.color,
-          strokeWeight: 1,
-          strokeOpacity: 1,
-          fillOpacity: 1,
-          fillColor: 'white',
-          offset: '5%',
-          rotation: param.course,
-          anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
-        },
+        icon: param.icon,
         shape: param.shape,
         content: param.content,
         tag: param.tag,
@@ -2253,7 +2402,7 @@ export class TrackingComponent implements OnInit {
 
       }));
 
-  
+
 
       //End
       /*=================================================*/
@@ -2386,6 +2535,13 @@ export class TrackingComponent implements OnInit {
       return roundoff + ' km/h';
     }
 
+    function batteryFormatter(value) {
+
+      var roundoff = Math.round(value * 100) / 100;
+
+      return roundoff + ' %';
+    }
+
     function getElapsedTime(timestamp) {
 
       var now = moment().format();
@@ -2481,27 +2637,27 @@ export class TrackingComponent implements OnInit {
       for (var i = 0; i < pois.length; i++) {
         pois[i].setMap(null);
       }
-        pois = [];
+      pois = [];
 
       for (var i = 0; i < infoWindowList.length; i++) {
         infoWindowList[i].close();
       }
-        infoWindowList = [];
+      infoWindowList = [];
 
       for (var i = 0; i < markerLabels.length; i++) {
         markerLabels[i].setMap(null);
       }
-        markerLabels = [];
+      markerLabels = [];
 
       for (var i = 0; i < all_overlays.length; i++) {
         all_overlays[i].overlay.setMap(null);
       }
-        all_overlays = [];
+      all_overlays = [];
 
       for (var i = 0; i < recmarkers.length; i++) {
         recmarkers[i].setMap(null);
       }
-        recmarkers = [];
+      recmarkers = [];
 
       // To show:
       drawingManager.setOptions({
@@ -2518,9 +2674,8 @@ export class TrackingComponent implements OnInit {
       ClearZoneFilter();
     });
 
-    
     $('.SelectCompanyFilter').change({ route: this.route }, function (event) {
-      
+
       clearInterval(assetMarkerInterval);
       ClearResellerFilter();
       ClearZoneFilter();
@@ -2536,10 +2691,11 @@ export class TrackingComponent implements OnInit {
       }, 10000);
     });
 
-    $('.SelectAssetFilter').on('change', function () {
+    $('.SelectAssetFilter').change({ router: this.router }, function (event) {
 
       var selected = $(this).find("option:selected").val();
 
+  
       for (k = 0; k < markers.length; k++) {
         marker = markers[k];
 
@@ -2554,7 +2710,6 @@ export class TrackingComponent implements OnInit {
       }
 
     }); // end of on change
-
 
 
     //====================================GET API WITH PARAM=================================//
@@ -2613,8 +2768,11 @@ export class TrackingComponent implements OnInit {
       };
     }
 
+
+
     //====================================END===============================================//
     this.spinner.hide();
+    //google.maps.event.addDomListener(window, 'load', this.ngOnInit);
   } //end of ngOnInit
 
 }

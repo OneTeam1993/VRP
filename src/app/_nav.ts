@@ -16,13 +16,13 @@ export const navItems: INavData[] = [
     icon: 'icon-map',
     badge: {
       variant: 'info',
-      text: 'Live Map'
+      text: 'Live'
     },
     children: [
       {
-        name: 'Fleet',
+        name: 'Live Location',
         url: '/tracking',
-        icon: 'fa fa-car'
+        icon: 'icon-location-pin'
       },
       {
         name: 'Traffic',
@@ -40,6 +40,11 @@ export const navItems: INavData[] = [
         icon: 'fa fa-cloud'
       },
       {
+        name: 'Street View',
+        url: '/tracking/street',
+        icon: 'fa fa-th'
+      },
+      {
         name: 'Heat Map',
         url: '/tracking/heatmap',
         icon: 'fa fa-thermometer'
@@ -47,15 +52,31 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name: 'Job Dispatch',
+    url: '/basic',
+    icon: 'icon-puzzle',
+    children: [
+      {
+        name: 'Basic',
+        url: '/basic',
+        icon: 'icon-puzzle'
+      }
+    ]
+  },
+  {
     name: 'Route Optimization',
     url: '/vrp',
     icon: 'icon-map',
-    class: 'd-none',
     //badge: {
     //  variant: 'info',
     //  text: 'Routing'
     //},
     children: [
+      {
+        name: 'Directions',
+        url: '/vrp/direction',
+        icon: 'fa fa-car'
+      },
       {
         name: 'Travelling Salesman',
         url: '/vrp/tsp',
@@ -78,6 +99,11 @@ export const navItems: INavData[] = [
     url: '/settings',
     icon: 'cui-cog icons',
     children: [
+      {
+        name: 'Messages',
+        url: '/messages',
+        icon: 'icon-envelope-open'
+      },
       {
         name: 'Assets',
         url: '/assets',

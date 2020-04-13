@@ -54,7 +54,7 @@ export class VrpComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let api_zonetype = this._constant.zonetypeApi;
     let api_post_zones = this._constant.zoneApi;
@@ -1157,7 +1157,7 @@ export class VrpComponent implements OnInit {
           ZoneID: 0,
           Name: $('#zname').val(),
           TypeID: $('#getZoneTypes').val(),
-          CompanyID: Number(sessionStorage.getItem('setSessionstorageValueCompanyID')),
+          CompanyID: Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID')),
           CreatedDate: timestamp,
           Perimeter: finalString,
           CellIds: '',

@@ -39,7 +39,7 @@ export class WeatherComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let weather_api = this._constant.weatherApi;
 

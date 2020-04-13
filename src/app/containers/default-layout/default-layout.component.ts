@@ -26,7 +26,7 @@ export class DefaultLayoutComponent implements OnInit {
   uri = this._constant.uri_track;
   user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
   reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-  company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
   role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
   username = sessionStorage.getItem('setSessionstorageValueUser');
   company = sessionStorage.getItem('setSessionstorageValueCompany');
@@ -34,6 +34,7 @@ export class DefaultLayoutComponent implements OnInit {
   api_company = this._constant.getCompanies();
   api_assets = this._constant.getAssets();
   api_reports = this._constant.getReports();
+  api_events = this._constant.eventsApi;
   time = new Date();
   route: string;
   default_reseller = this._constant.getSessionstorageValueUserResellerID;
@@ -48,7 +49,7 @@ export class DefaultLayoutComponent implements OnInit {
       }
 
       if (this.route) {
-        if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather' || this.route == '/tracking/carpark') {
+        if (this.route == '/dashboard' || this.route == '/drivers' || this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather' || this.route == '/tracking/carpark' || this.route == '/tracking/street' || this.route == '/vrp/direction') {
           $('#_reseller_filter').hide();
           $('#_company_filter').hide();
           $('#_asset_filter').hide();
@@ -71,6 +72,7 @@ export class DefaultLayoutComponent implements OnInit {
           $('#_company_filter').show();
           $('#_asset_filter').show();
           $('#_reports').show();
+          $('#_events_filter').hide();
         }
         else {
           $('#_reseller_filter').show();
@@ -96,7 +98,7 @@ export class DefaultLayoutComponent implements OnInit {
 
     //this.navigationSubscription = this.router.events.subscribe((event) => {
     //  if (event instanceof NavigationEnd) {
-    //    this.initialiseInvites();
+    //    //this.initialiseInvites();
     //    this.router.navigated = false;
     //  }
     //});
@@ -105,45 +107,7 @@ export class DefaultLayoutComponent implements OnInit {
   initialiseInvites() {
 
     // Set default values and re-fetch any data you need.
-    if (this.route) {
-      if (this.route == '/reseller' || this.route == '/tracking/traffic' || this.route == '/tracking/weather') {
-        $('#_reseller_filter').hide();
-        $('#_company_filter').hide();
-        $('#_asset_filter').hide();
-        $('#_reports').hide();
-      }
-      else if (this.route == '/dashboard' || this.route == '/tracking' || this.route == '/heatmap') {
-        $('#_reseller_filter').show();
-        $('#_company_filter').show();
-        $('#_asset_filter').show();
-        $('#_reports').hide();
-      }
-      else if (this.route == '/companies') {
-        $('#_reseller_filter').show();
-        $('#_company_filter').hide();
-        $('#_asset_filter').hide();
-        $('#_reports').hide();
-      }
-      else if (this.route == '/reports') {
-        $('#_reseller_filter').show();
-        $('#_company_filter').show();
-        $('#_asset_filter').show();
-        $('#_reports').show();
-      }
-      else {
-        $('#_reseller_filter').show();
-        $('#_company_filter').show();
-        $('#_asset_filter').show();
-        $('#_reports').hide();
-      }
-    }
-    else {
-      console.log('Route Problem')
-    }
 
-    if (this.role_id >= 3) {
-      $('#_reseller_filter').hide();
-    }
 
   }
 
@@ -362,11 +326,16 @@ export class DefaultLayoutComponent implements OnInit {
       for (var i = 0, length = data.length; i < length; i++) {
         if (data[i]) {
           if (role_id >= 3) {
-            if (data[i].ReportID == sessionStorage.getItem('setSessionstorageValueUserReport')) {
-              $('#load-report').append($('<option selected="selected"></option>').val(data[i].ReportID).html(data[i].Name));
-            } else {
-              $('#load-report').append($('<option></option>').val(data[i].ReportID).html(data[i].Name));
+
+            if (data[i].ReportID == 1 || data[i].ReportID == 2 || data[i].ReportID == 7 ||data[i].ReportID == 10 || data[i].ReportID == 11) {
+
+              if (data[i].ReportID == sessionStorage.getItem('setSessionstorageValueUserReport')) {
+                $('#load-report').append($('<option selected="selected"></option>').val(data[i].ReportID).html(data[i].Name));
+              } else {
+                $('#load-report').append($('<option></option>').val(data[i].ReportID).html(data[i].Name));
+              }
             }
+
           } else {
             $('#load-report').append($('<option></option>').val(data[i].ReportID).html(data[i].Name));
           }
@@ -379,11 +348,27 @@ export class DefaultLayoutComponent implements OnInit {
         }
       }
 
+      if (Number(sessionStorage.getItem('setSessionstorageValueUserReport')) == 1) $('#_events_filter').show();
+      else $('#_events_filter').hide();
+
       $('.selectpicker').selectpicker('refresh');
 
       return true;
     }
 
+    $.getJSON(this.api_events, function (data) {
+      $.each(data, function (index, item) {
+
+        if (item.StatusID == 5 || item.StatusID == 6 || item.StatusID == 12 || item.StatusID == 13 || item.StatusID == 16 || item.StatusID == 17 || item.StatusID == 18) {
+          $('#load-events').append($('<option></option>').val(item.StatusID).html(item.StatusDesc));
+        }
+      });
+
+      $(".selectpicker").selectpicker('refresh');
+
+      return true;
+
+    });
 
     var dateFormat = "D-MMM-YYYY HH:mm A";
     var d1 = new Date();
@@ -391,10 +376,6 @@ export class DefaultLayoutComponent implements OnInit {
     d1.setMinutes(0);
     var dateFrom = moment(d1).format(dateFormat);
 
-    var d2 = new Date();
-    d2.setDate(d2.getDate());
-    var dateTo = moment(d2).format(dateFormat);
-   
     $('#dateFrom').datetimepicker({
       format: 'd-M-Y H:i A',
       theme: 'dark',
@@ -406,6 +387,11 @@ export class DefaultLayoutComponent implements OnInit {
       }
     });
 
+    var dateFormat = "D-MMM-YYYY HH:mm A";
+    var d2 = new Date();
+    d2.setDate(d2.getDate());
+    var dateTo = moment(d2).format(dateFormat);
+   
     $('#dateTo').datetimepicker({
       format: 'd-M-Y H:i A',
       theme: 'dark',
@@ -419,12 +405,208 @@ export class DefaultLayoutComponent implements OnInit {
 
 
     //Setup new Nav bar
-    if (this.role_id >= 3) {
+    var visible = 'd-block';
+    var hidden = 'd-none';
+    var dashboard;
+    var tracking;
+    var location;
+    var traffic;
+    var carpark;
+    var weather;
+    var heatmap;
+    var jds;
+    var jds_basic;
+    var vrp;
+    var tsp;
+    var standard_vrp;
+    var reports;
+    var settings;
+    var assets;
+    var drivers;
+    var users;
+    var companies;
+    var reseller;
+    var street;
+    var direction;
+    var messages;
 
-      this.navItems = [{
+    switch (this.role_id) {
+      case 1:
+        dashboard = visible;
+        tracking = visible;
+        location = visible;
+        traffic = visible;
+        carpark = visible;
+        weather = visible;
+        street = visible;
+        heatmap = visible;
+        jds = visible;
+        jds_basic = visible;
+        vrp = visible;
+        direction = visible;
+        tsp = visible;
+        standard_vrp = visible;
+        reports = visible;
+        settings = visible;
+        assets = visible;
+        drivers = visible;
+        users = visible;
+        companies = visible;
+        reseller = visible;
+        messages = visible;
+        break;
+      case 2:
+        dashboard = visible;
+        tracking = visible;
+        location = visible;
+        traffic = visible;
+        carpark = visible;
+        weather = visible;
+        street = visible;
+        heatmap = visible;
+        jds = visible;
+        jds_basic = visible;
+        vrp = visible;
+        direction = visible;
+        tsp = visible;
+        standard_vrp = visible;
+        reports = visible;
+        settings = visible;
+        assets = visible;
+        drivers = visible;
+        users = visible;
+        companies = visible;
+        reseller = visible;
+        messages = visible;
+        break;
+      case 3:
+        dashboard = visible;
+        tracking = visible;
+        location = visible;
+        traffic = visible;
+        carpark = visible;
+        weather = visible;
+        street = visible;
+        heatmap = visible;
+        jds = visible;
+        jds_basic = visible;
+        vrp = visible;
+        direction = visible;
+        tsp = visible;
+        standard_vrp = visible;
+        reports = visible;
+        settings = visible;
+        assets = visible;
+        drivers = visible;
+        users = visible;
+        companies = visible;
+        reseller = hidden;
+        messages = visible;
+        break;
+      case 4:
+        dashboard = visible;
+        tracking = visible;
+        location = visible;
+        traffic = visible;
+        carpark = visible;
+        weather = visible;
+        street = visible;
+        heatmap = visible;
+        jds = visible;
+        jds_basic = visible;
+        vrp = visible;
+        direction = visible;
+        tsp = visible;
+        standard_vrp = visible;
+        reports = visible;
+        settings = visible;
+        assets = visible;
+        drivers = visible;
+        users = visible;
+        companies = visible;
+        reseller = hidden;
+        messages = visible;
+        break;
+      case 5:
+        dashboard = visible;
+        tracking = visible;
+        location = visible;
+        traffic = hidden;
+        carpark = hidden;
+        weather = hidden;
+        street = hidden;
+        heatmap = hidden;
+        jds = visible;
+        jds_basic = visible;
+        vrp = hidden;
+        direction = hidden;
+        tsp = hidden;
+        standard_vrp = hidden;
+        reports = visible;
+        settings = visible;
+        assets = hidden;
+        drivers = visible;
+        users = hidden;
+        companies = hidden;
+        reseller = hidden;
+        messages = visible;
+        break;
+      case 6:
+        dashboard = visible;
+        tracking = hidden;
+        location = hidden;
+        traffic = hidden;
+        carpark = hidden;
+        weather = hidden;
+        street = hidden;
+        heatmap = hidden;
+        jds = hidden;
+        jds_basic = hidden;
+        vrp = hidden;
+        direction = hidden;
+        tsp = hidden;
+        standard_vrp = hidden;
+        reports = visible;
+        settings = hidden;
+        assets = hidden;
+        drivers = hidden;
+        users = hidden;
+        companies = hidden;
+        reseller = hidden;
+        messages = visible;
+        break;
+      case 7:
+        dashboard = visible;
+        tracking = hidden;
+        location = hidden;
+        traffic = hidden;
+        carpark = hidden;
+        weather = hidden;
+        street = hidden;
+        heatmap = hidden;
+        jds = hidden;
+        jds_basic = hidden;
+        vrp = hidden;
+        direction = hidden;
+        tsp = hidden;
+        standard_vrp = hidden;
+        reports = hidden;
+        settings = hidden;
+        assets = hidden;
+        drivers = hidden;
+        users = hidden;
+        companies = hidden;
+        reseller = hidden;
+        messages = visible;
+        break;
+    }
+
+    this.navItems = [
+      {
         name: 'Dashboard',
         url: '/dashboard',
         icon: 'icon-speedometer',
+        class: dashboard
       },
       {
         name: 'Tracking',
@@ -432,82 +614,146 @@ export class DefaultLayoutComponent implements OnInit {
         icon: 'icon-map',
         badge: {
           variant: 'info',
-          text: 'Live Map'
+          text: 'Live'
         },
+        class: tracking,
         children: [
           {
-            name: 'Fleet',
+            name: 'Live Location',
             url: '/tracking',
-            icon: 'fa fa-car'
+            icon: 'icon-location-pin',
+            class: location
           },
           {
             name: 'Traffic',
             url: '/tracking/traffic',
-            icon: 'icon-puzzle'
+            icon: 'fa fa-warning',
+            class: traffic
           },
           {
             name: 'Carpark',
             url: '/tracking/carpark',
-            icon: 'icon-puzzle'
+            icon: 'fa fa-th',
+            class: carpark
           },
           {
             name: 'Weather',
             url: '/tracking/weather',
-            icon: 'icon-puzzle'
+            icon: 'fa fa-cloud',
+            class: weather
+          },
+          {
+            name: 'Street View',
+            url: '/tracking/street',
+            icon: 'fa fa-road',
+            class: street
           },
           {
             name: 'Heat Map',
             url: '/tracking/heatmap',
-            icon: 'icon-puzzle'
+            icon: 'fa fa-thermometer',
+            class: heatmap
           },
         ]
       },
       {
-        name: 'Reports',
+        name: 'SHN Reporting',
+        url: '/basic',
+        icon: 'icon-puzzle',
+        class: jds
+      },
+      {
+        name: 'Route Optimization',
+        url: '/vrp',
+        icon: 'icon-map',
+        class: vrp,
+        children: [
+          {
+            name: 'Directions',
+            url: '/vrp/direction',
+            icon: 'fa fa-car',
+            class: direction
+          },
+          {
+            name: 'Travelling Salesman',
+            url: '/vrp/tsp',
+            icon: 'fa fa-car',
+            class: tsp
+          },
+          {
+            name: 'Standard VRP',
+            url: '/vrp',
+            icon: 'fa fa-car',
+            class: standard_vrp
+          },
+        ]
+      },
+      {
+        name: 'History Report',
         url: '/reports',
         icon: 'icon-chart',
+        class: reports
       },
       {
         name: 'Settings',
         url: '/settings',
         icon: 'cui-cog icons',
+        class: settings,
         children: [
+          {
+            name: 'Messages',
+            url: '/messages',
+            icon: 'icon-envelope-open',
+            class: messages,
+          },
+          {
+            name: 'Assets',
+            url: '/assets',
+            icon: 'fa fa-truck',
+            class: assets,
+          },
+          {
+            name: 'Personnel',
+            url: '/drivers',
+            icon: 'fa fa-users',
+            class: drivers
+          },
           {
             name: 'Users',
             url: '/users',
-            icon: 'icon-user'
+            icon: 'fa fa-user',
+            class: users
           },
           {
             name: 'Companies',
             url: '/companies',
-            icon: 'fa fa-building-o'
+            icon: 'fa fa-building-o',
+            class: companies
           },
           {
             name: 'Reseller',
             url: '/reseller',
             icon: 'icon-people',
-            attributes: {
-              hidden: true
-            }
+            class: reseller
           },
         ]
-        },
-        {
-          name: 'Download iOS',
-          url: 'http://coreui.io/angular/',
-          icon: 'fa fa-apple fa-2x',
-          class: 'mt-auto',
-          variant: 'primary',
-          attributes: { target: '_blank', rel: 'noopener' }
-        },
-        {
-          name: 'Download Android',
-          url: 'https://play.google.com/store/apps/details?id=sg.com.acecom.trackSGAdmin&hl=en',
-          icon: 'fa fa-android fa-2x',
-          variant: 'success',
-          attributes: { target: '_blank', rel: 'noopener' }
-        }];
-    } 
+      },
+      {
+        name: 'Download iOS',
+        url: 'https://track-asia.com',
+        icon: 'fa fa-apple fa-2x',
+        class: 'mt-auto',
+        variant: 'primary',
+        attributes: { target: '_blank', rel: 'noopener' }
+      },
+      {
+        name: 'Download Android',
+        url: 'https://play.google.com/store/apps/details?id=sg.com.acecom.trackSGAdmin&hl=en',
+        icon: 'fa fa-android fa-2x',
+        variant: 'success',
+        attributes: { target: '_blank', rel: 'noopener' }
+      }
+    ];
 
     //===========================================================//
 
@@ -540,6 +786,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   onOptionsSelectedReseller(value: any) {
 
+    sessionStorage.setItem('setSessionstorageValueResellerDesc', $("#load-reseller option:selected").text())
     Number(sessionStorage.setItem('setSessionstorageValueUserResellerID', value));
 
     if (this.route == '/tracking') {
@@ -583,7 +830,11 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   onOptionsSelectedCompany(value: any) {
-    Number(sessionStorage.setItem('setSessionstorageValueCompanyID', value));
+
+    sessionStorage.setItem('setSessionstorageValueCompany', $("#load-company option:selected").text())
+    this.company = $("#load-company option:selected").text();
+
+    Number(sessionStorage.setItem('setSessionstorageValueUserCompanyID', value));
     let selected_reseller = $('#load-reseller').val();
     let selected_company = $('#load-company').val();
     let api_assets_filter: string = getAssetsFilter(this.role_id, this.base, this.uri, selected_reseller, selected_company);
@@ -616,7 +867,7 @@ export class DefaultLayoutComponent implements OnInit {
         $('.selectpicker').selectpicker('refresh');
       });
 
-      $(".selectpicker").selectpicker('refresh');
+       $(".selectpicker").selectpicker('refresh');
 
     } else {
 
@@ -669,7 +920,7 @@ export class DefaultLayoutComponent implements OnInit {
     sessionStorage.removeItem("setSessionstorageValueIgnition");
     sessionStorage.removeItem("setSessionstorageValueEngine");
     sessionStorage.removeItem("setSessionstorageValueCompany");
-    sessionStorage.removeItem("setSessionstorageValueCompanyID");
+    sessionStorage.removeItem("setSessionstorageValueUserCompanyID");
     sessionStorage.removeItem("setSessionstorageValueEmail");
     sessionStorage.removeItem("setSessionstorageValueName");
     sessionStorage.removeItem("setSessionstorageValueRoleDesc");

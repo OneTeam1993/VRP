@@ -6,6 +6,7 @@ import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import axios from "axios";
 declare var $: any;
@@ -35,10 +36,10 @@ export class AssetsComponent implements OnInit {
   clickEventsubscription: Subscription;
   route: string;
   api_assets_individual: string;
-  constructor(private _constant: ConstantsService) {}
+  constructor(private _constant: ConstantsService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
-
+    this.spinner.show();
     $.getJSON(this.api_reseller, function (data) {
       $.each(data, function (index, item) {
         $('#assetReseller').append($('<option></option>').val(item.ResellerID).html(item.Name));
@@ -253,14 +254,6 @@ export class AssetsComponent implements OnInit {
       lang: 'en',
       value: assetImmatriculation
     });
-
-    setInterval(() => {
-      this.time = new Date();
-    }, 1000);
-
-
-
-
 
     /*-------------------- Edit Assets -------------------------*/
 
@@ -594,6 +587,7 @@ export class AssetsComponent implements OnInit {
       }
     })
 
+    this.spinner.hide();
 }
 
 

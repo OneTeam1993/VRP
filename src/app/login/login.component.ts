@@ -98,16 +98,16 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("setSessionstorageValueUser", GetUser);
         sessionStorage.setItem("setSessionstorageValueUserLoginDate", GetCurrentDate);
         sessionStorage.setItem("setSessionstorageValueUserNotifications", GetNotifications);
-        sessionStorage.setItem("setSessionstorageValueUserResellerDesc", GetResellerDesc);
+        sessionStorage.setItem("setSessionstorageValueResellerDesc", GetResellerDesc);
         sessionStorage.setItem("setSessionstorageValueUserImage", GetImage);
         sessionStorage.setItem("setSessionstorageValueUserImageFill", GetImageFill);
         sessionStorage.setItem("setSessionstorageValueUserAssets", GetUserAssets);
 
         if (GetRoleID == 1) {
-          Number(sessionStorage.setItem('setSessionstorageValueCompanyID', String(14)));
+          Number(sessionStorage.setItem('setSessionstorageValueUserCompanyID', String(14)));
           Number(sessionStorage.setItem("setSessionstorageValueUserResellerID", String(4)));
         } else {
-          sessionStorage.setItem("setSessionstorageValueCompanyID", GetCompanyID.toString());
+          sessionStorage.setItem("setSessionstorageValueUserCompanyID", GetCompanyID.toString());
           sessionStorage.setItem("setSessionstorageValueUserResellerID", GetResellerID.toString());
         }
 

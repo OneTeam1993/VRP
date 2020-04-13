@@ -75,12 +75,20 @@ export const routes: Routes = [
         loadChildren: () => import('./views/tracking/tracking.module').then(m => m.TrackingModule)
       },
       {
+        path: 'basic',
+        loadChildren: () => import('./views/jobs/jobs.module').then(m => m.JobsModule)
+      },
+      {
         path: 'vrp',
         loadChildren: () => import('./views/vrp/vrp.module').then(m => m.VrpModule)
       },
       {
         path: 'reports',
         loadChildren: () => import('./views/reports/reports.module').then(m => m.ReportsModule)
+      },
+      {
+        path: 'messages',
+        loadChildren: () => import('./views/messages/messages.module').then(m => m.MessagesModule)
       },
       {
         path: 'drivers',
@@ -93,6 +101,10 @@ export const routes: Routes = [
       {
         path: 'users',
         loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
       },
       {
         path: 'companies',

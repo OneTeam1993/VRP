@@ -55,7 +55,7 @@ export class ReportsComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
     this.api_assets_individual = this._constant.assetApi;
     let role_id = this._constant.getSessionstorageValueRoleID;
@@ -118,18 +118,28 @@ export class ReportsComponent implements OnInit {
       this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     }
 
+
     $('#load-report').on('change', function () {
       //Default hide everything
       $("#_charts").hide();
       $("#_playback").hide();
       $("#_reports_table").hide();
 
-      if (this.value == 1) {
+      if (this.value == 0) {
         $("#positionSection").hide();
         $("#speedSection").hide();
         $("#mileageSection").hide();
         $("#utilizationSection").hide();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
+      }
+      else if (this.value == 1) {
+        $("#positionSection").hide();
+        $("#speedSection").hide();
+        $("#mileageSection").hide();
+        $("#utilizationSection").hide();
+        $("#utilization2Section").hide();
+        $('#_events_filter').show();
       }
       else if (this.value == 2) {
         $("#positionSection").show();
@@ -137,6 +147,7 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").hide();
         $("#utilizationSection").hide();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
       }
       else if (this.value == 3) {
         $("#positionSection").hide();
@@ -144,6 +155,7 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").hide();
         $("#utilizationSection").hide();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
       }
       else if (this.value == 4) {
         $("#positionSection").hide();
@@ -151,6 +163,7 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").show();
         $("#utilizationSection").hide();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
       }
       else if (this.value == 5) {
         $("#positionSection").hide();
@@ -158,6 +171,7 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").hide();
         $("#utilizationSection").show();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
       }
       else if (this.value == 6) {
         $("#positionSection").hide();
@@ -165,6 +179,7 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").hide();
         $("#utilizationSection").hide();
         $("#utilization2Section").show();
+        $('#_events_filter').hide();
       }
       else if (this.value == 7) {
         $("#positionSection").hide();
@@ -172,6 +187,15 @@ export class ReportsComponent implements OnInit {
         $("#mileageSection").hide();
         $("#utilizationSection").hide();
         $("#utilization2Section").hide();
+        $('#_events_filter').hide();
+      }
+      if (this.value == 10) {
+        $("#positionSection").hide();
+        $("#speedSection").hide();
+        $("#mileageSection").hide();
+        $("#utilizationSection").hide();
+        $("#utilization2Section").hide();
+        $('#_events_filter').hide();
       }
     });
 
@@ -196,8 +220,7 @@ export class ReportsComponent implements OnInit {
     var getFlag = $("#load-messages").val();
     var dateFormat = "D-MMM-YYYY, hh:mm:ss A";
 
-    $("#_charts").show();
-    $("#_playback").show();
+
     $('#_reports_table').show();
 
     let convertTmestamp: any = moment(getTimestamp, dateFormat);
@@ -213,7 +236,10 @@ export class ReportsComponent implements OnInit {
 
     }
 
-    if (getReport == 2) {
+    if (getReport == 1) {
+      WebApi = "https://app.track-asia.com/tracksgwebapi/api/eventinfo?AssetID=" + getAsset + "&StatusID=" + getStatusID + "&Timestamp=" + timestamp + "&RxTime=" + rxtime;
+    }
+    else if (getReport == 2) {
       WebApi = "https://app.track-asia.com/tracksgwebapi/api/posinfo?AssetID=" + getAsset + "&CompanyID=" + getCompany + "&Timestamp=" + timestamp + "&RxTime=" + rxtime;
     }
     else if (getReport == 3) {
@@ -222,12 +248,26 @@ export class ReportsComponent implements OnInit {
     else if (getReport >= 4 && getReport <= 6 ) {
       WebApi  = "https://app.track-asia.com/tracksgwebapi/api/utilizationinfo?AssetID=" + getAsset + "&StartTime=" + timestamp + "&EndTime=" + rxtime;
     }
+    else if (getReport == 7) {
+      WebApi = "https://app.track-asia.com/tracksgwebapi/api/messageinfo?ResellerID=" + this._constant.getSessionstorageValueUserResellerID + "&CompanyID=" + this._constant.getSessionstorageValueCompanyID + "&Timestamp=" + timestamp + "&RxTime=" + rxtime;
+    }
+    else if (getReport == 10) {
+      WebApi = "https://app.track-asia.com/tracksgwebapi/api/jobinfo?ResellerID=" + this._constant.getSessionstorageValueUserResellerID + "&CompanyID=" + this._constant.getSessionstorageValueCompanyID + "&Timestamp=" + timestamp + "&RxTime=" + rxtime;
+    }
+    else if (getReport == 11) {
+      WebApi = "https://app.track-asia.com/tracksgwebapi/api/posinfo?AssetID=" + getAsset + "&CompanyID=" + getCompany + "&Timestamp=" + timestamp + "&RxTime=" + rxtime;
+    }
    
     console.log(WebApi)
     Reports(WebApi, this.toastr, this.map, this.markers, icon_url, this.polylines, this.coordinates, this.spinner);
 
     function Reports(WebApi, toastr, map, markers, icon_url, polylines, coordinates, spinner) {
 
+      if (getReport == 1) {
+        //Events
+        eventReport(WebApi, toastr, spinner);
+        $('#label_reports').text("Events");
+      }
       if (getReport == 2) {
         //Position Report
         positionReport(WebApi, toastr, map, markers, icon_url, polylines, coordinates, spinner);
@@ -235,28 +275,159 @@ export class ReportsComponent implements OnInit {
       }
       else if (getReport == 3) {
         //Speed Report
-        speedReport(WebApi, toastr);
+        speedReport(WebApi, toastr, spinner);
         $('#label_reports').text("Speed Report");
       }
       else if (getReport == 4) {
         //Mileage Report
-        mileageReport(WebApi, toastr);
+        mileageReport(WebApi, toastr, spinner);
         $('#label_reports').text("Mileage Report");
       }
       else if (getReport == 5) {
         //Utilization Report
-        utilizationReport(WebApi, toastr);
+        utilizationReport(WebApi, toastr, spinner);
         $('#label_reports').text("Utilization Report (Type 1)");
       }
       else if (getReport == 6) {
         //Utilization2 Report
-        utilization2Report(WebApi, toastr);
+        utilization2Report(WebApi, toastr, spinner);
         $('#label_reports').text("Utilization Report (Type 2)");
+      }
+      else if (getReport == 7) {
+        //Messages Report
+        messagesReport(WebApi, toastr, spinner);
+        $('#label_reports').text("Messages Report");
+      }
+      else if (getReport == 10) {
+        //SHN Report
+        shnReport(WebApi, toastr, spinner);
+        $('#label_reports').text("Stay-Home Report");
+      }
+      else if (getReport == 11) {
+        //Battery Report
+        batteryReport(WebApi, toastr, spinner);
+        $('#label_reports').text("Battery Report");
       }
     }
 
+    function eventReport(WebApi, toastr, spinner) {
+
+      $("#_charts").hide();
+      $("#_playback").hide();
+      checkForTables();
+      $('#_eventR').show();
+
+      //Event report
+      $("#eventReport").DataTable({
+        "destroy": true,
+        "responsive": true,
+        "select": true,
+        "filter": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "fixedHeader": {
+          "header": false,
+          "footer": false
+        },
+        "scrollX": true,
+        "scrollY": (screen.height - 335) + 'px',
+        "scrollCollapse": true,
+        "fnInitComplete": function () {
+          const ps = new PerfectScrollbar('.dataTables_scrollBody');
+        },
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 12,
+        "lengthMenu": [[12, 25, 50, -1], [12, 25, 50, 'All']],
+        "searching": true,
+        "info": true,
+        "dom": 'lBfrtip',
+        "processing": true,
+        "language": {
+          "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)",
+        },
+        "buttons": [
+
+          { extend: 'colvis', className: 'float-right ml-2' },
+          [
+            // Export Button
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right ml-2',
+              buttons: [
+                'excel'
+              ]
+            },
+          ],
+        ],
+        "columns": [
+          { data: "EventID", title: "ID", className: 'reorder' },
+          { data: "Timestamp", title: "Date/Time", className: 'reorder' },
+          { data: "Asset", title: "Personnel", className: 'reorder' },
+          { data: "Event", title: "Event", className: 'reorder' },
+          { data: "Remarks", title: "Remarks", className: 'reorder' },
+        ],
+        "ajax": {
+          url: WebApi,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: '',
+          error: function (xhr, textStatus, errorThrown) {
+            toastr.error('Error: Network Error - ' + errorThrown + '. Pls. try again!', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
+        },
+        "columnDefs": [
+          {
+            "render": function (data) {
+              return moment(data).add(8, 'hours').format('D-MMM-YYYY, hh:mm:ss A');
+            },
+            "targets": 1
+          }
+        ],
+        "initComplete": function (data, type, row) {
+
+          //console.log(JSON.stringify(type));
+
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+      });
+
+      $("#eventReport").DataTable().columns.adjust().draw();
+
+
+    }
+
     function positionReport(WebApi, toastr, map, markers, icon_url, polylines, coordinates, spinner) {
-     
+      $("#_charts").show();
+      $("#_playback").show();
       clearMarkers(markers, polylines, coordinates);
       checkForTables();
       $('#_positionR').show();
@@ -271,8 +442,8 @@ export class ReportsComponent implements OnInit {
         "rowReorder": true,
         "keys": true,
         "fixedHeader": {
-          "header": true,
-          "footer": true
+          "header": false,
+          "footer": false
         },
         "scrollX": true,
 	      "scrollY": (screen.height - 335) + 'px',
@@ -285,8 +456,6 @@ export class ReportsComponent implements OnInit {
         "pageLength": 12,
         "lengthMenu": [[12, 25, 50, -1], [12, 25, 50, 'All']],
         "searching": true,
-        "ordering": true,
-        "order": [[0, 'asc']],
         "info": true,
         "dom": 'lBfrtip',
         "processing": true,
@@ -366,7 +535,7 @@ export class ReportsComponent implements OnInit {
               } else if (data == "STOP") {
                 labelColor = "danger";
               }
-              var icon = row.id % 2 === 0 ? 'fa-star' : 'fa-user';
+
               return '<div class="badge badge-' + labelColor + '"> ' + data + '</div>';
             },
             "targets": 9
@@ -383,7 +552,6 @@ export class ReportsComponent implements OnInit {
                 text = "Off";
               } else if (data == null || data == undefined || data == "" || data > 1) {
 
-
                 if (row.Engine == "IDLE") {
                   labelColor = "success";
                   text = "On"
@@ -396,7 +564,7 @@ export class ReportsComponent implements OnInit {
                   text = "Off"
                 }
               }
-              var icon = row.id % 2 === 0 ? 'fa-star' : 'fa-user';
+  
               return '<div class="badge badge-' + labelColor + '"> ' + text + '</div>';
             },
             "targets": 10
@@ -405,8 +573,8 @@ export class ReportsComponent implements OnInit {
         "initComplete": function (data, type, row) {
 
           //console.log(JSON.stringify(type));
-          if (type) {
-  
+          if (type.length > 0) {
+            
             //************************Highchart*************************//
             if (getDuration() <= 24) {
 
@@ -892,22 +1060,29 @@ export class ReportsComponent implements OnInit {
 
             }
 
-
             spinner.hide();
 
             setTimeout(() => {
-              toastr.success('Loaded Successful', 'Success', {
-                timeOut: 3000,
-                closeButton: true,
-                enableHtml: true,
-              });
+              if (type.length > 0) {
+                toastr.success('Loaded Successful', 'Success', {
+                  timeOut: 3000,
+                  closeButton: true,
+                  enableHtml: true,
+                });
+              } else {
+                toastr.warning('No Data', 'Warning', {
+                  timeOut: 3000,
+                  closeButton: true,
+                  enableHtml: true,
+                });
+              }
             }, 50);
 
           }
           else {
-
+            spinner.hide();
             setTimeout(() => {
-              toastr.error('Data not found.', 'Danger', {
+              toastr.error('Data not found.', 'Warning', {
                 timeOut: 3000,
                 closeButton: true,
                 enableHtml: true,
@@ -971,8 +1146,9 @@ export class ReportsComponent implements OnInit {
 
     }
 
-    function speedReport(WebApi, toastr) {
-  
+    function speedReport(WebApi, toastr, spinner) {
+      $("#_charts").show();
+      $("#_playback").hide();
       checkForTables();
       $('#_speedR').show();
 
@@ -985,8 +1161,8 @@ export class ReportsComponent implements OnInit {
         "rowReorder": true,
         "keys": true,
         "fixedHeader": {
-          "header": true,
-          "footer": true,
+          "header": false,
+          "footer": false,
           "headerOffset": $('#pageHeader').outerHeight()
         },
         "scrollX": true,
@@ -1245,20 +1421,24 @@ export class ReportsComponent implements OnInit {
           });//end of chart
 
 
+          spinner.hide();
 
-          if (type.length > 0) {
-            toastr.success('Loaded Successful', 'Success', {
-              timeOut: 3000,
-              closeButton: true,
-              enableHtml: true,
-            });
-          } else {
-            toastr.warning('No Data', 'Warning', {
-              timeOut: 3000,
-              closeButton: true,
-              enableHtml: true,
-            });
-          }
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
         },
         "footerCallback": function (row, data, start, end, display) {
 
@@ -1267,8 +1447,9 @@ export class ReportsComponent implements OnInit {
       });
     }
 
-    function mileageReport(WebApi, toastr) {
-
+    function mileageReport(WebApi, toastr, spinner) {
+      $("#_charts").show();
+      $("#_playback").hide();
       checkForTables();
       $('#_mileageR').show();
 
@@ -1281,8 +1462,8 @@ export class ReportsComponent implements OnInit {
         "rowReorder": true,
         "keys": true,
         "fixedHeader": {
-          "header": true,
-          "footer": true
+          "header": false,
+          "footer": false
         },
         "scrollX": true,
         "scrollCollapse": true,
@@ -1487,6 +1668,24 @@ export class ReportsComponent implements OnInit {
           });//end of chart
 
 
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
         },
         "footerCallback": function (row, data, start, end, display) {
 
@@ -1495,8 +1694,9 @@ export class ReportsComponent implements OnInit {
       });
     }
 
-    function utilizationReport(WebApi, toastr) {
-
+    function utilizationReport(WebApi, toastr, spinner) {
+      $("#_charts").show();
+      $("#_playback").hide();
       checkForTables();
       $('#_utilizationR').show();
 
@@ -1509,8 +1709,8 @@ export class ReportsComponent implements OnInit {
         "rowReorder": true,
         "keys": true,
         "fixedHeader": {
-          "header": true,
-          "footer": true
+          "header": false,
+          "footer": false
         },
         "scrollX": true,
         "scrollY": (screen.height - 335) + 'px',
@@ -1736,6 +1936,25 @@ export class ReportsComponent implements OnInit {
 
           });//end of chart
 
+
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
         }, 
         "footerCallback": function (row, data, start, end, display) {
 
@@ -1744,8 +1963,9 @@ export class ReportsComponent implements OnInit {
       });
     }
 
-    function utilization2Report(WebApi, toastr) {
-
+    function utilization2Report(WebApi, toastr, spinner) {
+      $("#_charts").show();
+      $("#_playback").hide();
       checkForTables();
       $('#_utilization2R').show();
 
@@ -1758,8 +1978,8 @@ export class ReportsComponent implements OnInit {
         "rowReorder": true,
         "keys": true,
         "fixedHeader": {
-          "header": true,
-          "footer": true
+          "header": false,
+          "footer": false
         },
         "scrollX": true,
         "scrollY": (screen.height - 335) + 'px',
@@ -1995,6 +2215,477 @@ export class ReportsComponent implements OnInit {
           });//end of chart
 
 
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+
+        }
+      });
+    }
+
+    function messagesReport(WebApi, toastr, spinner) {
+
+      $("#_charts").hide();
+      $("#_playback").hide();
+      checkForTables();
+      $('#_messagesR').show();
+
+      //Message report
+      $("#messagesReport").DataTable({
+        "destroy": true,
+        "responsive": true,
+        "select": true,
+        "filter": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "fixedHeader": {
+          "header": false,
+          "footer": false
+        },
+        "scrollX": true,
+        "scrollY": (screen.height - 335) + 'px',
+        "scrollCollapse": true,
+        "fnInitComplete": function () {
+          const ps = new PerfectScrollbar('.dataTables_scrollBody');
+        },
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 12,
+        "lengthMenu": [[12, 25, 50, -1], [12, 25, 50, 'All']],
+        "searching": true,
+        "info": true,
+        "dom": 'lBfrtip',
+        "processing": true,
+        "language": {
+          "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)",
+        },
+        "buttons": [
+
+          { extend: 'colvis', className: 'float-right ml-2' },
+          [
+            // Export Button
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right ml-2',
+              buttons: [
+                'excel'
+              ]
+            },
+          ],
+        ],
+        "columns": [
+          { data: "MessageID", title: "Message ID", className: 'reorder' },
+          { data: "Sender", title: "Sender", className: 'reorder' },
+          { data: "Recipients", title: "Recipient", className: 'reorder' },
+          { data: "Timestamp", title: "Date/Time", className: 'reorder' },
+          { data: "Message", title: "Messages", className: 'reorder' },
+          { data: "Flag", title: "Status", className: 'reorder' }
+        ],
+        "ajax": {
+          url: WebApi,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: '',
+          error: function (xhr, textStatus, errorThrown) {
+            toastr.error('Error: Network Error - ' + errorThrown + '. Pls. try again!', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
+        },
+        "columnDefs": [
+          {
+            "render": function (data) {
+
+              var stillUtc = moment.utc(data).toDate();
+              var local = moment(stillUtc).local().format('D-MMM-YYYY, hh:mm:ss A');
+
+              return local;
+            },
+            "targets": 3
+          },
+          {
+            "render": function (data, type, row) {
+
+              var labelColor;
+              var text;
+              if (row.Flag == 0) {
+                labelColor = "success";
+                text = "Sent";
+              } else if (row.Flag == 1) {
+                labelColor = "warning";
+                text = "Pending";
+              } else if (row.Flag == null || row.Flag == undefined || row.Flag == "") {
+
+                labelColor = "info";
+                text = "Status is undefined. Pls. contact administrator!"
+              }
+
+              return '<div class="text-dark badge badge-' + labelColor + '"> ' + text + '</div>';
+
+            },
+            "targets": 5
+          },
+        ],
+        "initComplete": function (data, type, row) {
+
+          console.log(JSON.stringify(type));
+
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+      });
+
+
+    }
+
+    function shnReport(WebApi, toastr, spinner) {
+
+      $("#_charts").hide();
+      $("#_playback").hide();
+      checkForTables();
+      $('#_shnR').show();
+
+      //SHN report
+      $("#shnReport").DataTable({
+        "destroy": true,
+        "responsive": true,
+        "select": true,
+        "filter": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "fixedHeader": {
+          "header": false,
+          "footer": false
+        },
+        "scrollX": true,
+        "scrollY": (screen.height - 335) + 'px',
+        "scrollCollapse": true,
+        "fnInitComplete": function () {
+          const ps = new PerfectScrollbar('.dataTables_scrollBody');
+        },
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 12,
+        "lengthMenu": [[12, 25, 50, -1], [12, 25, 50, 'All']],
+        "searching": true,
+        "info": true,
+        "dom": 'lBfrtip',
+        "processing": true,
+        "language": {
+          "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)",
+        },
+        "buttons": [
+
+          { extend: 'colvis', className: 'float-right ml-2' },
+          [
+            // Export Button
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right ml-2',
+              buttons: [
+                'excel'
+              ]
+            },
+          ],
+        ],
+        "columns": [
+          { data: "JobID", title: "Job ID", className: 'reorder' },
+          { data: "JobNumber", title: "Reporting Info ID", className: 'reorder' },
+          { data: "Driver", title: "Personnel", className: 'reorder' },
+          { data: "Timestamp", title: "Schedule Date/Time", className: 'reorder' },
+          { data: "RxTime", title: "Completed Date/Time", className: 'reorder' },
+          { data: "Cancelled", title: "Cancelled Date/Time", className: 'reorder' },
+          { data: "User", title: "Created By", className: 'reorder' },
+          { data: "Remarks", title: "Admin Remarks", className: 'reorder' },
+          { data: "Flag", title: "Status", className: 'reorder' },
+          { data: "Forms", title: "Forms", className: 'reorder' },
+        ],
+        "ajax": {
+          url: WebApi,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: '',
+          error: function (xhr, textStatus, errorThrown) {
+            toastr.error('Error: Network Error - ' + errorThrown + '. Pls. try again!', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
+        },
+        "columnDefs": [
+          {
+            "render": function (data) {
+
+              var stillUtc = moment.utc(data).toDate();
+              var local = moment(stillUtc).local().format('D-MMM-YYYY, hh:mm:ss A');
+
+              return local;
+            },
+            "targets": 3
+          },
+          {
+            "render": function (data, type, row) {
+              var text;
+              if (row.Flag == 1 || row.Flag == 2) {
+                text = '---';
+              }
+              else if (row.Flag == 3) {
+                var stillUtc = moment.utc(data).toDate();
+                text = moment(stillUtc).local().format('D-MMM-YYYY, hh:mm:ss A');
+              } else {
+                text = '---';
+              }
+
+              return text;
+
+            },
+            "targets": 4
+          },
+          {
+            "render": function (data, type, row) {
+              var text;
+              if (row.Flag == 1 || row.Flag == 3) {
+                text = '---';
+              }
+              else if (row.Flag == 2) {
+                var stillUtc = moment.utc(data).toDate();
+                text = moment(stillUtc).local().format('D-MMM-YYYY, hh:mm:ss A');
+              }
+              else {
+                text = '---';
+              }
+
+              return text;
+
+            },
+            "targets": 5
+          },
+          {
+            "render": function (data, type, row) {
+
+              var labelColor;
+              var text;
+              if (data == 1) {
+                labelColor = "warning";
+                text = "In-progress";
+              } else if (data == 2) {
+                labelColor = "danger";
+                text = "Cancelled";
+              } if (data == 3) {
+                labelColor = "success";
+                text = "Completed";
+              } else if (data == null || data == undefined || data == "") {
+
+                labelColor = "info";
+                text = "Status is undefined. Pls. contact administrator!"
+              }
+
+              return '<div class="text-dark badge badge-' + labelColor + '"> ' + text + '</div>';
+
+            },
+            "targets": 8
+          },
+          {
+            "render": function (data, type, row) {
+              if (row.FormsFill == "Uniform") {
+                return '<div class="align-self-center"><strong><a href="' + data + '" target="_blank"><i class="cui-file icons"></i></a></strong></div>'
+              } else {
+                return 'No form'
+              }
+            },
+            "targets": 9
+          },
+        ],
+        "initComplete": function (data, type, row) {
+
+          console.log(JSON.stringify(type));
+
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+      });
+
+
+    }
+
+    function batteryReport(WebApi, toastr, spinner) {
+      $("#_charts").hide();
+      $("#_playback").hide();
+      checkForTables();
+      $('#_batteryR').show();
+
+      $("#batteryReport").DataTable({
+        "destroy": true,
+        "responsive": true,
+        "select": true,
+        "filter": true,
+        "colReorder": false,
+        "rowReorder": true,
+        "keys": true,
+        "fixedHeader": {
+          "header": false,
+          "footer": false,
+          "headerOffset": $('#pageHeader').outerHeight()
+        },
+        "scrollX": true,
+        "scrollCollapse": true,
+        "paging": true,
+        "pagingType": "full_numbers",
+        "pageLength": 12,
+        "lengthMenu": [[12, 25, 50, -1], [12, 25, 50, 'All']],
+        "searching": true,
+        "ordering": true,
+        "order": [[0, 'asc']],
+        "info": true,
+        "dom": 'Blfrtip',
+        "processing": true,
+        "language": {
+          "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+          "infoEmpty": "No events available",
+          "infoFiltered": "(filtered from MAX total events)"
+        },
+        "buttons": [
+
+          { extend: 'colvis', className: 'float-right ml-2' },
+          [
+            // Export Button
+            {
+              extend: 'collection',
+              text: 'Export',
+              className: 'float-right ml-2',
+              buttons: [
+                'excel'
+              ]
+            },
+          ],
+        ],
+        "columns": [
+          { data: "PosID", title: "ID", className: 'reorder' },
+          { data: "Asset", title: "Asset", className: 'reorder' },
+          { data: "Tag", title: "Device", className: 'reorder' },
+          { data: "Driver", title: "Driver", className: 'reorder' },
+          { data: "PosY", title: "Latitude", className: 'reorder' },
+          { data: "PosX", title: "Longtitude", className: 'reorder' },
+          { data: "Location", title: "Location", className: 'reorder' },
+          { data: "Timestamp", title: "Timestamp", className: 'reorder' },
+          { data: "Battery", title: "Battery", className: 'reorder' },
+        ],
+        "ajax": {
+          url: WebApi,
+          type: 'GET',
+          dataType: 'json',
+          dataSrc: ''
+        },
+
+        "columnDefs": [
+          {
+
+            "render": function (data, type, row) {
+              return data;
+            },
+            "targets": 0
+          },
+          {
+            "render": function (data) {
+              return moment(data).add(8, 'hours').format('D-MMM-YYYY, hh:mm:ss A');
+            },
+            "targets": 7
+          },
+          {
+            "render": function (data) {
+              return '<span>' + data + ' %' + '</span>';
+            },
+            "targets": 8
+          },
+        ],
+        "initComplete": function (data, type, row) {
+
+          console.log(JSON.stringify(type));
+
+          spinner.hide();
+
+          setTimeout(() => {
+            if (type.length > 0) {
+              toastr.success('Loaded Successful', 'Success', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            } else {
+              toastr.warning('No Data', 'Warning', {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+              });
+            }
+          }, 50);
+
         },
         "footerCallback": function (row, data, start, end, display) {
 
@@ -2005,8 +2696,16 @@ export class ReportsComponent implements OnInit {
 
     function checkForTables() {
 
+      //check for the eventReport table
+      if ($.fn.DataTable.isDataTable('#eventReport') == true) {
+        $("#eventReport").DataTable().clear().draw();
+        $("#eventReport").DataTable().destroy();
+        $("#eventReport thead").html('');
+        $('#_eventR').hide();
+      }
+
       //check for the positionReport table
-      if ($.fn.DataTable.isDataTable('#positionReport') == true) {
+      else if ($.fn.DataTable.isDataTable('#positionReport') == true) {
         $("#positionReport").DataTable().clear().draw();
         $("#positionReport").DataTable().destroy();
         $("#positionReport thead").html('');
@@ -2042,6 +2741,30 @@ export class ReportsComponent implements OnInit {
         $("#utilization2Report").DataTable().destroy();
         $("#utilization2Report thead").html('');
         $('#_utilization2R').hide();
+      }
+
+      //check for the messages table
+      else if ($.fn.DataTable.isDataTable('#messagesReport') == true) {
+        $("#messagesReport").DataTable().clear().draw();
+        $("#mesasagesReport").DataTable().destroy();
+        $("#messagesReport thead").html('');
+        $('#_messagesR').hide();
+      }
+
+      //check for the shn table
+      else if ($.fn.DataTable.isDataTable('#shnReport') == true) {
+        $("#shnReport").DataTable().clear().draw();
+        $("#shnReport").DataTable().destroy();
+        $("#shnReport thead").html('');
+        $('#_shnR').hide();
+      }
+
+      //check for the battery table
+      else if ($.fn.DataTable.isDataTable('#batteryReport') == true) {
+        $("#batteryReport").DataTable().clear().draw();
+        $("#batteryReport").DataTable().destroy();
+        $("#batteryReport thead").html('');
+        $('#_batteryR').hide();
       }
 
     }

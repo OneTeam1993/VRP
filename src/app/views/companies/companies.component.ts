@@ -4,8 +4,6 @@ import 'moment/locale/en-SG';
 import { ConstantsService } from '../../common/services/constants.service';
 import { RouterEvent, Router } from '@angular/router';
 import { Location } from "@angular/common";
-import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import axios from "axios";
 declare var $: any;
@@ -23,10 +21,11 @@ export class CompaniesComponent implements OnInit {
   uri = this._constant.uri_track;
   user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
   reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-  company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+  company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
   role_id = Number(sessionStorage.getItem('setSessionstorageValueRoleID'));
   username = sessionStorage.getItem('setSessionstorageValueUser');
   company = sessionStorage.getItem('setSessionstorageValueCompany');
+  api_companies = this._constant.getCompanies();
   route: string;
   constructor(private _constant: ConstantsService, location: Location, private router: Router, private spinner: NgxSpinnerService) {
 
@@ -42,13 +41,14 @@ export class CompaniesComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    let api = this._constant.companyApi;
+    let api = this.api_companies;
+    let companyApi = this._constant.companyApi;
     let api_reseller = this._constant.resellerApi;
     let base = this._constant.baseAppUrl;
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let role_id = this._constant.getSessionstorageValueRoleID;
     let api_companies: string;
 
@@ -74,12 +74,12 @@ export class CompaniesComponent implements OnInit {
 
     _table = $("#companyData").DataTable({
       "destroy": true,
-      "responsive": false,
+      "responsive": true,
       "select": true,
       "filter": true,
-      //"orderCellsTop": true,
+
       "fixedHeader": {
-        "header": true,
+        "header": false,
         "footer": false
       },
       "colReorder": false,
@@ -127,7 +127,6 @@ export class CompaniesComponent implements OnInit {
         },
       ],
       "columns": [
-        //{ data: " ", title: "Status", className: 'reorder' },
         { data: "CompanyID", title: "ID", className: 'reorder' },
         { data: "Image", title: "Image", className: 'reorder' },
         { data: "Name", title: "Company", className: 'reorder' },
@@ -143,7 +142,7 @@ export class CompaniesComponent implements OnInit {
         }
       ],
       "ajax": {
-        url: api_companies,
+        url: api,
         type: 'GET',
         dataType: 'json',
         dataSrc: ''
@@ -151,9 +150,6 @@ export class CompaniesComponent implements OnInit {
 
       "columnDefs": [
         {
-          // The `data` parameter refers to the data for the cell (defined by the
-          // `data` option, which defaults to the column being worked with, in
-          // this case `data: 0`.
           "render": function (data, type, row) {
             if (row.ImageFill == "Uniform") {
               return '<img src="' + data + '" width="50" height="50">'
@@ -166,7 +162,7 @@ export class CompaniesComponent implements OnInit {
         {
           "render": function (data) {
 
-            if (role_id  <= 2) {
+            if (role_id <= 2) {
               return '<a class="editCompany"><i class="fa fa-edit"></i></a> &emsp; <a class="deleteCompany" data-toggle="modal"><i class="fa fa-trash"></i></a>'
             } else {
               return '<a class="editCompany"><i class="fa fa-edit"></i></a>'
@@ -176,24 +172,30 @@ export class CompaniesComponent implements OnInit {
         }
       ],
       "initComplete": function (data, type, row) {
-   
-
         $(".addNew").html('<button id="add" class="addBtn float-left">Add New</button>');
-
         $('#add').on('click', function (e) {
-
           $('#companyModal').modal("show");
           $('#companyFormTitle').text('Add New Company');
+	  clearForms();
           $('#companyReseller').val(Number(sessionStorage.getItem('setSessionstorageValueUserResellerID')));
           $('.selectpicker').selectpicker('refresh');
-
         });
-
-
       },
       "footerCallback": function (row, data, start, end, display) {
       }
     })
+    function clearForms() {
+      $('#companyID').val('');
+      $('#companyImageBox').attr('src', 'assets/img/avatars/default-company.jpg').width(110).height(110);
+      $('#companyName').val('');
+      $('#companyAddress').val('');
+      $('#companyEmail').val('');
+      $('#companyPhone').val('');
+      $('#companyReseller').val('');
+      $('#companyUserLimit').val('');
+      $('#companyZoneLimit').val('');
+      $('#companyAssetLimit').val('');
+    }
 
     /*------------------ Edit Company-----------------*/
 
@@ -211,16 +213,12 @@ export class CompaniesComponent implements OnInit {
       }
 
       $('#companyStatus').val(data.Flag);
+      $('#companyImageBox').attr('src', data.Image).width(110).height(110);
       $('#companyName').val(data.Name);
       $('#companyAddress').val(data.Address);
       $('#companyPhone').val(data.Phone);
       $('#companyEmail').val(data.Email);
       $('#companyReseller').val(data.ResellerID);
-      //$('#companyFleet').val(data.Fleet);
-      //$('#companyTraffic').val(data.Traffic);
-      //$('#companyHeatMap').val(data.HeatMap);
-      //$('#companyCarpark').val(data.Carpark);
-      //$('#companyWeather').val(data.Carpark);
 
       $('.selectpicker').selectpicker('refresh');
 
@@ -231,14 +229,13 @@ export class CompaniesComponent implements OnInit {
     $('#companyData').on('click', 'a.deleteCompany', function (e) {
 
       $('#deleteCompany').modal('show');
-
       var data = _table.row($(this).parents('tr')).data();
       $('#companyID').val(data.CompanyID);
       $('#deleteCompany').on('click', '.deleteCompanyBtn', function (e) {
         let obj: any = {
           CompanyID: data.CompanyID,
         };
-        axios.delete(api + obj.CompanyID, obj)
+        axios.delete(companyApi + obj.CompanyID, obj)
           .then(function (response) {
             console.log(response);
             $('#companyModal').modal('hide');
@@ -400,6 +397,7 @@ export class CompaniesComponent implements OnInit {
 
             $('#companyModal').modal("show");
             $('#companyFormTitle').text('Add New Reseller');
+            clearForms();
 
           });
 
@@ -425,7 +423,7 @@ export class CompaniesComponent implements OnInit {
 
       _table = $("#companyData").DataTable({
         "destroy": true,
-        "responsive": false,
+        "responsive": true,
         "select": true,
         "filter": true,
         //"orderCellsTop": true,
@@ -520,6 +518,7 @@ export class CompaniesComponent implements OnInit {
 
             $('#companyModal').modal("show");
             $('#companyFormTitle').text('Add New Company');
+            clearForms();
 
           });
 
@@ -597,53 +596,35 @@ export class CompaniesComponent implements OnInit {
       Weather: $('#companyWeather').val()
     };
 
+    /*------------------------ Save Uploaded Image ------------------------*/
 
     if (obj.CompanyID == 'undefined' || obj.CompanyID == null || obj.CompanyID == 0) {
 
       axios.post(this._constant.companyApi, obj)
-        .then(function (response) {
-          console.log(response);
+        .then(function (res) {
 
-
-          /*------------------------ Save Uploaded Image ------------------------*/
           var data = new FormData();
           var files = $("#uploadCompany").get(0).files;
           if (files.length > 0) {
-            data.append("UploadedImageCompany", files[0], GetCompanyID + ".png");
-          }
+            data.append("UploadedImageCompany", files[0], res.data.CompanyID + ".png");
 
-          let apiCompanyImage = this._constant.apiCompanyImage;
+            $.ajax({
+              type: "POST",
+              url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfilecompany",
+              contentType: false,
+              processData: false,
+              data: data,
+              success: function (data) {
+                console.log('success');
 
-          var ajaxRequest = $.ajax({
-            type: "POST",
-            url: this.apiCompanyImage,
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (data) {
-              console.log('success');
-              clearForms();
-              $('#companyModal').modal('hide');
-              $('#confirmCompany').modal('hide');
-              $("#companyData").DataTable().ajax.reload();
-            }
-          });
-
-          ajaxRequest.done(function (responseData, textStatus) {
-            if (textStatus == 'success') {
-              if (responseData != null) {
-                if (responseData.Key) {
-                  alert(responseData.Value);
-                  $("#uploadCompany").val('');
-                } else {
-                  alert(responseData.Value);
-                }
+                $('#companyModal').modal('hide');
+                $('#confirmCompany').modal('hide');
+                $("#companyData").DataTable().ajax.reload();
               }
-            } else {
-              alert(responseData.Value);
-            }
-          });
+            });
 
+          }
+          console.log(res);
         })
         .catch(function (error) {
           console.log(error);
@@ -660,37 +641,23 @@ export class CompaniesComponent implements OnInit {
           var files = $("#uploadCompany").get(0).files;
           if (files.length > 0) {
             data.append("UploadedImageCompany", files[0], obj.CompanyID + ".png");
-          }
 
-          var ajaxRequest = $.ajax({
-            type: "POST",
-            url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfilecompany",
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (data) {
-              console.log('success');
-              clearForms();
-              $('#companyModal').modal('hide');
-              $('#confirmCompany').modal('hide');
-              $("#companyData").DataTable().ajax.reload();
-            }
-          });
+            $.ajax({
+              type: "POST",
+              url: "https://app.track-asia.com/tracksgwebapi/api/fileupload/uploadfilecompany",
+              contentType: false,
+              processData: false,
+              data: data,
+              success: function (data) {
+                console.log('success');
 
-          ajaxRequest.done(function (responseData, textStatus) {
-            if (textStatus == 'success') {
-              if (responseData != null) {
-                if (responseData.Key) {
-                  alert(responseData.Value);
-                  $("#uploadCompany").val('');
-                } else {
-                  alert(responseData.Value);
-                }
+                $('#companyModal').modal('hide');
+                $('#confirmCompany').modal('hide');
+                $("#companyData").DataTable().ajax.reload();
               }
-            } else {
-              alert(responseData.Value);
-            }
-          });
+            });
+
+          }
 
         })
         .catch(function (error) {
@@ -698,34 +665,12 @@ export class CompaniesComponent implements OnInit {
         });
     }
 
-    function clearForms() {
-      $('#companyID').val('');
-      $('#companyName').val('');
-      $('#companyAddress').val(''),
-      $('#companyEmail').val(''),
-      $('#companyPhone').val(''),
-      $('#companyReseller').val(''),
-      $('#companyUserLimit').val(''),
-      $('#companyZoneLimit').val(''),
-      $('#companyAssetLimit').val('')
-    }
 
-  }
 
-  clearForms() {
-    $('#companyID').val('');
-    $('#companyName').val('');
-    $('#companyAddress').val(''),
-      $('#companyEmail').val(''),
-      $('#companyPhone').val(''),
-      $('#companyReseller').val(''),
-      $('#companyUserLimit').val(''),
-      $('#companyZoneLimit').val(''),
-      $('#companyAssetLimit').val('')
   }
 
   onOptionsSelectedReseller(value: any) {
- 
+
     Number(sessionStorage.setItem('setSessionstorageValueUserResellerID', value));
 
     if (this.route == '/companies') {

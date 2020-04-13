@@ -37,22 +37,63 @@ export class DashboardComponent implements OnInit {
     let uri = this._constant.uri_track;
     let user_id = Number(sessionStorage.getItem('setSessionstorageValueUserID'));
     let reseller_id = Number(sessionStorage.getItem('setSessionstorageValueUserResellerID'));
-    let company_id = Number(sessionStorage.getItem('setSessionstorageValueCompanyID'));
+    let company_id = Number(sessionStorage.getItem('setSessionstorageValueUserCompanyID'));
     let api_assets = base + uri + 'assetinfo' + '?UserID=' + user_id + '&ResellerID=' + reseller_id + '&CompanyID=' + company_id;
     this.api_assets_individual = this._constant.assetApi;
+    let api_news = this._constant.covid_news_sg;
     let role_id = this._constant.getSessionstorageValueRoleID;
 
     //================================INIT==================================//
 
-    initDashboard(loadDashboard, api_assets, role_id, this.toastr);
+    initDashboard(loadDashboard, api_assets, role_id, this.toastr, this.route);
+    initNews(loadNews, api_news, role_id, this.toastr, this.route);
 
-    //=====================================Heat Map=============================================//
+    //===============================Dashboard===================================================//
 
-    function initDashboard(callback: any, api_assets: string, role_id, toastr) {
+    function initNews(callback: any, api_news: string, role_id, toastr, route) {
+
+      axios.get(api_news)
+        .then(function (response) {
+          callback(response.data, toastr, route);
+
+        })
+        .catch(function (error) {
+          console.log(error);
+          if (role_id == 1) {
+            toastr.error('News API Error in Dashboard: ' + error, 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          } else {
+            toastr.error('Error: Network Error. Pls. Try again.', 'Error', {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+            });
+          }
+        });
+
+    }
+
+    function loadNews(data, toastr, route) {
+
+      if (route == "/dashboard") {
+        if ($('#infected').val() != null || $('#infected').val() != undefined) document.getElementById('infected').innerHTML = data.infected;
+        if ($('#stableHospitalized').val() != null || $('#stableHospitalized').val() != undefined) document.getElementById('stableHospitalized').innerHTML = data.stableHospitalized;
+        if ($('#criticalHospitalized').val() != null || $('#criticalHospitalized').val() != undefined) document.getElementById('criticalHospitalized').innerHTML = data.criticalHospitalized;
+        if ($('#activeCases').val() != null || $('#activeCases').val() != undefined) document.getElementById('activeCases').innerHTML = data.activeCases;
+        if ($('#deceased').val() != null || $('#deceased').val() != undefined) document.getElementById('deceased').innerHTML = data.deceased;
+        if ($('#recovered').val() != null || $('#recovered').val() != undefined) document.getElementById('recovered').innerHTML = data.recovered;
+      }
+
+    }
+
+    function initDashboard(callback: any, api_assets: string, role_id, toastr, route) {
 
       axios.get(api_assets)
         .then(function (response) {
-          callback(response.data, toastr, );
+          callback(response.data, toastr, route);
 
         })
         .catch(function (error) {
@@ -74,7 +115,7 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    function loadDashboard(data, toastr) {
+    function loadDashboard(data, toastr, route) {
 
       var active = 0;
       var inactive = 0;
@@ -98,13 +139,13 @@ export class DashboardComponent implements OnInit {
               var tag = data[i].Tag;
               var category = data[i].Category;
               var vechs = data[i].Name;
-              var make = data[i].Make;
-              var model = data[i].Model;
-              var plate_no = data[i].LicensePlate;
-              var transmission = data[i].Transmission;
-              var fuel_type = data[i].FuelType;
+              var fix = data[i].LastPos.Fix;
               var install_date = moment.utc(data[i].InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
               var address = data[i].LastPos.Location;
+              var speed = data[i].LastPos.Speed;
+              var gps = data[i].Gps;
+              var gprs = data[i].Gprs;
+              var engine = data[i].Engine;
 
               var assetTimestamp = data[i].LastPos.Timestamp;
               var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
@@ -114,7 +155,15 @@ export class DashboardComponent implements OnInit {
               timestamp1 = Date.parse(timestamp1);
               var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
               var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
+              var _el = getElapsedTime(elapsedTimestamp);
               var el = get_el(elapsedTimestamp);
+
+              let driverName: string;
+              if (data[i].Driver.Name == null) {
+                driverName = "No Driver Assigned";
+              } else {
+                driverName = data[i].Driver.Name;
+              }
 
               let vehicleImg: string;
 
@@ -150,6 +199,12 @@ export class DashboardComponent implements OnInit {
                 case "Ambulance":
                   vehicleImg = "assets/img/ambulance.jpg";
                   break;
+                case "Mobile":
+                  vehicleImg = "assets/img/mobile.jpg";
+                  break;
+                case "Personnel":
+                  vehicleImg = "assets/img/personnel.jpg";
+                  break;
               }
 
 
@@ -176,27 +231,37 @@ export class DashboardComponent implements OnInit {
                   + tag
                   + "</td>"
                   + "<td>"
-                  + plate_no
+                  + address
                   + "</td>"
                   + "<td>"
-                  + make
+                  + timestamp
                   + "</td>"
                   + "<td>"
-                  + model
+                  + _el
                   + "</td>"
                   + "<td>"
                   + category
                   + "</td>"
                   + "<td>"
-                  + transmission
-                  + "</td>"
-                  + "<td>"
-                  + fuel_type
+                  + speedFormatter(speed)
                   + "</td>"
                   + "<td>"
                   + install_date
                   + "</td>"
-                  + "</tr>";
+                  + "<td>"
+                  + fix
+                  + "</td>"
+                  + "<td>"
+                  + statusFormatter(engine, timestamp)
+                  + "</td>"
+                  + "<td>"
+                  + gpsStatus(gps, timestamp)
+                  + "</td>"
+                  + "<td>"
+                  + gprsStatus(gprs, timestamp)
+                  + "</td>"
+                  + "</tr>"
+                  + "<hr style='border: 1px solid #FFFFFF !important'>";
 
                 document.getElementById('total-assets').innerHTML = data.length;
                 document.getElementById('active').innerHTML = active.toString();
@@ -215,12 +280,13 @@ export class DashboardComponent implements OnInit {
           var tag = data.Tag;
           var category = data.Category;
           var vechs = data.Name;
-          var make = data.Make;
-          var model = data.Model;
-          var plate_no = data.LicensePlate;
-          var transmission = data.Transmission;
-          var fuel_type = data.FuelType;
+          var fix = data.LastPos.Fix;
           var install_date = moment.utc(data.InstallDate).local().format("D-MMM-YYYY, hh:mm:ss A");
+          var address = data.LastPos.Location;
+          var speed = data.LastPos.Speed;
+          var gps = data.Gps;
+          var gprs = data.Gprs;
+          var engine = data.Engine;
 
           var assetTimestamp = data.LastPos.Timestamp;
           var timestamp1: any = moment.utc(assetTimestamp).local().format("DD MMM YYYY");
@@ -230,7 +296,15 @@ export class DashboardComponent implements OnInit {
           timestamp1 = Date.parse(timestamp1);
           var timestamp = moment.utc(assetTimestamp).local().format("D-MMM-YYYY, hh:mm:ss A");
           var elapsedTimestamp = moment.utc(assetTimestamp).local().format();
+          var _el = getElapsedTime(elapsedTimestamp);
           var el = get_el(elapsedTimestamp);
+
+          let driverName: string;
+          if (data.Driver.Name == null) {
+            driverName = "No Driver Assigned";
+          } else {
+            driverName = data.Driver.Name;
+          }
 
           let vehicleImg: string;
 
@@ -268,6 +342,7 @@ export class DashboardComponent implements OnInit {
               break;
           }
 
+      
           if (el == "Active")
             active++;
           else if (el == "Inactive")
@@ -291,47 +366,174 @@ export class DashboardComponent implements OnInit {
               + tag
               + "</td>"
               + "<td>"
-              + plate_no
+              + address
               + "</td>"
               + "<td>"
-              + make
+              + timestamp
               + "</td>"
               + "<td>"
-              + model
+              + _el
               + "</td>"
               + "<td>"
               + category
               + "</td>"
               + "<td>"
-              + transmission
-              + "</td>"
-              + "<td>"
-              + fuel_type
+              + speedFormatter(speed)
               + "</td>"
               + "<td>"
               + install_date
               + "</td>"
+              + "<td>"
+              + fix
+              + "</td>"
+              + "<td>"
+              + statusFormatter(engine, timestamp)
+              + "</td>"
+              + "<td>"
+              + gpsStatus(gps, timestamp)
+              + "</td>"
+              + "<td>"
+              + gprsStatus(gprs, timestamp)
+              + "</td>"
               + "</tr>"
               + "<hr style='border: 1px solid #FFFFFF !important'>";
 
-       
-            document.getElementById('total-assets').innerHTML = "1";
-            document.getElementById('active').innerHTML = active.toString();
-            document.getElementById('inactive').innerHTML = inactive.toString();
-            document.getElementById('repair').innerHTML = repair.toString();
+            if (route == "/dashboard") {
+              if ($('#total-assets').val() != null || $('#total-assets').val() != undefined) document.getElementById('total-assets').innerHTML = "1";
+              if ($('#active').val() != null || $('#active').val() != undefined) document.getElementById('active').innerHTML = active.toString();
+              if ($('#inactive').val() != null || $('#inactive').val() != undefined) document.getElementById('inactive').innerHTML = inactive.toString();
+              if ($('#repair').val() != null || $('#repair').val() != undefined) document.getElementById('repair').innerHTML = repair.toString();
+            }
+
 
           }
 
         } else {
-          document.getElementById('total-assets').innerHTML = "0";
-          document.getElementById('active').innerHTML = "0";
-          document.getElementById('inactive').innerHTML = "0";
-          document.getElementById('repair').innerHTML = "0";
+
+          if (route == "/dashboard") {
+            if ($('#total-assets').val() != null || $('#total-assets').val() != undefined) document.getElementById('total-assets').innerHTML = "0";
+            if ($('#active').val() != null || $('#active').val() != undefined) document.getElementById('active').innerHTML = "0";
+            if ($('#inactive').val() != null || $('#inactive').val() != undefined) document.getElementById('inactive').innerHTML = "0";
+            if ($('#repair').val() != null || $('#repair').val() != undefined) document.getElementById('repair').innerHTML = "0";
+          }
+
         }
 
       }
 
 
+    }
+
+    function gpsStatus(gps, timestamp) {
+
+      var d = new Date();
+      var timestamp2 = moment.utc(d).local().format("D-MMM-YYYY");
+      var dateEntered = moment(timestamp, 'D-MMM-YYYY').format('D-MMM-YYYY');
+
+      var labelColor;
+      if (timestamp2 > dateEntered) {
+        labelColor = "down";
+      }
+      else if (gps >= 2) {
+        labelColor = "move";
+      }
+      else if (gps < 2 && timestamp2 == dateEntered) {
+        labelColor = "stop";
+      } else {
+        labelColor = "down";
+      }
+
+
+      return "<i class='fa fa-map-marker " + labelColor + "' title='GPS'></i>";
+    }
+
+    function gprsStatus(gprs, timestamp) {
+
+      var d = new Date();
+      var timestamp2 = moment.utc(d).local().format("D-MMM-YYYY");
+      var dateEntered = moment(timestamp, 'D-MMM-YYYY').format('D-MMM-YYYY');
+
+      var labelColor;
+      if (timestamp2 > dateEntered) {
+        labelColor = "down";
+      }
+      else if (gprs == 0) {
+        labelColor = "move";
+
+      } else if (gprs == 1) {
+        labelColor = "idle";
+      }
+      else if (gprs == 2 && timestamp2 == dateEntered) {
+        labelColor = "stop";
+      } else {
+        labelColor = "down";
+      }
+
+      return "<i class='fa fa-signal " + labelColor + "' title='3G'></i>";
+    }
+
+    function statusFormatter(val, timestamp) {
+      var text;
+      var d = new Date();
+      var timestamp2 = moment.utc(d).local().format("D-MMM-YYYY");
+      var dateEntered = moment(timestamp, 'D-MMM-YYYY').format('D-MMM-YYYY');
+
+      var labelColor;
+      if (timestamp2 > dateEntered) {
+        labelColor = "down";
+        text = "DOWN";
+      }
+      else if (val == "MOVE") {
+        labelColor = "move";
+        text = "MOVE";
+      }
+      else if (val == "IDLE") {
+        labelColor = "idle";
+        text = "IDLE";
+      }
+      else if (val == "STOP" && timestamp2 == dateEntered) {
+        labelColor = "stop";
+        text = "OFF";
+      } else {
+        labelColor = "down";
+        text = "DOWN";
+      }
+
+      return "<span style='padding: 4px; color:white;' class='" + labelColor + "'>" + text + "</span>";
+    }
+
+    function speedFormatter(value) {
+
+      var roundoff = Math.round(value * 100) / 100;
+
+      return roundoff + ' km/h';
+    }
+
+    function getElapsedTime(timestamp) {
+
+      var now = moment().format();
+      var diff: any = moment.duration(moment(now).diff(moment(timestamp)));
+      var days = parseInt(diff.asDays()); //84
+      var hours = parseInt(diff.asHours()); //2039 hours, but it gives total hours in given miliseconds which is not expacted.
+      hours = hours - days * 24;  // 23 hours
+      var minutes = parseInt(diff.asMinutes()); //122360 minutes,but it gives total minutes in given miliseconds which is not expacted.
+      minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
+      var ms = "";
+
+      if (days == 0 && hours == 0 && minutes == 0) {
+        ms = "a moment ago";
+      } else if (days == 0) {
+        ms = hours + " hours " + minutes + " minutes ago";
+      } else {
+        if (days == 1) {
+          ms = days + " day " + hours + " hours " + minutes + " minutes ago";
+        } else {
+          ms = days + " days " + hours + " hours " + minutes + " minutes ago";
+        }
+
+      }
+
+      return ms;
     }
 
     function get_el(timestamp) {
@@ -368,12 +570,12 @@ export class DashboardComponent implements OnInit {
 
     $('.SelectCompanyFilter').change({ route: this.route, toastr: this.toastr }, function (event) {
 
-      const awaitOnchangeCompany = async (loadDashboard, toastr) => {
-        const result = await initDashboard(loadDashboard, getAssetsFilter(role_id, base, uri, user_id, reseller_id), role_id, toastr);
+      const awaitOnchangeCompany = async (loadDashboard, toastr, route) => {
+        const result = await initDashboard(loadDashboard, getAssetsFilter(role_id, base, uri, user_id, reseller_id), role_id, toastr, route);
         ClearList();      
       }
 
-      awaitOnchangeCompany(loadDashboard, event.data.toastr);
+      awaitOnchangeCompany(loadDashboard, event.data.toastr, event.data.route);
 
     });
 
@@ -384,14 +586,13 @@ export class DashboardComponent implements OnInit {
         api_assets_filter_new = getAssetsFilter(role_id, base, uri, user_id, reseller_id);
       }
 
-      if (event.data.route = "/dashboard") {
-        const awaitOnchangeAsset = async (loadDashboard, toastr, api_assets_filter_new) => {
-          const result = await initDashboard(loadDashboard, api_assets_filter_new, role_id, toastr);
-
+      if (event.data.route == "/dashboard") {
+        const awaitOnchangeAsset = async (loadDashboard, toastr, api_assets_filter_new, route) => {
+          const result = await initDashboard(loadDashboard, api_assets_filter_new, role_id, toastr, route);
           ClearList();
         }
 
-        awaitOnchangeAsset(loadDashboard, event.data.toastr, api_assets_filter_new);
+        awaitOnchangeAsset(loadDashboard, event.data.toastr, api_assets_filter_new, event.data.route);
       }
 
      
